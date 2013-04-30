@@ -1,0 +1,9 @@
+{% include "catalog/include/border_top.html" %}
+<ul class="menu">
+    {% for serv in servs %}
+    <li class="parent"><a href="{% url catalog:catalog-list serv.codename %}" class="header">
+        {{ serv.title }} 
+        <span class="note">{{ serv.description }}</span>
+    </a></li>
+    {% endfor %}
+</ul>

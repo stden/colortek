@@ -1,0 +1,14 @@
+<div class='anonymous user info'>
+	{% if kart.service.has_online_payment %}
+	<p>
+		Возможен электронный платеж.<br>
+		Для оплаты картой, а также получения бонусных баллов за заказ, пожалуйста, выполните
+		<a href='{% url accounts:register-user %}' class="button">регистрацию</a><a href='{% url accounts:login %}' class="button">вход</a>
+	</p>
+	{% else %}
+	<p>
+		Для получения бонусных баллов, пожалуйста, выполните
+		<a href='{% url accounts:register-user %}' class="button">регистрацию</a><a href='{% url accounts:login %}' class="button">вход</a>
+	</p>
+	{% endif %}
+</div>

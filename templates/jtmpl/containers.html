@@ -1,0 +1,153 @@
+{% load coretags %}
+<script id='editCategoryTemplate' type='text/html'>
+    <div class='popup' data-id='${ id }' id="edit-category-item-${ id }">
+        <div class='block fblink-content'>
+            <form class='post-form' id='' method='POST' action='${ url }'>
+                {% csrf_token %}
+                <a title="Закрыть" class="btnClose" onClick='$(this).parents(".popup").hide();return false;'>&nbsp;</a>
+                <span class='textfield1'>
+                    <input name='title' id='id_title' value='${ item.container.title }' placeholder='Введите название категории' onfocus='this.placeholder = ""'/>
+                </span>
+
+                <span class='textfield2'>
+                    <input placeholder='Порядок' onfocus='this.placeholder=""'
+                        onchange='this.placeholder="Порядок"'
+                        name='weight' id='id_weight' value='${ item.container.weight }' />
+                </span>
+				<div class="info">
+					<select id='id_container' name='container'>
+						<option value>---------</option>
+					{% raw %}{{each(idx, option) item.options}}{% endraw %}
+						<option value='${ option.value }'
+                        {% if container.container %}
+                        {% templatetag openvariable %}if (option.value == {{ container.container.pk|default_if_none:0 }}){% templatetag closevariable %}
+                        selected='selected'{% raw %}{{/if}}{% endraw %}
+                        {% else %}
+                            {% if container %}
+                            {% templatetag openvariable %}if (option.value == {{ container.pk|default_if_none:0 }}){% templatetag closevariable %}
+                            selected='selected'{% raw %}{{/if}}{% endraw %}
+                            {% endif %}
+                        {% endif %}
+                        >${ option.title }</option>
+					{% raw %}{{/each}}{% endraw %}
+					</select>
+                    <br>
+                    <select id='id_category' name='category'>
+                        {% for category in categories %}
+                        <option value='{{ category.pk }}'
+                            {% templatetag openvariable %}if (item.container.category_id == {{ category.pk }}){% templatetag closevariable %}selected='selected'{% raw %}{{/if}}{% endraw %}>{{ category.title }}</option>
+                        {% endfor %}
+                    </select>
+				</div>
+                <span class='textfield1'>
+					<textarea id='id_description' name='description'>${ item.container.description }</textarea>
+				</span>
+				
+                <div class='hidden-info'>
+                    <div class='hidden-infoBlock'>
+                    </div>
+                </div>
+                <div class='btns'>
+                    <input type='submit' value='Сохранить' class='btnSave postAjax' />
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+
+<script type='text/javascript'>
+$(document).ready(function(){
+    var postForm = function(form){
+        data = form.serialize();
+        url = form.attr('action');
+        postFormAjax({
+            form: form, url: url,
+            successMsg: "<img src='/media/icon/success.png' alt=''>&nbsp;Успешно сохранено",
+            failureMsg: "Что-то пошло не так",
+            notyTimeout: 2000,
+            reloadPage: true,
+        });
+
+    }
+
+    $('.category_list .btnAdd').click(function(e){
+        url = String("{% url catalog:container-add %}");
+        tmpl = $.template('#editCategoryTemplate');
+        product_list = $(this).parents('.category_list');
+        blk = $.tmpl(tmpl, {
+            url: url,
+            item: {
+                container: {'title': '', 'description': ''},
+                options: [
+                    {% for container in containers %}{'title': "{{ container.title }}", 'value': {{ container.pk }}}{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                ]
+            }
+        });
+        blk.appendTo(product_list);
+        blk.show();
+        e.stopPropagation();
+        return false;
+    });
+
+    $('.product_list .btnEdit, .category_list .btnEdit').click(function(e){
+        product_list = $(this).parents('.product_list');
+        product_list = (product_list.length) ? product_list: $(this).parents('.category_list');
+        id = $(this).data('id');
+        url = String("{% url json:catalog:container 0 %}").replace(0, id);
+        edit_url = String("{% url catalog:container-edit 0 %}").replace(0, id);
+        blk = $(".popup[data-id=" + id + "]");
+        if (!blk.length){
+            $.getJSON(url, function(response){
+				var top = getScrollTop() - product_list.offset().top,
+					blkHeight;
+					product_list.find('.popup').remove();
+				
+                tmpl = $.template('#editCategoryTemplate');
+                blk = $.tmpl(tmpl, {url: edit_url, item: response, id: id});
+                blk.appendTo(product_list);
+				blkHeight = blk.innerHeight();
+				
+				
+                if (blk.is(':visible')){
+					blk.hide();
+				} else {
+					blk
+						.css({
+							//'top': getScrollTop() + 10
+							'top':  top + ($(window).height() - blkHeight)/2
+						})
+						.show();
+				}
+            });
+        }
+        else {
+					
+			var top = getScrollTop() - product_list.offset().top;
+			
+            if (blk.is(':visible')){
+				blk.hide();
+			} else {
+				blk
+					.css({
+						//'top': getScrollTop() + 10
+						'top':  top + ($(window).height() - blk.innerHeight())/2
+					})
+					.show();
+			}
+        }
+		
+        return false;
+    }); 
+    $('body').on('click', '.postAjax', function(e){
+        form = $(this).parents('form');
+        postForm(form);
+        return false;
+    });
+    $("form.post-form").submit(function(e){
+        postForm(form);
+        return false;
+    });
+
+}); //document ready
+</script>

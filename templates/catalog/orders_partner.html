@@ -1,0 +1,63 @@
+{% extends base %}{% load i18n %}
+{% block content %}
+<h3>{% trans "Your orders" %} </h3>
+
+{% trans "$." context "currency" as currency %}
+<div class=''>
+    <form class='search partner orders' id='search-partner-orders'
+        method='GET' url='{% url catalog:orders-partner %}'>
+        {{ form.as_ul }}
+        <div class='actions'>
+            <input type='submit' class='btn btn-primary' value='{% trans "Search" %}' />
+            <a class='btn btn-info'
+                href='{% url catalog:orders-partner-csv %}?{{ GET }}'>{% trans "Export as csv" %}</a>
+        </div>
+    </form>
+</div>
+{% if orders %}
+<table class='table striped'>
+    <tr class='head'>
+        <th>{% trans "ID" %}</th>
+        <th>{% trans "Created on" %}</th>
+        <th>{% trans "Updated on" %}</th>
+        <th>{% trans "Price" %}</th>
+        <th>{% trans "Fee" %}</th>
+        <th>{% trans "Status" %}</th>
+        <th>{% trans "Stuff" %}</th>
+        <th>{% trans "User" %}</th>
+        <th>{% trans "Actions" %}</th>
+        {% for order in orders %}
+        <tr id='order-{{ order.pk }}'>
+            <td class='code'>{{ order.id }}</td>
+            <td class='created_on'>{{ order.created_on }}</td>
+            <td class='updated_on'>{{ order.updated_on }}</td>
+            <td class='price'>{{ order.get_total_price }} {{ currency }}</td>
+            <td class='fee'>_in_implement</td>
+            <td class='status'>{% trans order.status as status %}{{ status }}</td>
+            <td class='stuff order list'>
+            {%  for item in order.containers.all %}
+                <li class='items'>{{ item.product.title }}
+                ({{ item.quantity }}x{{ item.product.cost }} {{ currency }} = {{ item.total_price }} {{ currency }})
+                </li>
+            {% endfor %}
+            {% if order.addons.all %}
+                <strong>{% trans "Addons" %}</strong>
+                {% for item in order.addons.all %}
+                    <li class='addons'>{{ item.title }} ({{ item.cost }} {{ currency }})</li>
+                {% endfor %}
+            {% endif %}
+                <div class='total'>
+                    {% trans "total" %}:
+                    {{ order.get_total_price }} {{ currency }}
+                </div>
+            </td>
+            <td class='user'>{{ order.client.username }}</td>
+            <td class='actions'></td>
+        </tr>
+        {% endfor %}
+    </tr>
+</table>
+{% else %}
+<h3>{% trans "No orders found" %}</h3>
+{% endif %}
+{% endblock %}

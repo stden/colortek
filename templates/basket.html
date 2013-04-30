@@ -1,0 +1,183 @@
+<div class="i">{% load thumbnail corefilters %}
+{% if user.is_authenticated and user.bonus_score != 0 %}
+<div class="box bonus"><div class="i">
+    <p>Внести баллы<br>(не более {{ kart.bonus_max|int }}):</p>
+    <div class="count">
+        <input type="text" id='bonus-discount' value="0{#{% if kart.bonus_max <= user.bonus_score %}{{ kart.bonus_max|int }}{% else %}{{ user.bonus_score|int }}{% endif %}#}">{# баллов #}
+    </div>
+	{% comment %}
+    <p>Этот заказ принесет вам:<br>{{ kart.total_price|multiply:gs.BONUS_EXCHANGE_RATE }} баллов</p>
+	<p>Этот заказ принесет вам:<br><span id="side-get-bonus">{{ kart.total_price|multiply:gs.DEFAULT_BONUS_RATE|multiply:gs.MBONUS_RATE_THRESHOLD }}</span> баллов</p>
+	{% endcomment %}	
+</div></div>
+{% endif %}
+
+{% if kart.products.all %}
+<div class="box place"><div class="i">
+    {% if not kart.service.is_published %}
+        <h3>Вы осуществляете заказ у службы, которая не работает в данный момент времени</h3>
+		<br>
+    {% endif %}
+	{% if kart.service.is_published %}
+		<p>Вы осуществляете заказ у</p>
+	{% endif %}
+	{% thumbnail kart.service.logo gs.ITEM_THUMBNAIL_SIZE_TINY as image %}
+    <div class="logo">
+        <a href="{% url catalog:service-page kart.service.pk %}"><img src="{{ image.url }}" alt="{{ kart.service.service_name }}"></a>
+    </div>
+    {% endthumbnail %}
+    {{ kart.service.service_name|default_if_none:"" }}
+</div></div>
+<div class="box products"><div class="i">
+    {% for product in kart.products %}
+    <div class="item">
+        <p class="name"><a href="#">{{ product.product.title }}</a></p>
+        <!-- <p class="desc">500 /1125г / 30 см.</p> -->
+        <div class="info">
+			<div class="cartItemCount">
+				<a href="{% url catalog:cart-item-set product.product.pk 0 %}" class="del_basket_item">-</a>
+				<input class="qnt" type="text" value="{{ product.quantity|multiply:product.product.category.rate|safe }}">
+				<span class="category-short-title">{{ product.product.category.short_title }}</span>
+				<a href="{% url catalog:cart-item-set product.product.pk 0 %}" class="add_basket_item">+</a>
+			</div>
+            <p class="price">{{ product.total_price|floatformat:"-2" }} <span class="ruble">n</span></p>
+        </div>
+        <a href="{% url catalog:cart-item-remove product.product.pk %}" class="del">×</a>
+    </div>
+    {% endfor %}
+    {% if kart.addons %}
+    <h3>Добавки</h3>
+    {% for addon in kart.addons %}
+    <div class='item addon'>
+        <p class='name' data-id='{{ addon.product.pk }}'>{{ addon.product.title }}</p>
+        <div class='info'>
+			<div class="cartItemCount">
+				<a href="{% url catalog:cart-addon-checkout addon.product.pk 0 %}" class="del_basket_item" data-addon="{{ addon.product.category.threshold }}">-</a>
+				<input class="qnt" type="text" value="{{ addon.quantity }}">
+				<span class="category-short-title">{{ addon.product.category.short_title }}.</span>
+				<a href="{% url catalog:cart-addon-checkout addon.product.pk 0 %}" class="add_basket_item" data-addon="{{ addon.product.category.threshold }}">+</a>
+			</div>
+            
+            <p class='price'>{{ addon.total_price|floatformat:"-2" }} <span class='ruble'>n</span></p>
+        </div>
+        <a href='{% url catalog:cart-addon-remove addon.product.pk %}' class='del'>x</a>
+    </div>
+    {% endfor %}
+    {% endif %}
+	<a class="recalc-button" href="">Пересчитать</a>
+</div></div>
+
+
+<div class="box price"><div class="i">
+    <p class="order">Сумма заказа: {{ kart.total_price|floatformat:"-2" }} <span class="ruble">n</span></p>
+    <p class="delivery">Стоимость доставки: {{ kart.deliver_cost }} <span class="ruble">n</span></p>
+    <p class="bonus">Баллы за заказ: ~{{ kart.total_price|multiply:gs.MBONUS_RATE_THRESHOLD|multiply:gs.DEFAULT_BONUS_RATE|int }}</p>
+    <p class="total" id="side-total-price">Итого: <strong><span class="cn">{{ kart.total_price|add:kart.deliver_cost }}</span> <span class="ruble">n</span></strong></p>
+</div></div>
+<div class="box action"><div class="i">
+    <a id='order-button' class="order-button"
+        href="{% url catalog:cart-order-popup %}">оформить заказ</a>
+</div></div>
+{% else %}
+<div class='box place'><div class='i'>
+    <h3>На данный момент товаров в корзине нет</h3>
+</div></div>
+{% endif %}
+</div>
+
+<script type="text/javascript">
+	function cartItemCountAction(a, l){
+		var action = a,
+			link = l,
+			val = parseInt(link.parents('.info').find('.qnt').val()),
+			url = link.attr('href'),
+			addon = link.attr('data-addon') || 1;
+			
+		if (action == 'add'){
+			val = val + parseInt(addon);
+		} else {
+			if (val >= parseInt(addon)*2) val = val - parseInt(addon);
+			else return false;
+		}
+		url = url.replace('/0/', '/'+ val +'/');
+		link.parents('.info').find('.qnt').val(val);
+		$.get(url, function(data){ });
+	}
+	
+	$('.add_basket_item').click(function(){
+		var self = $(this);
+		cartItemCountAction('add', self);
+		return false;
+	});
+	$('.del_basket_item').click(function(){
+		var self = $(this);
+		cartItemCountAction('del', self);
+		return false;
+	});
+	$('.cartItemCount .qnt').keyup(function(){
+		var w = $(this).parents('.cartItemCount'),
+			d = w.find('.del_basket_item'),
+			url = d.attr('href'),
+			addonD = d.attr('data-addon') || 1,
+			v = Math.round($(this).val() / addonD) * addonD;
+			
+			if (v){
+				if (v < 0 || v == ''){
+					return false;
+				} else {
+					url = url.replace('/0/', '/'+ v +'/');
+					$(this).val(v);
+					$.get(url, function(data){ });
+				}
+			}
+	});
+    $('.order-button').click(function(e){
+        {% if kart.service.minimal_cost %}
+        if ({{ kart.service.minimal_cost|safe }} > {{ kart.total_price|safe }}){
+            noty({
+                text: "Вы не можете осуществить заказ меньше установленной суммы в {{ kart.service.minimal_cost|safe }} руб.",
+                type: "information",
+                dismissQueue: true,
+                timeout: 5000
+            });
+            e.preventDefault();
+            return false;
+        }
+        {% endif %}
+    });
+	
+	/* globals */
+    var exchange_rate = {{ gs.BONUS_EXCHANGE_RATE|safe }};
+    var bonus_rate = {{ gs.BONUS_RATE|floatformat }};
+    var bonus_threshold = {{ gs.BONUS_RATE_THRESHOLD|floatformat }};
+    var bonus_max_discount = {{ gs.BONUS_MAX_DISCOUNT|safe }};
+	{% if kart.deliver_cost|safe == 'None' %}
+    var deliver_cost = 0;
+	{% else %}
+	var deliver_cost = {{ kart.deliver_cost|safe }};
+	{% endif %}
+    var _total_price = {{ kart.total_price|safe }};
+	
+	$('#bonus-discount').keydown(function(e){
+        $this = this;
+        clearTimeout(typeof tid == 'undefined' ? null : tid);
+        tid = setTimeout(function(){
+            val = parseInt($($this).val()) || 0;
+            //console.log(val);
+            var total_price = parseFloat(_total_price);
+				bonus_max = total_price * bonus_max_discount / exchange_rate;
+				bonus_currency = val * exchange_rate;
+				bonus_get = (total_price - bonus_currency) / bonus_threshold * bonus_rate;
+            if (val > bonus_max){
+                $("#side-get-bonus").html("<b>Максимальная установленная планка для скидки по бонусным балам 10%, то есть:" + bonus_max + "</b>");
+            }else {
+                $("#side-get-bonus").text(bonus_get.toFixed(0));
+                total = total_price + deliver_cost - val * exchange_rate;
+                $("#side-total-price .cn").text(total);
+            }
+			//console.log(total);
+        }, 400);
+    });
+    $("#bonus-discount").keydown(); //initial
+	
+</script>

@@ -1,0 +1,62 @@
+<div class="b-supplements">{% load coretags %}
+        {% if addons %}
+        <div class="toggle-button">
+            <a href="#"><span class="brd">У нас есть вкусные добавки</span><span class="close">×</span></a>
+        </div>
+        {% endif %}
+
+        <div class="supplements-options">
+            <div class="col-2">
+                <form class='addon form' id='add-addons-form' method='POST' action='{% url catalog:add-addons-to-cart %}'>
+                {% csrf_token %}
+                {% slice_instances addons as addonz %}
+                <div id='addons'>
+                    <div class="col">
+                        {% include "catalog/include/addons.html" with addons=addonz.0 id="sup-1" %}
+                    </div>
+                    <div class='col'>
+                        {% include "catalog/include/addons.html" with addons=addonz.1 id="sup-2" %}
+                    </div>
+                </div>
+                    <input type='submit' value='Добавить' class='postAjax'>
+                </form>
+            </div>
+        </div><!-- /supplements-options -->
+    </div><!-- /b-supplements -->
+</div>
+
+<script type='text/javascript'>
+$(document).ready(function(){
+    $('body').on('click', '.postAjax', function(e){
+//    $(".postAjax").click(function(e){
+        form = $(this).parents('form');
+        postFormAjax({
+            form: form,
+            url:  "{% url catalog:add-addons-to-cart %}",
+            successMsg: "Успешно добавлено, пожалуйста обновите страницу",
+            notyTimeout: 3000,
+            success: function(response){
+                frm = (typeof response.form != 'undefined') ? response.form : {};
+                errors = (typeof frm.errors != 'undefined') ? frm.errors : {};
+                if (errors.addons){
+                    noty({
+                        text: frm.errors.addons.join(' '),
+                        type: 'error',
+                        dismissQueue: true,
+                        timeout: 5000
+                    });
+                } else {
+
+                }
+            }
+        });
+        return false;
+    });
+    $('body').on('submit', '.addon.form', function(e){
+        return false;
+    });
+    $("#add-addons-form").submit(function(e){
+        return false;
+    });
+});
+</script>

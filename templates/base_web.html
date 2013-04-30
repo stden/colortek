@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>{% load pytils_numeral corefilters thumbnail coretags banner %}
+    <head>
+        <title>{% block title %}Уже везу{% endblock %}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<!--meta name="viewport" content="width=device-width"-->
+		<meta name="viewport" content="width=1000px">
+        {% block head %}{% endblock %}
+        {% block css %}
+        <link rel="stylesheet" type="text/css" media="screen" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
+        <link rel='stylesheet' type='text/css' media='screen' href='/media/css/jquery.ui.timepicker.css'>
+        <link rel="stylesheet" type="text/css" media="screen" href="/media/css/cusel.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="/media/css/default.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="/media/css/inner.css">
+        <link rel='stylesheet' type='text/css' media='screen' href='/media/css/jquery.fancybox.css'>
+		<!--[if IE 7]><link rel="stylesheet" href="/media/css/ie7.css" media="all"><![endif]-->
+		<!--[if IE 8]><link rel="stylesheet" href="/media/css/ie8.css" media="all"><![endif]-->
+		<!--[if lt IE 9]><link rel="stylesheet" href="/media/css/ie.css" media="all"><![endif]-->
+        {% endblock %}
+		
+		<!-- Favicon -->
+        <link rel="icon" href="/media/img/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="/media/img/favicon.ico" type="image/x-icon">
+
+        {% block js %}
+		
+		<script type="text/javascript" src="/media/js/jquery.min.js"></script>
+        <script type='text/javascript' src='/media/js/jquery.tmpl.min.js'></script>
+		
+		<script type='text/javascript' src='/media/js/jquery.cookie.js'></script>
+
+        <script type="text/javascript" src="/media/js/jScrollPane.js"></script>
+        <script type="text/javascript" src="/media/js/cusel.min.js"></script>
+        <script type="text/javascript" src="/media/js/jquery.mousewheel.js"></script>
+        <script type="text/javascript" src="/media/js/jquery-ui.js"></script>
+
+        <script type="text/javascript" src="/media/js/jscroller-0.4.js"></script>
+        <script type="text/javascript" src="/media/js/jquery.ui.timepicker.js"></script>
+        <script type="text/javascript" src="/media/js/site.js"></script>
+        <script type="text/javascript" src="/media/js/helpers.js"></script>
+        <script type='text/javascript' src='/media/js/jquery.fancybox.pack.js'></script>
+        <!-- noty -->
+        <script type='text/javascript' src='/media/js/noty/jquery.noty.js'></script>
+        <script type='text/javascript' src='/media/js/noty/layouts/top.js'></script>
+        <script type='text/javascript' src='/media/js/noty/layouts/topLeft.js'></script>
+        <script type='text/javascript' src='/media/js/noty/layouts/topRight.js'></script>
+        <script type='text/javascript' src='/media/js/noty/layouts/center.js'></script>
+        <script type='text/javascript' src='/media/js/noty/themes/default.js'></script>
+        <script type='text/javascript' src='/media/js/noty/defaults.js'></script>
+
+        <!-- google maps -->
+        <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+
+        <link href="/media/css/tipTip.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="/media/js/jquery.tipTip.minified.js"></script>
+
+        {% endblock %}
+    </head>
+    <body class="{% block body-class %}{% endblock %}{% if get_full_path == '/' or get_full_path == '/catalog/' %} main-page{% endif %}">
+        <div class="main"><div class="mainSF">
+
+            <div id="b-top">
+                <div class="b-steps-info">
+                    <div class="b-inner">
+                        <div class="step"><div class="i">
+                            <div class="num">1</div>
+                            <div class="step-info">
+                                <strong>Выбери что нравится</strong>
+                                Сейчас выбирают:&nbsp;&nbsp;
+                                {% comment %}
+                                <span>2</span><span>3</span><span>3</span><span>3</span><span>3</span>&nbsp;&nbsp;
+                                {% endcomment %}
+                                {% for num in online_users|make_list %}
+                                <span>{{ num }}</span>
+                                {% endfor %}
+                                {#{ present_user_count }#}{{ online_users|choose_plural:"человек,человека,человек" }}
+                            </div>
+                        </div></div>
+                        <div class="step"><div class="i">
+                            <div class="num">2</div>
+                            <div class="step-info">
+                                <strong>Отправьте заказ</strong>
+                                Заказов сегодня:&nbsp;&nbsp;
+                                {% for num in present_orders_count|make_list %}
+                                <span>{{ num }}</span>
+                                {% endfor %}
+                                {% comment %}<span>1</span><span>7</span><span>8</span><span>3</span><span>3</span>{% endcomment %}
+                                &nbsp;&nbsp;шт
+                            </div>
+                        </div></div>
+                        <div class="step"><div class="i">
+                            <div class="num">3</div>
+                            <div class="step-info">
+                                <strong>уже везу!</strong>
+                                Нас уже:&nbsp;&nbsp;
+                                {% for num in total_user_count|default_if_none:0|make_list %}
+                                <span>{{ num }}</span>
+                                {% endfor %}
+                                {% comment %}
+                                <span>2</span><span>3</span><span>3</span><span>3</span><span>3</span>
+                                &nbsp;&nbsp;{{ partners_count|default_if_none:0|choose_plural:"операторов,операторa,операторов" }}
+                                {% endcomment %}
+                            </div>
+                        </div></div>
+                    </div>
+                </div><!-- /b-steps-info -->
+                <div class="navigation">
+                    <div class="b-inner">
+                        <div class="region{% if user.is_authenticated %} l-2{% endif %}">
+                            <span class="title">Регион доставки:</span>
+                            {% get_instances 'geo.city' as cities %}
+                            <select id='city-changer'>
+                                {% for city in cities %}
+                                <option value="{{ city.pk }}"
+                                    {% if user.city.pk == city.pk and not session.city %}selected='selected'{% endif %}
+                                    {% if session.city == city.pk %}selected='selected'{% else %}
+                                    {% if rgeoip.city and rgeoip.city == city.title %}{% endif %}
+                                    {% endif %}>{{ city.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        {% if not user.is_partner %}
+                        <div class="basket{% if cart.get_total_items_count|default_if_none:0 == 0 %} empty{% endif %}">
+                            <a href="#"><span class="icon"></span>
+                            корзина {% if cart.get_total_items_count %}<span class="detail">({{ cart.get_total_price }} руб.)</span>{% endif %}</a>
+                        </div>
+                        {% endif %}
+
+                        <div class="user">
+                            {% if user.is_authenticated %}
+                                {% if user.is_partner %}
+                                <div class='partner'>
+                                    {% thumbnail user.logo gs.ITEM_THUMBNAIL_SIZE_TOPBAR as logo %}
+                                    <a href='{% url catalog:container-list %}'><img src='{{ logo.url }}' alt='{{ user.service_name }}'></a>
+                                    {% endthumbnail %}
+                                    <span class="help-info">Здравствуйте, </span>
+                                    <div class="username-box"><a href='{% url catalog:container-list %}'>{{ user.get_real_name }}</a></div>
+                                    <a href='{% url accounts:logout %}'>Выход{# {{ user.service_name|default_if_none:user.username }}#}</a>
+                                </div>
+                                {% else %}
+                                <div class="welcome">
+                                    <span class="help-info">Здравствуйте, </span>
+									<a href='{% url accounts:profile-edit %}'>{{ user.get_real_name }}</a>
+                                    <br><span class="help-info">Ваши баллы: {{ user.bonus_score|int }}</span>{# {{ user.get_bonus_score|choose_plural:"балл, балла, баллов"}} #}
+
+                                    <a href='{% url accounts:logout %}'>Выход{# {{ user.service_name|default_if_none:user.username }}#}</a>
+                                </div>
+                                {% endif %}
+                            {% else %}
+                                <a href="{% url accounts:register-user %}">Регистрация</a>
+                                <a href="{% url accounts:login %}">Войти</a>
+                            {% endif %}
+                        </div>
+
+
+                        <div class="menu">
+                            <span class="show-steps"><span class="arr"></span></span>
+                            <ul>
+                                <li><a href="/about/">О нас</a></li>
+                                <li><a
+                                    href="{% url accounts:profile-bonuses %}">Бонусы</a></li>
+                                {% if user.is_authenticated and user.is_partner and gs.VERY_ANGRY %}
+                                    <li><a
+                                        {# href="{% url catalog:service-specials user.pk %}" #}
+                                        href='{% url catalog:service-partner-specials %}'>Акции</a></li>
+                                {% else %}
+                                <li><a href="{% url catalog:all-specials %}">Акции</a></li>
+                                {% endif %}
+                                <li><a href="{% url blog:index %}">Блог</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!-- /navigation -->
+            </div><!-- /b-top -->
+
+            <div id="main-filter">
+                <div class="b-inner">
+                    <div class="wrap-content">
+                        <div class="content-border"><div class="content">{% block border %}
+                            {% if get_full_path == '/' or get_full_path == '/catalog/' %}
+                            <div class="main-page-border-wrap">
+                            {% include "catalog/border_search.html" %}
+                            </div>
+                            {% else %}
+                            {% include "catalog/border.html" %}
+                            {% endif %}
+                        {% endblock %}
+                        </div></div>
+                        <div class="btm"><a class="arr"></a></div>
+                    </div>
+
+                </div>
+            </div><!-- /main-filter -->
+
+            <div id="content-wrap"><div class="vis">
+                {% block all_content %}
+                {% if get_full_path == '/' or get_full_path == '/catalog/' %}
+                <div id="movingline">
+                    <div class="b-inner">
+                        <div id="scroller_container">
+                            <div id="scroller">
+                                <ul>
+                                    <li>сотни служб доставки на одном сайте, всегда актуальные предложения, никаких наценок</li>
+                                    <li>за заказ начисляются бонусные баллы, которыми можно оплачивать последующий заказ</li>
+                                    <li>меняйте отзывы на бонусные баллы, участвуйте в розыгрышах проекта</li>
+                                    <li>сотни актуальных акций партнеров проекта</li>
+                                    <li>как наличный, так и безналичный расчет</li>
+                                    <li>поддержка участников проекта, наши операторы окажут вам необходимую помощь</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="l"></div><div class="r"></div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="b-inner">
+                    <div id='side-basket'>
+                        {% block side-basket %}{% include "basket.html" %}{% endblock %}
+                    </div>
+                    <div class="content">
+                    {% if messages %}{% include "core/messages_fancybox.html" %}{% endif %}
+                    {% if active_votes %}{% include "core/votes.html" %}{% endif %}
+                    {% block content %}{% endblock %}
+                    </div>
+                </div>
+                {% endblock %}
+            </div></div><!-- /content-wrap -->
+
+            {% if get_full_path == '/' or get_full_path == '/catalog/' %}
+				<div class="b-adv">
+					<div class="top">&nbsp;</div>
+					<div class="content">
+						<div class="b-inner">
+							<div class="col-3">
+								{% get_banner %}
+							</div>
+						</div>
+					</div>
+				</div><!-- /b-adv -->
+            {% endif %}
+
+
+        </div></div><!-- /main -->
+
+        <div id="footer">
+            <div class="b-inner">
+                <div class="info">
+                    <a href="/partners/">Партнерам</a>
+                    <a href="/agreement/">Пользовательское соглашение</a>
+                    <a href="/contacts/">Контакты</a>
+                </div>
+                <div class="copyright">&copy; 2010-2012 Уже везу!™, Все права защищены</div>
+            </div>
+        </div>
+		
+		{% if get_full_path == '/' or get_full_path == '/catalog/' %}
+			{% if not user.city and not session.city %}
+				{% include "core/city_set.html" %}
+			{% endif %}
+		{% endif %}
+		
+		<div class="counters">
+			<!-- Yandex.Metrika counter -->
+			<script type="text/javascript">
+			(function (d, w, c) {
+				(w[c] = w[c] || []).push(function() {
+					try {
+						w.yaCounter20026174 = new Ya.Metrika({id:20026174,
+								webvisor:true,
+								clickmap:true,
+								trackLinks:true,
+								accurateTrackBounce:true});
+					} catch(e) { }
+				});
+
+				var n = d.getElementsByTagName("script")[0],
+					s = d.createElement("script"),
+					f = function () { n.parentNode.insertBefore(s, n); };
+				s.type = "text/javascript";
+				s.async = true;
+				s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+				if (w.opera == "[object Opera]") {
+					d.addEventListener("DOMContentLoaded", f, false);
+				} else { f(); }
+			})(document, window, "yandex_metrika_callbacks");
+			</script>
+			<noscript><div><img src="//mc.yandex.ru/watch/20026174" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+			<!-- /Yandex.Metrika counter -->
+
+			<script type="text/javascript">
+
+			  var _gaq = _gaq || [];
+			  _gaq.push(['_setAccount', 'UA-38434109-1']);
+			  _gaq.push(['_setDomainName', 'uzevezu.ru']);
+			  _gaq.push(['_setAllowLinker', true]);
+			  _gaq.push(['_trackPageview']);
+
+			  (function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			  })();
+
+			</script>
+
+			<!--LiveInternet counter--><script type="text/javascript"><!--
+			new Image().src = "//counter.yadro.ru/hit?r"+
+			escape(document.referrer)+((typeof(screen)=="undefined")?"":
+			";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+			screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+			";"+Math.random();//--></script><!--/LiveInternet-->
+		</div><!-- /counters -->		
+		<script type='text/javascript'>
+			{% if get_full_path == '/' or get_full_path == '/catalog/'%}
+			initBasket = function(){
+				$('.basket a').unbind('click');
+				$('.basket a').click(function(e){
+					document.location.href = String('{% url catalog:cart %}');
+				});
+			}
+			{% endif %}
+			$(document).ready(function(){
+				$('#city-changer').change(function(e){
+					city_pk = $('input[id=city-changer]').val();
+					url = String("{% url geo:city-set 0 %}").replace(0, city_pk);
+					if ($.browser.msie && $.browser.version < 9){
+						if (url){
+							$.ajax({
+								type: "GET",
+								url: url,
+								success: function(data){
+									document.location.reload();
+								}
+							});
+						}
+					} else {
+						window.location.href = url;
+						//console.log(['changed', url, city_pk]);
+					}
+				});
+				if (document.cookie./*split("; ").*/indexOf('visited') == -1){
+					$('.show-steps').addClass('active');
+					$('.b-steps-info').attr({style: "display: block;"});
+					document.cookie = 'visited';
+				}
+			});
+		</script>
+		<!--[if IE 6]>
+		<script type="text/javascript" src="/media/js/ie6.js"></script>
+		<![endif]-->
+    </body>
+</html>

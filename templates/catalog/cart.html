@@ -1,0 +1,74 @@
+{% extends base %} {% load i18n %}
+{% block body-class %}inner-pages{% endblock %}
+{% block content %}
+    {% trans " $." context "currency" as currency %}
+    {% if products %}
+    <h3>{% trans "Products" context "Order products" %}</h3>
+    <table class='table striped'>
+        <thead>
+            <tr>
+                <th>{% trans "#" %}</th>
+                <th>{% trans "Product" %}</th>
+                <th>{% trans "Quantity" %}</th>
+                <th>{% trans "Total price" %}</th>
+                <th>{% trans "Actions" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in products %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ item.product.title }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.total_price }}{{ currency }}</td>
+                <td class='actions'>
+                    <a href='{% url catalog:cart-item-remove item.product.pk %}'
+                        class='btn btn-danger'>{% trans "Remove" %}</a>
+                    <a href='{% url catalog:addon-list item.product.container.pk %}?item={{ item.product.pk }}'
+                        class='btn btn-info'>
+                        {% trans "Add extras"  %}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <th colspan='4' style='text-align: right;'>{% trans "Total price (with extras)" %}</th>
+                <th colspan='1'>{{ total_price }}{{ currency }}</th>
+            </tr>
+            <tr>
+                <th colspan='4' style='text-align: right;'></th>
+                <th colspan='1'>
+                    <a class='btn btn-success' href='{% url catalog:order %}'>{% trans "Order" context "Purchase" %}</a>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+    <!-- addons list --!>
+    <h3>{% trans "Addons" %}</h3>
+    <table class='table striped addons'>
+        <tr>
+            <th>{% trans "#" %}</th>
+            <th>{% trans "Product" %}</th>
+            <th>{% trans "Quantity" %}</th>
+            <th>{% trans "Total price" %}</th>
+            <th>{% trans "Actions" %}</th>
+        </tr>
+        {% for addon in addons %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ addon.product.title }}</td>
+                <td>{{ addon.quantity }}</td>
+                <td>{{ addon.total_price }} {{ currency }}</td>
+                <td class='actions'>
+                    <a href='{% url catalog:cart-addon-remove addon.product.pk %}'
+                        class='btn btn-danger'>
+                        {% trans "Delete" %}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <h3>{% trans "No cart items found" %}</h3>
+    {% endif %}
+{% endblock %}

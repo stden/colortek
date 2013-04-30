@@ -1,0 +1,324 @@
+{% extends base %} {% load i18n coretags corefilters %}
+{% block css %}
+    {{ block.super }}
+    <style type='text/css'>
+        form ul.errors, form ul.errors li{
+        list-style-type: none;
+    }
+    form ul.errors{
+        margin-left: 230px;
+    }
+    form ul.errors li{
+        color: red;
+    }
+    </style>
+{% endblock %}
+{% block js %}
+    {{ block.super }}
+{% endblock %}
+{% block head %}
+{{ wizard.form.media }}
+{% endblock %}
+
+{% block all_content %}
+    <div class="partners registration"><!-- /add class registration -->
+        <div class="head">
+            <div class="b-inner">
+                <div class="content">
+                    <h1>Регистрация</h1>
+                </div>
+            </div>
+        </div><!-- /add head -->
+
+        <div class="menu">
+            <div class="b-inner">
+                <div class="content">
+                    <div class="step-info">
+                        <span class="active">Шаг 1</span>
+                        <a>Шаг 2</a>
+                        <span class="title">Информация о компании</span>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /steps -->
+
+        <div class="b-inner">
+            <div class="content">
+                <form action="{% url accounts:register-partner %}"
+                    method="POST" enctype="multipart/form-data" id='register-partner-form'>
+                    {% csrf_token %}
+                    {{ wizard.management_form }}
+                    {% comment %}{% if wizard.form.errors %}
+                    <div class='errors'>
+                        {{ wizard.form.errors }}
+                    </div>
+                    {% endif %}{% endcomment %}
+                    {% with wizard.steps.current as step %}
+                    <div class="contentform">
+                        <div class="line">
+                            <span class="name">название фирмы<span class="req">*</span></span>
+                            <input type="text" onfocus='this.placeholder=""'
+                                placeholder="Введите название вашей фирмы" value="" name='{{ step }}-service_name' id='{{ step }}-id_service_name'>
+                        </div>
+                        {% comment %}
+                        <div class="line">
+                            <span class="name">адрес сайта</span>
+                            <input type="text" onfocus='this.placeholder=""'
+                                placeholder='например: http://mysite.com/'
+                                value="" name='{{ step }}-site' id='{{ step }}-id_site'>
+                        </div>
+                        {% endcomment %}
+                        <div class="line">
+                            <span class="name">направление деятельности<span class="req">*</span></span>
+							{% comment %}
+                            <div class="cusel   cuselScrollArrows" id="cuselFrame-cuSel-0" style="width:119px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">{{ servs.0.title }}</div><div class="cusel-scroll-wrap"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-0">
+                                {% for serv in servs %}
+                                <span val="{{ serv.pk }}" class="{{ forloop.first|yesno:"cuselActive," }}">{{ serv.title }}</span>
+                                {% endfor %}
+                            </div></div><input type="hidden" id="{{ step }}-id_service" name="{{ step }}-service" value="{{ servs.0.pk }}"></div>
+							{% endcomment %}
+							<select name="{{ step }}-service" id="{{ step }}-id_service">
+								<option value="" selected="selected">-</option>
+								{% for serv in servs %}
+                                <option value="{{ serv.pk }}">{{ serv.title }}</option>
+                                {% endfor %}
+							</select>
+                        </div>
+                        <div class="line">
+                            {% get_instances 'geo.city' as cities %}
+                            <span class="name">Город<span class="req">*</span></span>
+							{% comment %}
+                            <div class="cusel   cuselScrollArrows" id="cuselCities" style="width:132px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">{{ cities.0.title }}</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-cities-scroll">
+                                {% for c in cities %}
+                                <span val='{{ c.pk }}'>{{ c.title }}</span>
+                                {% endfor %}
+                            </div></div><input type="hidden" id="{{ step }}-id_city" name="{{ step }}-city" value="{{ cities.0.pk }}"></div>
+							{% endcomment %}
+							<select name="{{ step }}-city" id="{{ step }}-id_city">
+								{% for c in cities %}
+                                <option value="{{ c.pk }}"{% if forloop.first %} selected='selected'{% endif %}>{{ c.title }}</option>
+                                {% endfor %}
+							</select>
+                        </div>
+                        <div class="line">
+                            <span class="name">Ближайшая станция метро<span class="req">*</span></span>
+							{% comment %}
+                            <div class="cusel   cuselScrollArrows" id="cuselSubways" style="width:97px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">Волковская</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-subways">
+                            </div></div><input type="hidden" name='{{ step }}-subway' id="{{ step }}-id_subway" name="" value="1"></div>
+							{% endcomment %}
+							<div id="cusel-scroll-subways" style="display:inline-block;"></div>
+                        </div>
+                        <div class="line">
+                            <span class="name">Адрес заведения<span class="req">*</span></span>
+                            <input type="text" onfocus='this.placeholder=""'
+                                placeholder='Адрес, по которому вы располагаетесь'
+                                name='{{ step }}-address' id='{{ step }}-id_address' value="">
+                        </div>
+                        <div class="line">
+                            <span class="name">Время приема заказов<span class="req">*</span></span>
+                            <div class="time-block">
+                                <div class="item">
+                                    <label><input type="checkbox" name='{{ step }}-day-1' {% if '0-day-1' in wizard.form.data %}checked='checked'{% endif %}>Пн</label>
+                                    <div class="cusel  classDisCusel cuselScrollArrows" id="cuselFrame-cuSel-3" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">10-00</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-3">
+
+                                    <input type='text' name='{{ step }}-day-1_since' id='{{ step }}-id_day-1_since' value='10:00' />
+                                    </div></div>
+                                    </div>
+                                    &nbsp;‐&nbsp;
+                                    <div class="cusel  classDisCusel cuselScrollArrows" id="cuselFrame-cuSel-4" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">21-00</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-4">
+                                    <input type='text' name='{{ step }}-day-1_until' id='{{ step }}-id_day-2_until' value='21:00' />
+                                    </div></div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <label><input type="checkbox"
+                                        {% if '0-day-2' in wizard.form.data %}checked='checked'{% endif %}
+                                        name='{{ step }}-day-2' id='{{ step }}-id_day-2'>Вт</label>
+                                    <div class="cusel  classDisCusel cuselScrollArrows" id="cuselFrame-cuSel-5" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">10-00</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-5">
+                                        <input type='text' name='{{ step }}-day-2_since' id='{{ step }}-id_day-2_since' value='10:00' />
+                                    </div></div>
+                                    </div>
+                                    &nbsp;‐&nbsp;
+                                    <div class="cusel  classDisCusel cuselScrollArrows" id="cuselFrame-cuSel-6" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">21-00</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-6">
+                                    <input type='text' name='{{ step }}-day-2_until' id='{{ step }}-id_day-2_until' value='10:00' />
+                                    </div></div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <label><input type="checkbox"
+                                        {% if '0-day-3' in wizard.form.data %}checked='checked'{% endif %}
+                                        name='{{ step }}-day-3' id='{{ step }}-id_day-3'>Ср</label>
+                                    <div class="cusel  classDisCusel cuselScrollArrows" id="cuselFrame-cuSel-7" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">10-00</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-7">
+
+                                        <input type='text' name='{{ step }}-day-3_since' id='{{ step }}-id_day-4_since' value='10:00' />
+                                    </div></div>
+                                    </div>
+                                    &nbsp;‐&nbsp;
+                                    <div class="cusel  classDisCusel cuselScrollArrows" id="cuselFrame-cuSel-8" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">21-00</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-8">
+
+                                        <input type='text' name='{{ step }}-day-3_until' id='{{ step }}-id_day-3_until' value='21:00' />
+                                    </div></div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <label><input type="checkbox"
+                                        {% if '0-day-4' in wizard.form.data %}checked='checked'{% endif %}
+                                        name='{{ step }}-day-4' id='{{ step }}-id_day-4'>Чт</label>
+                                    <div class="cusel  classDisCusel cuselScrollArrows" id="cuselFrame-cuSel-9" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">10-00</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-9">
+
+                                        <input type='text' name='{{ step }}-day-4_since' id='{{ step }}-id_day-4_since' value='10:00' />
+                                    </div></div></div>
+                                    &nbsp;‐&nbsp;
+                                    <div class="cusel  classDisCusel cuselScrollArrows" id="cuselFrame-cuSel-10" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">21-00</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-10">
+
+                                        <input type='text' name='{{ step }}-day-4_until' id='{{ step }}-id_day-4_until' value='21:00' />
+                                    </div></div></div>
+                                </div>
+                                <div class="item">
+                                    <label><input type="checkbox"
+                                        {% if '0-day-5' in wizard.form.data %}checked='checked'{% endif %}
+                                        name='{{ step }}-day-5' id='{{ step }}-id_day-5'>Пт</label>
+                                    <div class="cusel  classDisCusel cuselScrollArrows" id="cuselFrame-cuSel-11" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">10-00</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-11">
+
+                                        <input type='text' name='{{ step }}-day-5_since' id='{{ step }}-id_day-5_since' value='10:00' />
+                                    </div></div></div>
+                                    &nbsp;‐&nbsp;
+                                    <div class="cusel  classDisCusel cuselScrollArrows" id="cuselFrame-cuSel-12" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">21-00</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-12">
+
+                                        <input type='text' name='{{ step }}-day-5_until' id='{{ step }}-id_day-5_until' value='21:00' />
+                                    </div></div></div>
+                                </div>
+                                <div class="item">
+                                    <label><input type="checkbox"
+                                        {% if '0-day-6' in wizard.form.data %}checked='checked'{% endif %}
+                                        name='{{ step }}-day-6' id='{{ step }}-id_day-6'>Сб</label>
+                                    <div class="cusel  classDisCusel cuselScrollArrows" id="cuselFrame-cuSel-13" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">10-00</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-13">
+
+                                        <input type='text' name='{{ step }}-day-6_since' id='{{ step }}-id_day-6_since' value='10:00' />
+                                    </div></div></div>
+                                    &nbsp;‐&nbsp;
+                                    <div class="cusel  classDisCusel cuselScrollArrows" id="cuselFrame-cuSel-14" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">21-00</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-14">
+
+                                        <input type='text' name='{{ step }}-day-6_until' id='{{ step }}-id_day-6_until' value='21:00' />
+                                    </div></div></div>
+                                </div>
+                                <div class="item">
+                                    <label><input type="checkbox"
+                                        {% if '0-day-7' in wizard.form.data %}checked='checked' {% endif %}
+                                        name='{{ step }}-day-7' id='{{ step }}-id_day-7'>Вс</label>
+                                    <div class="cusel  classDisCusel cuselScrollArrows" id="cuselFrame-cuSel-15" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">10-00</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-15">
+
+                                        <input type='text' name='{{ step }}-day-7_since' id='{{ step }}-id_day-7_since' value='10:00' />
+                                    </div></div></div>
+                                    &nbsp;‐&nbsp;
+                                    <div class="cusel  classDisCusel cuselScrollArrows" id="cuselFrame-cuSel-16" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">21-00</div><div class="cusel-scroll-wrap" style="display: none; visibility: visible;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-16">
+
+                                        <input type='text' name='{{ step }}-day-7_until' id='{{ step }}-id_day-7_until' value='21:00' />
+                                    </div></div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <span class="name">Средняя стоимость заказа<span class="req">*</span></span>
+                            <input onfocus=' this.placeholder=""'
+                                placeholder='500'
+                                name='{{ step }}-avarage_cost' id='{{ step }}-id_avarage_cost' type="text" value="" class="size-1">
+                            <span class="note"><span class="ruble">n</span></span>
+                        </div>
+                        <div class="line">
+                            <span class="name">Средняя стоимость доставки<span class="req">*</span></span>
+                            <input name='{{ step }}-avarage_deliver_cost' onfocus='this.placeholder=""'
+                                placeholder='500'
+                                id='{{ step }}-id_avarage_deliver_cost' type="text" value="" class="size-1">
+                            <span class="note"><span class="ruble">n</span></span>
+                        </div>
+                        <div class="line">
+                            <span class="name">Среднее время доставки<span class="req">*</span></span>
+                            <input name='{{ step }}-avarage_deliver_time' onfocus='this.placeholder=""'
+                                placeholder='00:45'
+                                id='{{ step }}-id_avarage_deliver_time' type="text" value="" class="size-1">
+                            <span class="note">(ЧЧ:ММ)</span>
+                        </div>
+                        <div class="line submit">
+                            <input type="submit" value="перейти к шагу 2">
+                        </div>
+                    </div>
+                {% endwith %}
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+{% with form=wizard.form step=wizard.steps.current %}
+    {% include "accounts/wizard_restore_values.js" %}
+
+<script type='text/javascript'>
+{% if wizard.form.errors %}
+var form = {
+    errors: {
+        {% for error in wizard.form.errors %}"{{ error }}": ['{{ wizard.form.errors|get:error|striptags }}']{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    }
+}
+{% endif %}
+var form_data = {
+    {% for key in wizard.form.data %}"{{ key }}": "{{ wizard.form.data|get:key }}"{% if not forloop.last %},{% endif %}
+    {% endfor %}
+}
+$(document).ready(function(){
+form = (typeof form == 'undefined') ? {} : form;
+if (form.errors){
+    updateFormErrors($("#register-partner-form"), form.errors, prefix='0-');
+}
+for (key in form_data){
+    $("[name=" + key + ']').val(form_data[key]);
+}
+
+var reloadSubways = function(){
+    city_pk = parseInt($("#{{ step }}-id_city").val());
+    url = String('{% url json:geo:subways 0 %}').replace(0, city_pk);
+	
+    $.getJSON(url, function(response){
+        if (response.subways){
+            block = '';
+            for (var i = 0; i<response.subways.length; i++){
+                /*opt = '<span val="' + response.subways[i].id + '">' +
+                    response.subways[i].title + '</span>\n';*/
+				opt = '<option value="' + response.subways[i].id + '">' +
+                    response.subways[i].title + '</option>\n';
+                block += opt;
+            }
+            $("#cusel-scroll-subways").html('<select name="{{ step }}-subway" id="cusel-scroll-subways-select">' + block + '</select>');
+			var params = {
+				changedEl: "#cusel-scroll-subways-select",
+				visRows: 15,
+				scrollArrows: true
+			}
+			cuSel(params);
+        }
+    });
+};
+reloadSubways();
+//$("#cuselCities").change(function(){
+$("#{{ step }}-id_city").change(function(){
+    reloadSubways();
+});
+$('.cusel-scroll-pane input[type=text]').change(function(e){
+    /* need some checks and so on */
+    val = $(this).val();
+    blk = $(this).parents('.cusel').find('.cuselText');
+    blk.text(val);
+    return false;
+});
+$('.cusel-scroll-pane input[type=text]').keydown(function(e){
+    if (e.keyCode == 13){
+        /* do nothing on enter with time management inputs */
+        return false;
+    }
+});
+});
+</script>
+
+{% endwith %}
+{% endblock %}

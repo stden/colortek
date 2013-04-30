@@ -1,0 +1,223 @@
+<div class="partners">{% load coretags corefilters %}
+    <div class="menu">
+        <div class="b-inner">
+            <div class="content">
+                <ul>
+                    <li class="active">мои настройки</li>
+                    <li><a href="{% url catalog:service-orders %}">Мои заказы</a></li>
+                    <li><a href="{% url catalog:container-list %}">Мои товары</a></li>
+                    <li><a href="{% url catalog:service-partner-specials user.pk %}">Мои акции</a></li>
+                    <li><a href='{% url catalog:csv-import %}'>Импортирование базы</a></li>
+                </ul>
+                <div class="Clear"></div>
+            </div>
+        </div>
+    </div>
+    <div class="b-inner">
+        <div class="content">
+            <div class="header">
+                <div class="rText">Здесь вы можете редактировать данные своего профиля:<br>логин, пароль, адреса и т.д.</div>
+                <div class="Clear"></div>
+            </div>
+
+            <p class="commission-info right">Ваша комиссия: {{ user.commission|multiply:gs.HUNDRED|safe|floatformat }} %</p>
+
+            <div class="b-content-filter">
+                {% if user.is_partner %}
+                <a href="{% url accounts:profile-edit-org %}"><span>Данные об организации</span></a>
+                <a class="active"><span>Данные о контактном лице</span></a>
+                {% else %}
+                <a class="active"><span>Данные о пользователе</span></a>
+                {% endif %}
+                <a href='{% url accounts:set-coordinates %}'>Привязка к карте</a>
+            </div>
+
+            {% if success %}
+            <div class='info'>
+                <h3>Профиль успешно сохранен</h3>
+            </div>
+            {% endif %}
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
+
+            <form action="" method="POST" action='{% url accounts:profile-edit %}' id='update-form'>
+                {% csrf_token %}
+                <div class="contentform editform">
+                    <h4>Доступ в личный кабинет</h4>
+                    <!-- it's like shoot in my face, why are you doing this?? -->
+                    <div class="line">
+                        <span class="name">логин</span>
+                        <input type="text" value="{{ user.username }}" name='username' id='id_username'>
+                    </div>
+                    <div class="line">
+                        <span class="name">пароль</span>
+                        <input type="password" value="" name='password' id='id_password'>
+                    </div>
+                    <h4>Контактные данные</h4>
+                    <div class="line">
+                        <span class="name">Фамилия</span>
+                        <input type="text" value="{{ user.last_name }}" name='last_name' id='id_last_name'>
+                    </div>
+                    <div class="line">
+                        <span class="name">Имя</span>
+                        <input type="text" value="{{ user.first_name }}" name='first_name' id='id_first_name'>
+                    </div>
+                    <div class="line">
+                        <span class="name">Отчество</span>
+                        <input type="text" value="{{ user.middle_name|default_if_none:"" }}" name='middle_name' id='id_middle_name'>
+                    </div>
+                    <div class="line">
+                        <span class="name">E-mail</span>
+                        <input type="text" value="{{ user.email }}" name='email' id='id_email'>
+                    </div>
+                    {% comment %}
+                    {% get_instances 'accounts.contactphonetype' as phone_types %}
+                    {% for phone in user.phones.all %}
+                    <div class="line">
+                        <span class="name">Контактный телефон</span>
+                        <div class="phone">
+                            <div class="clone">
+                                <div class="cusel   cuselScrollArrows" id="cuselFrame-cuSel-0" style="width:111px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">{{ phone_types.0.title }}</div><div class="cusel-scroll-wrap" style="display: none;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-0">
+                                    {% for type in phone_types %}
+                                    <span val="{{ type.pk }}" class="cuselActive">{{ type.title }}</span>
+                                    {% endfor %}
+                                </div></div><input type="hidden" id="cuSel-0" name="" value="{{ phone_types.0.pk }}" name='contact_phone_type' id='{{ phone.pk }}'></div>
+                                <!--<span class="cc">+7</span>-->
+                                <!--<input type="text" value="921" class="code">-->
+                                <input type="text" value="{{ phone.phone }}"
+                                    class="number" name='contact_phone' id='id_contact_phone_{{ phone.pk }}'>
+                            </div>
+                            <a href="#" class="add">добавить</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endcomment %}
+
+                    {% get_instances 'accounts.contactphonetype' as phone_types %}
+                    {% if user.phones.all %}
+                    {% for phone in user.phones.all %}
+                    <div class="line">
+                        <span class="name">Контактный телефон</span>
+                        <div class="phone">
+                            <div class="clone">
+								{% comment %}
+                                <div class="cusel   cuselScrollArrows" id="cuselFrame-cuSel-0" style="width:111px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">{{ phone_types.0.title }}</div><div class="cusel-scroll-wrap" style="display: none;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-0">
+                                    {% for type in phone_types %}
+                                    <span val="{{ type.pk }}" class="cuselActive">{{ type.title }}</span>
+                                    {% endfor %}
+                                </div></div><input type="hidden"
+                                    value="{{ phone_types.0.pk }}"
+                                    name='contact_phone_type' id='contact_phone_type_{{ phone.pk }}'></div>
+								{% endcomment %}
+								<select name='contact_phone_type'>
+									{% for type in phone_types %}
+                                    <option value="{{ type.pk }}" {% if phone.type == type %}selected='selected'{% endif %}>{{ type.title }}</option>
+                                    {% endfor %}
+								</select>
+                                <input type="text" value="{{ phone.phone }}" class="number" name='contact_phone' id='id_contact_phone_{{ phone.pk }}'>
+                            </div>
+                            <a href="#" class="add">добавить</a>
+                            <a class='del'
+                                href='{% url accounts:profile-contact-phone-delete phone.pk %}'>удалить</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="line">
+                        <span class="name">Контактный телефон</span>
+                        <div class="phone ">
+                            <div class="clone">
+								{% comment %}
+                                <div class="cusel cuselScrollArrows" id="cuselFrame-cuSel-0" style="width:111px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">{{ phone_types.0.title }}</div><div class="cusel-scroll-wrap" style="display: none;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-0">
+                                    {% for type in phone_types %}
+                                    <span val="{{ type.pk }}" class="cuselActive">{{ type.title }}</span>
+                                    {% endfor %}
+                                </div></div><input type="hidden"
+                                    value="{{ phone_types.0.pk }}" name='contact_phone_type'></div>
+								{% endcomment %}
+								<select name='contact_phone_type'>
+									{% for type in phone_types %}
+                                    <option value="{{ type.pk }}">{{ type.title }}</option>
+                                    {% endfor %}
+								</select>
+                                <input type="text" value="" class="number" name='contact_phone'>
+                            </div>
+                            <a href="#" class="add">добавить</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if user.emails.all %}
+                    {% for email in user.emails.all %}
+                    <div class="line">
+                        <span class="name">Дополнительный e-mail</span>
+                        <div class="phone">
+                            <div class="clone">
+                                <input type="text" value="{{ email.email }}" class="number" name='contact_email' id='id_contact_email_{{ email.pk }}'>
+                            </div>
+                            <a href="#" class="add">добавить</a>
+                            <a class='del'
+                                href='{% url accounts:profile-contact-email-delete email.pk %}'>удалить</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="line">
+                        <span class="name">Дополнительный e-mail</span>
+                        <div class="phone ">
+                            <div class="clone">
+                                <input type="text" value="" class="number" name='contact_email'>
+                            </div>
+                            <a href="#" class="add">добавить</a>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if user.is_partner %}
+                    <div class="line">
+                        <span class="name">номер для смс-уведомлений</span>
+                        <div class="phone">
+                            <!--<span class="cc">+7</span>
+                            <input type="text" value="921" class="code"> -->
+                            <input type="text" value="{{ user.phone }}" class="number" name='phone' id='id_phone'>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="line submit">
+                        <input type="submit" value="Сохранить">
+                    </div>
+
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+{% if user.is_partner %}
+<script src='/media/js/tiny_mce/tiny_mce_src.js'></script>
+<script src='/media/js/textareas.js'></script>
+<script type='text/javascript'>
+{% endif %}
+{% if form.errors %}
+    form = {
+        errors: {
+            {% for error in form.errors %}"{{ error }}": '{{ form.errors|get:error }}' {% if forloop.last %},{% endif %}{% endfor %}
+        }
+    }
+    var updateErrorFields = function(frm){
+        for (item in form.errors){
+            blk = $(form.errors[item]);
+            //console.log(blk);
+            insert_before_blk = $($("#id_" + item).parents('.line').children()[0]);
+            blk.insertBefore(insert_before_blk);
+        }
+    }
+    $(document).ready(function(){
+        updateErrorFields('#update-form');
+    });
+{% endif %}
+</script>
+
+</div>

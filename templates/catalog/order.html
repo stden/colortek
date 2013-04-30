@@ -1,0 +1,47 @@
+{% extends base %} {% load i18n %}
+{% block content %}
+{% if cart %}
+<div class='order list'>
+    <div class='title'>{% trans "Your request order" %}</div>
+    {% trans "$." context "currency" as currency %}
+    <h3>{% trans "Extras" %}</h3>
+    <table class='addons table striped'>
+        <tr>
+            <th>{% trans "#" %}</th>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Quantity" %}</th>
+            <th>{% trans "Price" %}</th>
+        </tr>
+        {% for item in addons %}
+            {% include "catalog/include/cart_addon.html" %}
+        {% endfor %}
+    </table>
+    <h3>{% trans "Order stuff" %}</h3>
+    <table class='items table striped'>
+        <tr class='title'>
+            <th>{% trans "#" %}</th>
+            <th>{% trans "Image" %}</th>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Quantity" %}</th>
+            <th>{% trans "Price" %}</th>
+        </tr>
+        {% for item in products %}
+            {% include "catalog/include/cart_item.html" %}
+        {% endfor %}
+        <tr class='total'>
+            <th colspan='4' class='move-right'>{% trans "Total (with extras):" %}</th>
+            <td>{{ cart.get_total_price }}&nbsp;{{ currency }}</td>
+        </tr>
+    </table>
+</div>
+<hr />
+<form class='form order' id='order-form' method='post' action='{% url catalog:order %}'>
+    {% csrf_token %}
+    {{ form.as_ul }}
+    <input type='submit' class='btn btn-success' value='{% trans "Finish the order" %}' />
+    {% if form.media %}{{ form.media }}{% endif %}
+</form>
+{% else %}
+<h3>{% trans "There is nothing you can order, please add something to your cart" %}</h3>
+{% endif %}
+{% endblock %}

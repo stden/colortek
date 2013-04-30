@@ -1,0 +1,9 @@
+{% load thumbnail %}
+{% thumbnail item.image gs.ITEM_THUMBNAIL_SIZE as image %}
+<img src="{{ image.url }}" alt="{{ item.title }}">
+{% endthumbnail %}
+
+<h3>{{ item.title }}</h3>
+{{ item.description|safe }}
+{% if item.mass %}
+<br><strong>{{ item.mass }} гр.</strong>{% endif %}

@@ -1,0 +1,62 @@
+{% load i18n %}
+
+{% if page.has_next %}
+<a class="load-more-content" href='#load-more'>
+	<img alt="" src="/media/img/preloader.gif">
+	&nbsp;отобразить еще <span class="count"></span>
+</a>
+{% endif %}
+
+<script type='text/javascript'>
+	
+	var nextPage = {{ page.next_page_number }};
+	var isLoaded = true;
+    
+	$('.load-more-content').click(function(){
+		getPage("?page=" + nextPage);
+		return false;
+	});
+	
+	var getPage = function(url){
+	
+		if (!isLoaded) return false;
+		isLoaded = false;
+	
+		var loadMoreUrl;
+			nextPage++;
+			/* cleanup */
+			keyword = url.match(/[\w\d-_]+/);
+        var search = window.location.search;
+			$.each(keyword, function(idx, value){
+				r = new RegExp("[&|?]"+value+"=[\\d\\w-_]+", 'g');
+				search = search.replace(r, '');
+			});
+
+        var wl = window.location;
+			if (search){
+				url = url.replace('?', '&');
+				loadMoreUrl = search + url;
+			} //if wl.search
+			else{
+				loadMoreUrl = url;
+			}
+			if (loadMoreUrl){
+				$.ajax({
+					type: "GET",
+					url: window.location.href + loadMoreUrl,
+					success: function(html){
+						isLoaded = true;
+						$('.load-more-content').attr('href', 'javascript:getPage("?page='+ nextPage +'");');									
+						//$('.load-more-content span.count').text(count);
+						if (nextPage > {{ page.page_range|length }}) $('.load-more-content').hide();
+						//var count = $(html).find('.item').length;
+						$(html).appendTo('.action_list .items-loaded');
+						isLoaded = true;
+						initActionsHeight();
+					}
+				});
+			}
+			
+    }
+	
+</script>

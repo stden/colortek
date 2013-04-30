@@ -1,0 +1,24 @@
+.contentform .line .time-block {
+	width:425px;
+}
+#main-filter .wrap-content .content ul.menu li a,
+body.inner-pages #main-filter .wrap-content .content ul.menu div.options,
+body.inner-pages #main-filter .wrap-content .content ul.menu li a.header,
+body.inner-pages #main-filter .wrap-content .content ul.menu li.parent{
+	zoom:1;
+}
+
+.b-dish-list .line .col{
+	clear:none!important;
+}
+.b-dish-list .item .order-options .count .description{
+	left:-22px;
+}
+
+.help-info{
+	position:relative;
+	zoom:1;
+}
+.username-box{
+	display:inline;
+}

@@ -1,0 +1,39 @@
+{% load pytils_numeral thumbnail %}
+    <div class="item{% if container.owner.get_specials or container.owner.get_active_specials %} action{% endif %}">
+        <div class="preview">
+            <div class="image">
+                <a href="{% url catalog:service-page container.owner.pk %}">
+                    {% if container.owner.logo %}
+                        {% thumbnail container.owner.logo gs.SERVICE_THUMBNAIL_LOGO_SIZE as logo %}
+                        <img src='{{ logo.url }}' alt='{{ container.title }} от {{ container.owner.service_name|default_if_none:container.owner.username }}'>
+                        {% endthumbnail %}
+                    {% else %}
+						{% comment %}
+						<img src="/media/img/no-service-logo.jpg" alt="{{ container.title }} от {{ container.owner.service_name|default_if_none:container.owner.username }}">
+						{% endcomment %}
+						<img src="/media/img/no-logo.png" alt="{{ container.owner.service_name|default_if_none:container.owner.username }}">
+                    {% endif %}
+                </a>
+            </div>
+            {% include "catalog/include/service_rating.html" with service=container.owner %}
+        </div>
+        <div class="preview-text">
+            <h3><a href="{% url catalog:service-page container.owner.pk %}">{{ container.owner.service_name|default_if_none:container.owner.username }}</a></h3>
+            <p class="tag">
+                Категория:
+                {% for category in container.owner.categories.all %}
+                    {{ category.title }}{% if not forloop.last %},{% endif %}
+                {% endfor %}
+                {% comment %}
+                {% if container.container %}
+                <a href='#'>{{ container.container.title }}</a>,{% endif %}
+                <a href='#'>{{ container.title }}</a>
+                {% endcomment %}
+                {% if container.owner.has_online_payment %}
+                <img src="/media/img/icon/card.png" alt="" title="Оплата картой" class="tool">
+                {% endif %}
+            </p>			
+            {% include "catalog/include/catalog_info_table.html" with service=container.owner %}
+            {% include "catalog/include/catalog_note.html" with service=container.owner %}
+        </div>
+    </div>

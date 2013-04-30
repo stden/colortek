@@ -1,0 +1,306 @@
+{% extends base %}
+{% block css %}
+{{ block.super }}
+    <link href="/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+{% endblock %}
+{% block js %}
+{{ block.super }}
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+      var nid = -1;
+      var current = null;
+      var auto = null;
+      {% if user.glat and user.glng %}
+        current = new google.maps.LatLng({{ user.glat|safe }}, {{ user.glng|safe }});
+      {% else %}
+      if (navigator.geolocation && !current){
+            navigator.geolocation.getCurrentPosition(function(pos){
+                plat = pos.coords.latitude;
+                plng = pos.coords.longitude;
+                auto = new google.maps.LatLng(plat, plng);
+            });
+      }
+      var spb = new google.maps.LatLng(59.939038999999994, 30.315784999999998);   
+      {% endif %}
+      //var stockholm = new google.maps.LatLng(59.32522, 18.07002);
+      //var parliament = new google.maps.LatLng(59.327383, 18.06747);
+      var markers = [];
+      var marker;
+      var map;
+      var info_opened = false;
+
+      function initialize() {
+        var mapOptions = {
+          zoom: 11,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          center: current || auto || spb,
+        };
+
+        map = new google.maps.Map(document.getElementById('map_canvas'),
+                mapOptions);
+
+        {% if user.markers.all %}
+        {% for marker in user.markers.all %}
+        _m = new google.maps.Marker({
+            map: map,
+            position: new google.maps.LatLng({{ marker.lat|safe }}, {{ marker.lng|safe }}),
+            draggable:true,
+            animation: google.maps.Animation.DROP,
+            title: "{{ marker.description }}"
+          });
+        _m.id = 'marker-{{ marker.pk }}';
+        markers.push(_m);
+        {% endfor %}
+        {% endif %}
+        /*
+        marker = new google.maps.Marker({
+          map:map,
+          draggable:true,
+          animation: google.maps.Animation.DROP,
+          position: current || spb
+        });
+        markers.push(marker);
+        */
+
+        info = new google.maps.InfoWindow({
+            content: 'Ваше местоположение',
+            size: new google.maps.Size(10, 10)
+        });
+        for (var i=0; i<markers.length; i++){
+            //console.log('o_O');
+            google.maps.event.addListener(markers[i], 'mouseup', function(event){
+                    //console.log(event.latLng);
+                    var lng = event.latLng.ab;
+                    var lat = event.latLng.$a;
+                    glat = $("input[data-marker=" + markers[0].id + "][name=lat]");
+                    glng = $("input[data-marker=" + markers[0].id + "][name=lng]");
+                    glat.val(lat);
+                    glng.val(lng);
+
+            });
+
+        }
+        /*
+        google.maps.event.addListener(marker, 'click', clickMarker);
+        google.maps.event.addListener(marker, 'mouseup', function(event){
+            console.log(event.latLng);
+            lng = event.latLng.ab;
+            lat = event.latLng.$a;
+            b = document.querySelector("#lat");
+            text = "lat: " + lat + "<br>";
+            text += " lng: " + lng;
+            b.innerHTML = text;
+            //set for update
+            glat = document.querySelector("#id_glat");
+            glng = document.querySelector("#id_glng");
+            glat.value = lat;
+            glng.value = lng;
+        });
+        google.maps.event.addListener(map, 'click', function(event){
+            marker.setPosition(event.latLng);
+        });
+        marker.setTitle('Ваше местоположение');*/
+      }
+
+      function clickMarker() {
+        /*
+        if (marker.getAnimation() != null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }*/
+        if (info_opened){
+            info.close(); info_opened = false;
+        } else {
+            info.open(map, marker);
+            info_opened = true;
+        }
+      }
+      function getMarkerPos(){
+        var lat = marker.position.lat();
+        var lng = marker.position.lng();
+        return [lat, lng];
+      }
+    </script>
+{% endblock %}
+
+{% block all_content %}
+<div class="partners">{% load coretags corefilters %}
+    <div class="menu">
+        <div class="b-inner">
+            <div class="content">
+                <ul>
+                    <li class="active">мои настройки</li>
+                    <li><a href="{% url catalog:service-orders %}" title="#">Мои заказы</a></li>
+                    <li><a href="{% url catalog:container-list %}" title="#">Мои товары</a></li>
+                    <li><a href="{% url catalog:service-partner-specials user.pk %}" title="#">Мои акции</a></li>
+                    <li><a href='{% url catalog:csv-import %}'>Импортирование базы</a></li>
+                </ul>
+                <div class="Clear"></div>
+            </div>
+        </div>
+    </div>
+    <div class="b-inner">
+        <div class="content">
+            <div class="header">
+                <div class="rText">Здесь вы можете редактировать данные своего профиля:<br>логин, пароль, адреса и т.д.</div>
+                <div class="Clear"></div>
+            </div>
+
+            {# <p class="commission-info right">Ваша комиссия: {{ gs.COMMISSION_RATE|multiply:gs.HUNDRED|safe }}%</p> #}
+
+            <div class="b-content-filter">
+                {% if user.is_partner %}
+                <a href="{% url accounts:profile-edit-org %}"><span>Данные об организации</span></a>
+                {% endif %}
+                <a href='{% url accounts:profile-edit %}'><span>Данные о контактном лице</span></a>
+                <a class='active'>Привязка к карте</a>
+            </div>
+            <div class='info'>
+                {% comment %}
+                {% if not user.glat and not user.glng %}
+                    <strong>Ваши координаты не установлены, пожалуйста воспользуйтесь
+                    картой и кнопкой "Установить",
+                    для того, чтобы установить их</strong>
+                {% else %}
+                {% endcomment %}
+                    <form action='{% url accounts:set-coordinates %}' method='POST'>
+                    {% csrf_token %}
+                    <div class="contentform editform" id='marker-edit-block'>
+                    <a class='add' href="#">Добавить маркер</a>
+                        <div class='lines'>
+                        {% if user.markers.all %}
+                        {% for marker in user.markers.all %}
+                            <div class='coords line'>
+                                <div class='clone'>
+                                    <span class='name'>Маркер</span>
+                                        <input type="text" value="{{ marker.description }}"
+                                            name='description'>
+                                        <input type='hidden' value='{{ marker.lat|safe }}' name='lat' id='id_lat' data-marker='marker-{{ marker.id }}'>
+                                        <input type='hidden' value='{{ marker.lng|safe }}' name='lng' id='id_lng' data-marker='marker-{{ marker.id }}'>
+                                        <input type='hidden' value='{{ marker.id }}' name='id' id='id_marker_id'>
+                                    <a class='del' href='{% url geo:position-delete marker.pk %}'>Удалить</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% endif %}
+                        </div><!-- lines -->
+                        <div class='actions'>
+                            <input type='submit' value='Сохранить'>
+                        </div>
+                    </div>
+                    </form>
+                    {% comment %}
+                    Ваши координаты:<br>
+                    Широта: <strong>{{ user.glat }}</strong><br>
+                    Долгота: <strong>{{ user.glng }}</strong><br>
+                    <a href='{% url accounts:purge-coordinates %}' class='del'>Удалить привзку</a>
+                    <br>
+                    {% endcomment %}
+            </div>
+            <div class='control-group' style='float: right;'>
+                {% comment %}<form class='' method='POST' action='{% url accounts:set-coordinates %}'>
+                    {% csrf_token %}
+                    {{ form.as_ul }}
+                    <input type='submit' value='Установить'>
+                </form>{% endcomment %}
+                <div id='lat'></div>
+            </div>
+            <div id="map_canvas" style='width: 650px; height: 490px;'>map div</div>
+
+
+        </div>
+    </div>
+
+<script type='text/html' id='addMarkerTemplate'>
+    <div class='coords line'>
+        <div class='clone'>
+            <span class='name'>Маркер</span>
+            <input type='text' name='description' value="" class='new marker'
+                placeholder='описание' onfocus='this.placeholder=""'
+                data-marker='${ id }'
+                id='marker-${ id }'>
+            <input type='hidden' name='lat' value="" id='marker-${ id }-lat' />
+            <input type='hidden' name='lng' value="" id='marker-${ id }-lng' />
+        </div>
+        <a class='del marker' href='#' data-target='#marker-${ id }'>Удалить</a>
+    </div>
+</script>
+
+<script type='text/javascript'>
+$(document).ready(function(){
+    initialize();
+    $('a.del').click(function(e){
+        $this = this;
+
+        nt = noty({
+            text: "Вы действительно хотите удалить привязку координат?",
+            buttons: [
+                {
+                    text: "Да",
+                    onClick: function($noty){
+                        document.location.href = $this.href;
+                    }
+                },
+                {
+                    text: "Нет",
+                    onClick: function($noty){
+                        $noty.close();
+                    }
+                }
+            ]
+        });
+        return false;
+    });
+    $(".add").click(function(e){
+            marker_id = ++nid;
+            /* creates new marker handle */
+            t = $.template('#addMarkerTemplate');
+            blk = $.tmpl(t, {id: marker_id});
+            blk.appendTo($('#marker-edit-block .lines'));
+            /* initilize marker */
+            new_marker = new google.maps.Marker({
+                map: map,
+                position: map.getCenter(),
+                title: "New marker",
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+            });
+            new_marker.id = marker_id;
+            markers.push(new_marker);
+            /* bind event */
+            id = marker_id;
+            (function(id, marker){
+                google.maps.event.addListener(marker, 'mouseup', function(event){
+                    //console.log(event.latLng);
+                    var lng = event.latLng.lng();
+                    var lat = event.latLng.lat();
+                    glat = document.querySelector("#marker-" + id + "-lat");
+                    glng = document.querySelector("#marker-" + id + "-lng");
+                    glat.value = lat;
+                    glng.value = lng;
+
+                });
+            })(id, new_marker);
+
+    });
+    $(".del.marker").click(function(e){
+        /* deletes mareker we created */
+        marker = $($(this).data('target'));
+        marker.parents('.line').detach().remove();
+        return false;
+    });
+    $('body').on('change', '.new.marker', function(e){
+        //console.log(this);
+        /* update marker fields */
+        marker_id = $(this).data('marker');
+        for (var i=0; i<markers.length; i++){
+            if (markers[i].id == marker_id){
+                markers[i].setTitle($(this).val());
+                break;
+            }
+        }
+    });
+}); //document ready
+</script>
+{% endblock %}

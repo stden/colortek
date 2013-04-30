@@ -1,0 +1,11 @@
+{% load i18n thumbnail %}
+<tr class='item'> {% trans "$." context "currency" as currency %}
+    <td>{{ forloop.counter }}</td>
+    {% thumbnail item.product.image global_settings.DEFAULT_THUMBNAIL_SIZE as image %}
+    <td class='image'>
+        <img src='{{ image.url }}' alt='{{ item.product.title }}' />{% endthumbnail %}
+    </td>
+    <td class='title'>{{ item.product.title }}</td>
+    <td class='title'>{{ item.quantity }}</td>
+    <td class='cost'>{{ item.total_price }} {{ currency }}</td>
+</tr>

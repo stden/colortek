@@ -1,0 +1,21 @@
+<div class="options">
+    <ul class="dish-menu">
+        {% for category in serv.categories.all %}
+            <li class='{{ forloop.first|yesno:"active,hidden" }}' data-id='{{ category.id }}'>
+                <a href='#'>{{ category.title }}</a>
+                {% if category.containers.all %}
+                <ul>
+                {% for container in category.get_unique_containers %}
+                    <li><a href='#'>{{ container.title }}</a></li>
+                {% endfor %}
+                </ul>
+            </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+ </div>
+<script type='text/javascript'>
+    $(".dish-menu li a").click(function(e){
+        $(this).parent().addClass('active');
+    });
+</script>

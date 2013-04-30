@@ -1,0 +1,17 @@
+{% extends base %}{% load i18n %}
+{% block all_content %}
+{% if user.is_partner %}
+    {% include "accounts/include/partner_profile_edit.html" %}
+{% else %}
+    {% include "accounts/include/user_profile_edit.html" %}
+{% endif %}
+{% comment %}
+<form class='profile-edit-form {{ user.is_partner|yesno:"partner user" }}'
+    method='POST' action='{% url accounts:profile-edit %}' id='profile-edit-form'>
+    {% csrf_token %}
+    {% include "forms/bootstrap.html" %}
+    <a class='btn' href='{% url accounts:profile %}'>{% trans "Back to profile" %}</a>
+    <input type='submit' class='btn btn-success' value='{% trans "Save" %}' />
+</form>
+{% endcomment %}
+{% endblock %}

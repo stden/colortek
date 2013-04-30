@@ -1,0 +1,5 @@
+{% load i18n %}№ Заказа,Дата,Время,Название Сервиса,Сумма к оплате,Стоимость доставки,Комиссия,Имя клиента,Телефон,Адрес,Позиции Заказа,Комментарии
+{% for order in orders %}{% spaceless %}
+{{ order.pk }},"{{ order.created_on|date:"d.m.Y" }}","{{ order.created_on|date:"H:i" }}","{{ order.container.owner.service_name }}",{{ order.get_cost|add:order.deliver_cost|safe }},{{ order.deliver_cost|safe }},{{ order.real_commission|safe }},"{{ order.get_client.get_real_name }}","{{ order.offline_client.get_phones|safe }}","{{ order.offline_client.get_address|safe }}","{{ order.get_item_title_quantity_string }}","{{order.comment|safe}}"
+{% endspaceless %}
+{% endfor %}

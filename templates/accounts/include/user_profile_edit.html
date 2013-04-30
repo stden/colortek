@@ -1,0 +1,342 @@
+<div class="partners">{% load coretags corefilters %}
+    <div class="menu">
+        <div class="b-inner">
+            <div class="content">
+                <ul>
+                    <li class="active">мои настройки</li>
+                    {% if not user.is_operator %}
+                    <li><a href="{% url catalog:orders %}">Мои заказы</a></li>
+                    <li><a href="{% url accounts:profile-bonuses %}">Мои бонусы</a></li>
+                    {% endif %}
+                    {% if user.is_operator %}
+                    <li><a href="{% url catalog:service-orders-confirmed %}">Статистика заказов</a></li>
+                    <li><a href="{% url catalog:service-orders %}">Необработанные заказы</a></li>
+                    {% endif %}
+                </ul>
+                <div class="Clear"></div>
+            </div>
+        </div>
+    </div>
+    <div class="b-inner">
+        <div class="content">
+            <div class="header">
+                <div class="rText">Здесь вы можете редактировать данные своего профиля:<br>логин, пароль, адреса и т.д.</div>
+                <div class="Clear"></div>
+            </div>
+
+            <div class="b-content-filter">
+                {% if user.is_partner %}
+                <a href="#"><span>Данные об организации</span></a>
+                <a class="active"><span>Данные о контактном лице</span></a>
+                {% else %}
+                {# <a class="active"><span>Данные о пользователе</span></a> #}
+                {% endif %}
+                {# <a href='{% url accounts:set-coordinates %}'>Привязка к карте</a> #}
+            </div>
+
+            {% if success %}
+            <div class='info'>
+                <h3>Профиль успешно сохранен</h3>
+            </div>
+            {% endif %}
+            {% comment %}
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
+            {% endcomment  %}
+
+            <form action="" method="POST" action='{% url accounts:profile-edit %}' id='update-form'>
+                {% csrf_token %}
+                <div class="contentform editform">
+                    <h4>Доступ в личный кабинет</h4>
+                    <!-- it's like shoot in my face, why are you doing this?? -->
+                    <div class="line">
+                        <span class="name">логин</span>
+                        <input type="text" value="{{ user.username }}" name='username' id='id_username' disabled="disabled">
+                    </div>
+                    <div class="line">
+                        <span class="name">пароль</span>
+                        <input type="password" value="" name='password' id='id_password'>
+                    </div>
+                    <h4>Контактные данные</h4>
+                        <div class="line">
+                        <span class="name">E-mail<span class="req">*</span></span>
+                        <input type="text" value="{{ user.email }}" name='email' id='id_email'>
+                    </div>
+
+                    <div class="line">
+                        <span class="name">Контактный телефон<span class="req">*</span></span>
+                        <input type="text" value="{{ user.phone }}" name='phone' id='id_phone'>
+                    </div>
+                    <div class="line">
+                        <span class="name">Имя</span>
+                        <input type="text" value="{{ user.first_name }}" name='first_name' id='id_first_name'>
+                    </div>
+                    {% comment %}
+                    <div class="line">
+                        <span class="name">Фамилия</span>
+                        <input type="text" value="{{ user.last_name }}" name='last_name' id='id_last_name'>
+                    </div>
+                    <div class="line">
+                        <span class="name">Отчество</span>
+                        <input type="text" value="{{ user.middle_name|default_if_none:"" }}" name='middle_name' id='id_middle_name'>
+                    </div>
+                    {% endcomment %}
+                    <div class="line">
+                        {% get_instances 'geo.city' as cities %}
+                        <span class="name">Город</span>
+                        <select id='id_city' name='city'>
+                            {% for city in cities %}
+                                <option
+                                    value='{{ city.pk }}'
+                                    {% if city.pk == user.city.pk %}
+                                    selected='selected'{% endif %}>{{ city.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="line">
+                        <span class="name">Адрес</span>
+                        <input type="text" value="{{ user.address|default_if_none:"" }}" name='address' id='id_address'>
+                    </div>
+                    <div class="line">
+                        <span class="name">Здание</span>
+                        <input type="text" value="{{ user.building|default_if_none:"" }}" name='building' id='id_building'>
+                        <span class='name'>&nbsp;</span>
+                        <span class='text'>например: 3/1, корп. 3</span>
+                    </div>
+                    <div class="line">
+                        <span class="name">Квартира/Офис</span>
+                        <input type="text" value="{{ user.apartment|default_if_none:"" }}" name='apartment' id='id_apartment'>
+                    </div>
+					<!-- Birthday example -->
+					<div class="line">
+                        <input placeholder='27.08.1970'
+                            value="{{ user.birthday|date:"d.m.Y"|default_if_none:"" }}"
+                            name='birthday' id='id_birthday' type='hidden'>
+						<span class="name">Дата рождения:</span>
+
+                        <select class="birth-day">
+                            {% for day in days %}
+                                <option {% if user.birthday|date:"Y-m-d"|split:"-"|select:"2"|int == day %}
+                                    selected='selected'
+                                    {% endif %}
+                                    value="{{ day }}" onclick="get_birth_day(this);">{{ day }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="birth-month">
+                            {% for month in months %}
+                                <option {% if user.birthday|date:"Y-m-d"|split:"-"|select:"1"|int == month %}
+                                    selected='selected'
+                                    {% endif %}
+                                    value="{{ month}}" onclick="get_birth_month(this);">{{ month|select_month }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="birth-year">
+                            {% for year in years %}
+                                <option
+                                    {% if user.birthday|date:"Y-m-d"|split:"-"|select:"0"|int == year %}
+                                    selected='selected'
+                                    {% endif %}
+                                    value="{{ year }}" onclick="get_birth_year(this);">{{ year }}</option>
+                            {% endfor %}
+                        </select><br>
+                        <span class='name'>&nbsp;</span>
+                        <span class='txt'>Заполните это поле для получения дополнительных бонусов в Ваш день рождения</span>
+					</div>
+					<!-- /Birthday example -->
+
+                    {% comment %}
+                    <div class="line">
+                        <span class="name">Контактный телефон</span>
+                        <div class='phones'>
+                            <a href="#" class="add">добавить</a>
+                            <div class='field'>
+                                <div data-bind="foreach: phones">
+                                    <input data-bind='value:phone'>
+                                    <select data-bind='options: $root.types,
+                                        value: "type", optionsText: "type"'></select>
+
+                                </div>
+                                <div data-bind="foreach: type">
+                                    <span data-bind="text: type"></span>
+                                    <span data-bind='text: pk'></span>
+                                </div>
+                                {# <input type='text' data-bind='value: phone'></input> #}
+                            {# </div> #}
+                        </div>
+                    </div>
+                    {% endcomment %}
+
+                    {% get_instances 'accounts.contactphonetype' as phone_types %}
+                    {% if user.phones.all %}
+                    <div class="line">
+                        <span class="name">Дополнительный телефон</span>
+                        <div class="phone">
+							{% for phone in user.phones.all %}
+                            <div class="clone">
+								{% comment %}
+								<!-- Do not copy HTML from firebug!! This code was created by JS!! Here must be simple select!! -->
+                                <div class="cusel   cuselScrollArrows" id="cuselFrame-cuSel-0" style="width:111px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">{{ phone_types.0.title }}</div><div class="cusel-scroll-wrap" style="display: none;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-0">
+                                    {% for type in phone_types %}
+                                    <span val="{{ type.pk }}" class="cuselActive">{{ type.title }}</span>
+                                    {% endfor %}
+                                </div></div>
+								<!-- -->
+								<input type="hidden" value="{{ phone_types.0.pk }}" name='contact_phone_type' id='contact_phone_type_{{ phone.pk }}'></div>
+                                <input type="text" value="{{ phone.phone }}" class="number" name='contact_phone' id='id_contact_phone_{{ phone.pk }}'>
+								{% endcomment %}
+								<select name='contact_phone_type'>
+									{% for type in phone_types %}
+									<option value="{{ type.pk }}" {% if phone.type == type %}selected='selected'{% endif %}>{{ type.title }}</option>
+									{% endfor %}
+								</select>
+								<input type="text"
+                                    value="{{ phone.phone }}" class="number" name='contact_phone' id='id_contact_phone_{{ phone.pk }}'>
+								<a class='del' href='{% url accounts:profile-contact-phone-delete phone.pk %}'>удалить</a>
+                            </div>
+							{% endfor %}
+							<a href="#" class="add">добавить</a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="line">
+                        <span class="name">Дополнительный телефон</span>
+                        <div class="phone ">
+                            <div class="clone">
+								{% comment %}
+                                <div class="cusel cuselScrollArrows" id="cuselFrame-cuSel-0" style="width:111px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">{{ phone_types.0.title }}</div><div class="cusel-scroll-wrap" style="display: none;"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-0">
+                                    {% for type in phone_types %}
+                                    <span val="{{ type.pk }}" class="cuselActive">{{ type.title }}</span>
+                                    {% endfor %}
+                                </div></div>
+								<input type="hidden" value="{{ phone_types.0.pk }}" name='contact_phone_type'></div>
+                                <input type="text" value="" class="number" name='contact_phone'>
+								{% endcomment %}
+								<select name='contact_phone_type'>
+									{% for type in phone_types %}
+									<option value="{{ type.pk }}" {% if phone.type == type %}selected='selected'{% endif %}>{{ type.title }}</option>
+									{% endfor %}
+								</select>
+								<input type="text" value="{{ phone.phone }}" class="number" name='contact_phone' id='id_contact_phone_{{ phone.pk }}'>
+                            </div>
+                            <a href="#" class="add">добавить</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if user.is_operator %}
+                    {% if user.emails.all %}
+                    {% for email in user.emails.all %}
+                    <div class="line">
+                        <span class="name">Дополнительный e-mail</span>
+                        <div class="phone">
+                            <div class="clone">
+                                <input type="text" value="{{ email.email }}" class="number" name='contact_email' id='id_contact_email_{{ email.pk }}'>
+                            </div>
+                            <a href="#" class="add">добавить</a>
+                            <a class='del'
+                                href='{% url accounts:profile-contact-email-delete email.pk %}'>удалить</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="line">
+                        <span class="name">Дополнительный e-mail</span>
+                        <div class="phone ">
+                            <div class="clone">
+                                <input type="text" value="" class="number" name='contact_email'>
+                            </div>
+                            <a href="#" class="add">добавить</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+
+
+                    {% if user.is_partner %}
+                    <div class="line">
+                        <span class="name">номер для смс-уведомлений</span>
+                        <div class="phone">
+                            <!--<span class="cc">+7</span>
+                            <input type="text" value="921" class="code"> -->
+                            <input type="text" value="{{ user.phone }}" class="number" name='phone' id='id_phone'>
+                        </div>
+                    </div>
+                    <div class='line'>
+                        <span class='name'>Описание</span>
+                        <div class='description'>
+                            <textarea name='description' id='id_description'>{{ user.description }}</textarea>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="line submit">
+                        <input type="submit" value="Сохранить">
+                    </div>
+
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+{% if user.is_partner %}
+<script src='/media/js/tiny_mce/tiny_mce_src.js'></script>
+<script src='/media/js/textareas.js'></script>
+{% endif %}
+
+<script type='text/javascript'>
+{% if form.errors %}
+    form = {
+        errors: {
+            {% for error in form.errors %}"{{ error }}": '{{ form.errors|get:error }}'{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        }
+    }
+    var updateErrorFields = function(frm){
+        for (item in form.errors){
+            blk = $(form.errors[item]);
+            insert_before_blk = $($("#id_" + item).parents('.line').children()[0]);
+            blk.insertBefore(insert_before_blk);
+        }
+    }
+    $(document).ready(function(){
+        updateErrorFields('#update-form');
+    });
+{% endif %}
+</script>
+
+<script type='text/javascript'>
+// Birthdays
+var birthDate = '',
+    {% if form.data.birthday %}
+    birthDay = '{{ form.data.birthday|split:"-"|select:"2"|int }}';
+    birthMonth = '{{ form.data.birthday|split:"-"|select:"1"|int }}';
+    birthYear = '{{ form.data.birthday|split:"-"|select:"0"|int }}';
+    {% else %}
+    {% if user.birthday %}
+	birthDay = '{{ user.birthday|date:"Y-m-d"|split:"-"|select:"2"|int }}';
+    birthMonth = '{{ user.birthday|date:"Y-m-d"|split:"-"|select:"1"|int }}';
+    birthYear = '{{ user.birthday|date:"Y-m-d"|split:"-"|select:"0"|int }}';
+    {% else %}
+    birthDay = '01'; birthMonth = '01'; birthYear = '1970';
+    {% endif %}
+    {% endif %}
+	
+function get_birth_day(e) {
+	birthDay = $(e).attr('val');
+	if (birthDay < 10) birthDay = '0' + birthDay;
+	$('#id_birthday').val(birthYear + "-" + birthMonth + "-" + birthDay);
+}
+function get_birth_month(e) {
+	birthMonth = $(e).attr('val');
+	if (birthMonth < 10) birthMonth = '0' + birthMonth;
+	$('#id_birthday').val(birthYear + "-" + birthMonth + "-" + birthDay);
+}
+function get_birth_year(e) {
+	birthYear = $(e).attr('val');
+	$('#id_birthday').val(birthYear + "-" + birthMonth + "-" + birthDay);
+}
+</script>
+
+</div>

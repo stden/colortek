@@ -1,0 +1,51 @@
+{% extends base %} {% load i18n %}
+{% block css %}
+    {{ block.super }}
+    <link rel='stylesheet' href='/media/css/form.css?{{ csshash }}' type='text/css'>
+{% endblock %}
+{% block js %}
+    {{ block.super }}
+   <script type='text/javascript' src='/media/js/jquery.fcbkcomplete.js' charset='utf-8'></script>
+   <script type='text/javascript' src='/media/js/jq_complete.js?{{ csshash }}' charset='utf-8'></script>
+{% endblock %}
+{% block head %}
+{{ wizard.form.media }}
+{% endblock %}
+
+{% block content %}
+<h1>{% trans "Partner register" %}, 
+{% trans "step" %} {{ wizard.steps.step1 }} {% trans "of" %} {{ wizard.steps.count }}</h1>
+{% comment %}{% if wizard.steps.step1 == 1 %}
+<h3>{% trans "This step you create base data about your rehearsal base,<br> helping musicians find it." %}</h3>
+{% else %}
+<h3>{% trans "Create you first room, set its name and working days. If it's necessary to change you would allow to do it either you can add more rooms." %}</h3>
+{% endif %}{% endcomment %}
+<br />
+<form class='forms spot-wizard-form{{ wizard.steps.step1 }}'
+    action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    {{ wizard.management_form }}
+    {% if wizard.form.forms %}
+    <table>
+        {{ wizard.form.management_form }}
+        {% for form in wizard.form.forms %}
+            {{ form }}
+        {% endfor %}
+    </table>
+    {% else %}
+        {{ wizard.form.as_ul }}
+    {% endif %}
+    <div class='form-actions'>
+        <input class='btn-success btn submit'  type="submit"
+            value="{% if wizard.steps.step1 == 3 %}{% trans "Save" %}{% else %}{% trans "Next step" %}{% endif %}"/> {# a little hack #}
+        {% if wizard.steps.prev %}
+            {# <button class='btn right' name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">{% trans "First step" %}</button> #}
+            <button class='btn wizard prev' 
+                name="wizard_goto_step" 
+                type="submit" value="{{ wizard.steps.prev }}">{% trans "Prev step" %}</button>
+        {% endif %}
+    </div>
+</form>
+{% if wizard.form.media %}
+{{ wizard.form.media }}
+{% endif %}
+{% endblock %}

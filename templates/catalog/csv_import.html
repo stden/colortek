@@ -1,0 +1,43 @@
+{% extends base %}
+{% block all_content %}
+
+<div class="partners">
+        <div class="menu">	
+            <div class="b-inner">
+                <div class="content">
+                    <ul>
+                        <li><a href="{% url accounts:profile-edit %}">мои настройки</a></li>
+                        <li><a href="{% url catalog:service-orders %}">Мои заказы</a></li>
+                        <li><a href='{% url catalog:container-list %}'>Мои товары</li>
+                        <li><a href="{% url catalog:service-partner-specials user.pk %}">Мои акции</a></li>
+                        <li class='active'>Импортирование базы</li>
+                    </ul>
+                    <div class="Clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="b-inner">
+            <div class="content">
+                {# #}
+                {% if success %}
+                    <h3>Элементы успешно были добавлены</h3>
+                    {% if stats %}
+                    <br>
+                    <strong>Добавлено категорий: </strong> {{ stats.category_created }}<br>
+                    <strong>Добавлено товаров: </strong> {{ stats.created }}<br>
+                    <strong>Товаров обновлено: </strong> {{ stats.updated }}
+                    {% endif %}
+                {% endif %}
+				<div class="contentform">
+					<form id='csv-import-form' method='POST' action='{% url catalog:csv-import %}'
+						enctype='multipart/form-data'>
+						{% csrf_token %}
+						{% include "forms/form.html" with form=form error_block='div' %}
+						<div class='actions'>
+							<input type='submit' value='Импортировать' class='submit'>
+						</div>
+					</form>
+				</div>
+            </div>
+        </div>
+{% endblock %}

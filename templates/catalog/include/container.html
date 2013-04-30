@@ -1,0 +1,114 @@
+<div class='item{% if forloop.last %} last{% endif %} active'>{% load thumbnail coretags %}
+    <h2>{{ container.title }} ({{ container.get_whole_items.count }} тов.)</h2>
+    <div class='list'>
+		<!--
+			<a href='{% url catalog:item-add container.pk %}' title='' class='btnAdd'>Добавить товар</a>
+		-->
+		<a href='#add-goods-{{ container.pk }}' title='' class='fancybox.inline fblink'>Добавить товар</a>
+		<div class='btn floatRight'><a class='btnEdit' data-id='{{ container.pk }}' href='{% url catalog:container-edit container.pk %}'>Редактировать</a></div>
+		<a href="{% url catalog:container-delete container.pk %}" class="del-item floatRight delAllCat"><img src="/media/img/icon/del.png" alt="Удалить" title="Удалить"></a>
+        <!--
+			<a data-id='{{ container.pk }}' href='{% url catalog:container-edit container.pk %}' title='' class='btnEdit' style='margin-right: 140px;'>Править категорию</a>
+		-->
+        {% for item in container.items.all %}
+        <span class='product'>
+			<a href="{% url catalog:item-delete item.pk %}" class="del-item"><img src="/media/img/icon/del.png" alt="del"></a>
+            <h3>{{ item.title }}<span class="fade"></span></h3>
+            <div class="Img">
+                {% if item.image %}
+                {% thumbnail item.image gs.ITEM_THUMBNAIL_SIZE_SMALL as image %}
+                <img src="{{ image.url }}" alt="{{ item.title }}">
+                {% endthumbnail %}
+                {% else %}
+                <img src='/media/img/no-content-{{ item.container.owner.service.codename }}.jpg' />
+                {% endif %}
+            </div>
+            <div class="txt"><br>{{ item.description|truncatewords_html:"10"|safe }}</div>
+            <div class="info"><span>
+                {% if item.is_special_active %}
+                    <s>{{ item.cost|floatformat:"-2" }}</s>
+                {% endif %}
+                {{ item.get_generic_cost|floatformat:"-2" }}
+            <span class="ruble">n</span></span></div>
+            <div class="btn">
+                <a data-id='{{ item.id }}'
+                    href="{% url catalog:item-edit item.pk %}"
+                    title="#" class='editItem'>Редактировать</a>
+            </div>
+        </span>
+        {% endfor %}
+        {# #}
+            <div class="popup" id="add-goods-{{ container.pk }}">
+				<div class="block fblink-content">
+					<form method='POST' action='{% url catalog:item-add container.pk %}' enctype="multipart/form-data">
+					{% csrf_token %}
+					<a title="Закрыть" class="btnClose">&nbsp;</a>
+					<span class="textfield1 allwidth">
+						<input name='title' id='id_title' type="text" placeholder='Введите название' value="" onfocus='this.placeholder=""'>
+					</span><br>
+					<div class="info select">
+						<span class="txt">Единицы измерения</span>
+						<select name='category' id='id_category' class="select1">
+							{% get_instances 'catalog.itemcategory' as options %}
+							{% for option in options %}
+								<option value='{{ option.pk }}'>{{ option.title }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<script type="text/javascript">
+					var params = {
+						changedEl: "select#id_category, select#id_container",
+						visRows: 5,
+						scrollArrows: true
+					}
+					cuSel(params);
+					</script>
+					<span class="Img">
+						<a class='loadPhoto'><img src="/media/img/icon/add1.gif" alt=""><p>Загрузить фото</p></a>
+					</span>
+					<span class="textarea itm">
+						<textarea placeholder='Введите описание' onfocus='this.placeholder=""' id='id_description' name='description'></textarea>
+					</span>
+					<div class="addPhoto">
+						<div class="item1">
+							<span class="txt"><a class='loadPhoto'><img src="/media/img/icon/add.gif" alt=""> Загрузить фото</a></span>
+							<span class="addFile"><span class="textfield3">
+								<input type="text" value=""></span> <span class="filefield">обзор<input type="file" name='image' id='id_image'></span>
+							</span>
+						</div>
+						<p>Вы можете загрузить только фотографию расширения JPG, PNG или GIF. Файлы размером более 5 MB не загрузятся. В случае возникновения проблем попробуйте загрузить фотографию меньшего размера.</p>
+					</div>
+					<div class="info">
+						<div class="infoBlock">
+							<!--<span class="txt">Размер</span>
+							<span class="selectfield">
+								<select style="color:#e3e3e3">
+									<option>0 см</option>
+									<option>40 см</option>
+								</select>
+							</span>&nbsp;&nbsp;
+							<span class="txt">вес</span> <span class="textfield2"><input type="text" value="0" style="color:#e3e3e3"></span> <span class="txt"><em>гр.</em></span>&nbsp;&nbsp;&nbsp; -->
+							<span class="txt">Цена</span> <span class="textfield2">
+                                <input name='cost' id='id_cost' type="text" placeholder='0' onfocus='this.placeholder=""' value=""></span>
+								<span class="txt"><span class="ruble">n</span></span>&nbsp;&nbsp;&nbsp;
+							<!--<span class="txt">Цена по акции</span> <span class="textfield2"><input type="text" value="0" style="color:#e3e3e3"></span> <span class="txt"><span class="ruble">n</span></span> -->
+                            <span class='txt'>Вес (г)</span> <span class='textfield2'>
+                                <input name='mass' id='id_mass' value='' />
+                            </span>&nbsp;&nbsp;&nbsp;
+                            <span class='txt'>Порядок</span> <span class='textfield2'>
+                                <input name='weight' id='id_container' value='0' />
+                            </span>&nbsp;&nbsp;&nbsp;
+							<span class='hide'><input type='hidden' name='container' id='id_container' value='{{ container.pk }}'></span>
+						</div>
+					</div>
+					<!--<span class="add_size"><a href="#" title="#">добавить размер</a></span> -->
+					<div class="btns">
+						<!--<input type="button" class="btnClear" value="отменить изменения"> -->
+						<input type="submit" class="btnSave" value="сохранить">
+					</div>
+					</form>
+				</div>
+            </div>
+        {# #}
+    </div>
+</div>

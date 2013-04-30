@@ -1,0 +1,18 @@
+{% include "catalog/include/border_top.html" %}
+<!-- menu -->
+<ul class="menu">
+    {% for serv in servs %}
+    <li class="parent {% if serv == service %}active{% endif %}">
+        <a href="{% url catalog:catalog-list serv.codename %}" class="header">
+            {{ serv.title }}
+            <span class="note">{{ serv.description }}</span>
+        </a>
+		<span class="arr-toggle"></span>
+        {# {% if serv == service %} #}
+        <section class='{% if serv == service %}active{% endif %}'>
+            {% include "catalog/include/border_search_list.html" %}
+        {# {% endif %} #}
+        </section>
+        </li>
+    {% endfor %}
+</ul>

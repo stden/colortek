@@ -1,0 +1,79 @@
+{% load corefilters %}
+<p class="person_contacts">
+    {{ order.get_client.get_real_name }}<br>
+    {{ order.offline_client.get_phones }}<br>
+    {{ order.offline_client.get_address }}
+</p>
+
+<p class="person_contacts">
+    {% if order.comment %}
+        Комментарий: {{ order.comment|default_if_none:"" }}<br />
+    {% endif %}
+    {% if order.deliver_date and order.deliver_time %}
+        Время доставки: к {{order.deliver_time}} {{order.deliver_date|date:"d.m.y"}}<br />
+    {% endif %}
+    {% if order.deliver_date and not order.deliver_time %}
+        Дата доставки: {{order.deliver_date|date:"d.m.y"}}<br />
+    {% endif %}   
+    {% if order.offline_client.need_change %}
+        Сдача с: {{order.offline_client.need_change}}<br />
+    {% endif %}
+    {% if order.promo_code %}
+        Промо-код: {{order.promo_code}}<br />
+    {% endif %}      
+    {% if order.is_paid %}
+        <b>Оплачен по б\н</b><br />
+    {% endif %}
+</p>
+<table class="orders detailed">
+    <tr>
+        <th>название</th>
+        <th>количество</th>
+        <th>Цена (руб.)</th>
+        <th>Итоговая сумма</th>
+    </tr>
+    {% for container in order.containers.all %}
+    <tr>
+        <td>{{ container.product.title }}</td>
+        <td>
+            {% if not read_only %}
+                <input type='text' name='quantity'
+                    value='{{ container.get_quantity|floatformat:"-3"|safe }}'
+                    id='id_container-{{ container.pk }}' class='quantity input'>
+                <input type='hidden' name='container'
+                    value='{{ container.pk }}' id='id_container-{{ container.pk }}'>
+                <!--<input type="text" value="1" class="count">-->
+            {% else %}
+                {{ container.get_quantity|floatformat:"-3"|safe }}
+            {% endif %}
+        </td>
+        <td class='cost' id='id_container-{{ container.pk }}-cost'
+            data-value='{{ container.product.cost }}'
+            data-threshold='{{ container.product.category.threshold }}'
+            data-rate='{{ container.product.category.rate }}'>
+            {{ container.product.cost }}
+        </td>
+        <td class='total' id='id_container-{{ container.pk }}-price'>
+            {{ container.total_price }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% if order.deliver_cost %}
+<div class='deliver'>Доставка:
+    <strong>{{ order.deliver_cost }}</strong>
+</div>
+{% endif %}
+{% if order.discount %}
+<div class='deliver'>Скидка:
+    <strong>{{ order.discount }}</strong>
+</div>
+{% endif %}
+<div data-deliver='{{ order.deliver_cost }}' id='deliver_cost'></div>
+<!--<a class="add-items addBtn" href="#">Добавить еще товаров</a>-->
+<p class="orders-total">
+    <strong>Общая сумма заказа:  <span id='total_price'>{{ order.get_total_price|add:order.deliver_cost }}</span> руб.</strong>
+    {% if order.discount %}
+        <br /><strong>Общая сумма заказа со скидкой:  <span>{{ order.get_total_price|add:order.deliver_cost|subtract:order.discount }}</span> руб.</strong>
+    {% endif %}
+</p>

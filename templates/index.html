@@ -1,0 +1,26 @@
+{% extends base %} {% load i18n thumbnail %}
+{% block content %}
+    <div class="col-{{ services.count }}">
+        {% for service in services %}
+        <div class="col">
+            <div class="card">
+                <div class="front">{% thumbnail service.logo gs.ITEM_THUMBNAIL_SIZE as logo %}
+                    <img src="{{ logo.url }}" alt="{{ service.title }}">
+                    {% endthumbnail %}
+                </div>
+                <h2>{{ service.title }}{#Готовая еда#}</h2>
+                <p class="note">{{ service.description }} {#из ресторанов#}</p>
+				<a href='{% url catalog:catalog-list service.codename %}' class="section"></a>
+				{% comment %}
+				<div class="back">
+                    <a href='{% url catalog:catalog-list service.codename %}'><strong>все</strong></a>
+                    {% for type in service.categories.all %}
+                    / <a href='{% url catalog:catalog-list service.codename %}?type={{ type.pk }}'>{{ type.title }}</a>
+                    {% endfor %}
+                </div>
+				{% endcomment %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

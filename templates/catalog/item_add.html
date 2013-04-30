@@ -1,0 +1,17 @@
+{% extends base %}{% load i18n %}
+{% block css %}
+    {{ block.super }}
+    <link rel='stylesheet' href='/media/css/auto_forms.css' type='text/css'>
+{% endblock %}
+{% block content %}
+<form class='add-container' method='POST'
+    url='{% url catalog:container-add %}' id='add-container-form' enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class='contentform form'>
+            {% include "forms/form.html" with error_block='div'%}
+        <div class='actions'>
+            <input class='btn btn-success' type='submit' value='{% trans "Save" %}' />
+        </div>
+    </div>
+</form>
+{% endblock %}

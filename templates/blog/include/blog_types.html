@@ -1,0 +1,11 @@
+{% for type in types %}
+    {% if type.posts.count > 0 %}
+    <li>
+		{% if type == post.type or type == category %}
+			<a class="active" href='{% url blog:category type.pk %}' title=''>{{ type.title }} ({{ type.posts.count }})</a>
+		{% else %}
+			<a href='{% url blog:category type.pk %}' title=''>{{ type.title }} ({{ type.posts.count }})</a>
+		{% endif %}
+	</li>
+    {% endif %}
+{% endfor %}

@@ -1,0 +1,5 @@
+{% load corefilters %}{% for addon in addons %}
+    <div class="label" id='{{ id }}'>
+        {% include "catalog/include/addon.html" with addon=addon %}
+    </div>
+{% endfor %}

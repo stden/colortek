@@ -1,0 +1,20 @@
+<div class='well user profile'> {% load i18n %}
+    <div class='username'>
+        <span class='label'>{% trans "Username" %}</span>
+        <span class='content'>{{ user.username }}</span>
+   </div>
+    <div class="real-name">
+        <span class="label">{% trans "Real name" %}</span>
+        <span class="content">{{ user.get_real_name }}</span>
+    </div>
+    <div class="email">
+        <span class="label">{% trans "Email" %}</span>
+        <span class="content">{{ user.email }}</span>
+    </div>
+    <div class="phone">
+        <span class="label">{% trans "Phone" %}</span>
+        <span class="content">{{ user.phone }}</span>
+    </div>
+    <br />
+    <a class='btn btn-success' href='{% url accounts:profile-edit %}'>{% trans "Edit profile" %}</a>
+</div>

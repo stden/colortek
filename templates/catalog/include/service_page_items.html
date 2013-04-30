@@ -1,0 +1,56 @@
+{% load thumbnail %}
+{% comment %}
+    <div class="b-dish-list">
+		{% if items|length < 3 %}<div class="line">{% endif %}
+{% endcomment %}
+		{% for item in items %}
+{% comment %}
+			{% if items|length > 2 %}{% cycle '<div class="line">' '' '' %}{% endif %}
+{% endcomment %}
+            <div class="col">
+                <form method='POST' action="{% url catalog:cart-item-add %}"
+                data-service-name='{{ item.container.owner.service_name }}'><div class="item"><div class="item-inner">
+                    {% csrf_token %}
+                    <h3>{{ item.title }}<span class="fade"></span></h3>
+                    <div class="subhead">
+                        {% if item.container.addons.all %}
+                            <a class="supplements"
+                                {# href="{% url catalog:item-description-popup item.pk %}" #}
+								data-href='{% url catalog:addons-get item.container.pk %}'
+                                data-container='{{ item.container.pk }}'>Добавки</a>
+                        {% endif %}
+                        <span class="price">{% if item.is_special_active %}
+                            <s>{{ item.cost|floatformat:"-2" }}</s>&nbsp;{{ item.get_generic_cost|floatformat:"-2" }}
+                        {% else %}
+                            {{ item.cost|floatformat:"-2" }}
+                        {% endif %}
+                        <span class="ruble">n</span></span>
+                    </div>
+                    <div class="image" data-img="{% url catalog:item-description-popup item.pk %}">
+						{% if item.image %}
+							{% thumbnail item.image gs.ITEM_THUMBNAIL_SIZE_SMALL as image %}
+								<img src="{{ image.url }}" alt="{{ item.title }}">
+							{% endthumbnail %}
+						{% else %}
+							<img src="/media/img/no-content-{{ item.container.owner.service.codename }}.jpg" alt="">
+						{% endif %}
+                    </div>
+                    <div class="order-options">
+                        <div class="count">
+                            <a class="minus" data-threshold='-{{ item.category.threshold }}'></a>
+                            <input name='quantity' id='id_quantity' type="text" value="{{ item.category.get_rate }}">
+							<span class='description'>{{ item.category.short_rate_title }}</span>
+                            <input type='hidden' id='id_item' value='{{ item.pk }}' name='item' />
+                        <a class="plus" data-threshold='{{ item.category.threshold }}'></a></div>
+                        <input type="submit" value="Заказать" class='orderCheck'>
+                    </div>
+                </div></div></form><!-- /item -->
+            </div>
+{% comment %}
+			{% if items|length > 2 %}{% cycle '' '' '</div>' %}{% endif %}
+{% endcomment %}
+		{% endfor %}
+{% comment %}
+		{% if items|length < 3 %}</div>{% endif %}
+		{% if items|length > 2 and items|length|divisibleby:3 %}{% else %}</div>{% endif %}
+{% endcomment %}

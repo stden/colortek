@@ -1,0 +1,11 @@
+{% extends base %}
+
+{% block content %}
+<form class='formset' id='alter-schedule-form' method='POST'
+    method='{% url accounts:alter-schedule %}'>
+    {{ formset.management_form }}
+    {% for form in formset %}
+        {% include "forms/bootstrap.html" %}
+    {% endfor %}
+</form>
+{% endblock %}

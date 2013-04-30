@@ -1,0 +1,53 @@
+{% extends base %}{% load i18n %}
+{% block css %}
+    {{ block.super }}
+    <link rel='stylesheet' href='/media/css/auto_forms.css' type='text/css'>
+{% endblock %}
+
+{% block all_content %}
+	<div class="partners">
+		<div class="menu">
+            <div class="b-inner">
+                <div class="content">
+                    <ul>
+                        <li><a href="{% url accounts:profile-edit %}">мои настройки</a></li>
+                        <li><a href="{% url catalog:service-orders %}">Мои заказы</a></li>
+                        <li><a href="{% url catalog:container-list %}">Мои товары</a></li>
+                        <li class="active"><a href="{% url catalog:service-partner-specials user.pk %}">Мои акции</a></li>
+                        <li><a href='{% url catalog:csv-import %}'>Импортирование базы</a></li>
+                    </ul>
+                    <div class="Clear"></div>
+                </div>
+            </div>
+        </div>
+		<div class="b-inner">
+            <div class="content">
+				
+				<div class="header">
+
+                    <div class="rText">Здесь вы можете редактировать акции</div>
+                    <h1>Добавить акцию</h1>
+					<br>
+					<p><a class="back-to-list" href="{% url catalog:service-partner-specials user.pk %}">Назад к списку акций</a></p>
+                    <div class="Clear"></div>
+                </div>
+				
+				<form class='add addon form' method='POST'
+					{% if form.instance.pk %}
+						action='{% url catalog:special-edit form.instance.pk %}'
+					{% else %}
+					action='{% url catalog:special-add %}'{% endif %} id='add-special-form'
+						enctype="multipart/form-data">
+						{% csrf_token %}
+						<div class='contentform form'>
+						{% include "forms/form.html" %}
+							<div class='actions a-addon-add'>
+								<input class='s-addon-add' type='submit' value='{% trans "Save" %}'>
+								{# <a class='s-addon-add' href='{% url catalog:service-partner-specials user.pk %}'>Назад</a> #}
+							</div>
+						</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

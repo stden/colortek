@@ -1,0 +1,71 @@
+{% load i18n %}{% if has_status %}
+<div class="group statuses">
+        {% comment %}
+        <label>
+        <input name='status' type="checkbox" value="not_confirmed" {% spaceless %}
+        {% if 'not_confirmed' in status %}checked{% endif %}{% endspaceless %}>неподтвержденные</label>
+        {% endcomment %}
+
+        {% comment %}
+        <label>
+        <input name='status' type="checkbox" value="rejected" {% spaceless %}
+        {% if 'rejected' in status %}checked{% endif %}{% endspaceless %}>отмененные</label>
+        {% endcomment %}
+        <label>
+            <input name='status' type="checkbox" value="is_paid"{% spaceless %}
+            {% if 'is_paid' in status %}checked{% endif %}{% endspaceless %}>
+            {% trans "paid" %}</label>
+
+        <label>
+        <input name='status' type="checkbox" value="processed" {% spaceless %}
+        {% if 'processed' in status %}checked{% endif %}{% endspaceless %}>
+        {% trans "processed" %}</label>
+        <label>
+        <input name='status' type="checkbox" value="finished" {% spaceless %}
+        {% if 'finished' in status %}checked{% endif %}{% endspaceless %}>{% trans "finished" %}</label>
+        {% comment %}
+        <label>
+        <input name='status' type="checkbox" value="approved" {% spaceless %}
+        {% if 'approved' in status %}checked{% endif %}{% endspaceless %}>{% trans "approved" %}</label>
+        {% endcomment %}
+        {% if not user.is_partner or not gs.HIDE_REJECTED_FROM_PARTNER %}
+        <label>
+        <input name='status' type="checkbox" value="rejected" {% spaceless %}
+        {% if 'rejected' in status %}checked{% endif %}{% endspaceless %}>{% trans "rejected" %}</label>
+        {% endif %}
+
+        {% if user.is_operator %}
+        <label>
+        <input name='status' type="checkbox" value="approved" {% spaceless %}
+        {% if 'approved' in status %}checked{% endif %}{% endspaceless %}>
+        {% trans "approved" %}</label>
+        {% endif %}
+
+
+</div>
+{% else %}
+<div class="group statuses">
+    <label>
+        <input name='status' type="checkbox" value="is_paid"{% spaceless %}
+        {% if 'is_paid' in status %}checked{% endif %}{% endspaceless %}>
+        {% trans "paid" %}</label>
+    {% comment %}<label>
+        <input name='status' type="checkbox" value="not_confirmed" {% spaceless %}
+        {% if 'not_confirmed' in status %}checked{% endif %}{% endspaceless %}>
+        {% trans "not confirmed" %}</label>
+<label>
+        <input name='status' type="checkbox" value="processed" {% spaceless %}
+        {% if 'processed' in status %}checked{% endif %}{% endspaceless %}>
+        {% trans "processed" %}</label>{% endcomment %}
+    {% if not user.is_partner %}
+    <label>
+        <input name='status' type="checkbox" value="checking" {% spaceless %}
+        {% if 'checking' in status %}checked{% endif %}{% endspaceless %}>
+        {% trans "checking" %}</label>
+    {% endif %}
+    <!--<label>
+        <input name='status' type="checkbox" value="approved" {% spaceless %}
+        {% if 'approved' in status %}checked{% endif %}{% endspaceless %}>
+        {% trans "approved" %}</label>-->
+</div>
+{% endif %}

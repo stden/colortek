@@ -1,0 +1,8 @@
+{% load coretags %}
+{% slice_instances posts.object_list as postz %}
+<span class='col'>
+    {% include "blog/include/posts.html" with posts=postz.0 %}
+</span>
+<span class='col'>
+    {% include "blog/include/posts.html" with posts=postz.1 %}
+</span>

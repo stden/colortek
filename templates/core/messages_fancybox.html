@@ -1,0 +1,60 @@
+{% load i18n %}
+{% comment %}
+    <div class='modal hide fade in' id='inform-messages'>
+        <div class='modal-header'>
+            <a class='close' href='#' data-dismiss='modal'>x</a>
+            <h1>{% trans "Information" %}</h1>
+        </div>
+        <div class='modal-body'>
+            <ul class='messages'>
+                {% for message in messages %}
+                    <li class='{{ message.tags|default_if_none:'' }}'>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class='modal-footer'>
+            <a class='btn' href='{{ global_referer }}'>{% trans "Back" %}</a>
+            <a class='btn' href='#' data-dismiss='modal'>{% trans "Close" %}</a>
+        </div>
+    </div>
+{% endcomment %}
+
+<script type='text/javascript'>
+{% comment %}$(document).ready(function(){
+    $("#inform-messages").modal({'backdrop': 'static'}).modal('show');
+});{% endcomment %}
+$(document).ready(function(){
+
+{% if messages %}
+    {% for message in messages %}
+    noty({
+        text: "{{ message }}",
+        type: "{{ message.tags }}",
+        //type: "information",
+        dismissQueue: true,
+		{% if 'cleanse_cart' in message.tags %}
+        timeout: false,
+        buttons: [
+            {
+                addClass: 'btn btn-danger',
+                text: "Подтвердить",
+                onClick: function($noty){
+                    document.location.href = '{% url catalog:cart-cleanse %}';
+                }
+            },
+            {
+                addClass: 'btn',
+                text: "Отменить",
+                onClick: function($noty){
+                    $noty.close();
+                }
+            }
+        ]
+		{% else %}
+		timeout: 2000
+        {% endif %}
+    });
+    {% endfor %}
+{% endif %}
+});
+</script>

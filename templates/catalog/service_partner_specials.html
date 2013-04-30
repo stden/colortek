@@ -1,0 +1,119 @@
+{% extends base %}{% load thumbnail %}
+{% block body-class %}{% endblock %}
+{% block all_content %}
+    <div class="partners">
+        <div class="menu">
+            <div class="b-inner">
+                <div class="content">
+                    <ul>
+                        <li><a href="{% url accounts:profile-edit %}">мои настройки</a></li>
+                        <li><a href="{% url catalog:service-orders %}">Мои заказы</a></li>
+                        <li><a href="{% url catalog:container-list %}">Мои товары</a></li>
+                        <li class="active">Мои акции</li>
+                        <li><a href='{% url catalog:csv-import %}'>Импортирование базы</a></li>
+                    </ul>
+                    <div class="Clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="b-inner">
+            <div class="content">
+                <div class="header">
+                    <div class="rText">Здесь вы можете редактировать акции</div>
+                    <div class="Clear"></div>
+                </div>
+                <div class="action_list">
+                    <div class="line">
+                        <div class="item addCategory">
+                            <a class="actionPopup" href="{% url catalog:special-add %}"><span class="icoPlus">&nbsp;</span> <span class="txt">Добавить акцию</span></a>
+                        </div>
+                    </div>
+                    {% if items or user.get_active_specials %}
+                    <div class="line">
+                        {% for item in items %}
+                        <div class="item"><div class="col">
+                            <div class="i">
+                                {% if item.image %}
+                                {% thumbnail item.image gs.ITEM_THUMBNAIL_SIZE as image %}
+                                <div class="image">
+                                    <img src="{{ image.url }}" alt="{{ item.title }}">
+                                </div>{% endthumbnail %}
+                                {% else %}
+                                <div class='image'>
+                                    <img src='/media/img/no-content-{{ item.container.owner.service.codename }}.jpg'
+                                        alt='{{ item.title }}'>
+                                </div>
+                                {% endif %}
+                            <!--<a href="#" class="button">редактировать</a> -->
+                            <span class="title">{{ item.title }}</span>
+							<span class="description">
+								<span class="price">
+									цена по акции: <span><s>{{ item.cost|floatformat:"-2" }}</s> {{ item.get_generic_cost|floatformat:"-2" }}<span class="ruble">n</span></span>
+								</span>
+							</span>
+                            <a href="{% url catalog:special-off item.pk %}" class="del-item"><img src="/media/img/icon/del.png" alt="del"></a>
+
+                            </div>
+                        </div></div>
+                        {% endfor %}
+                        {% for special in user.specials.all %}
+                            <div class="item"><div class="col">
+                                <div class="i">
+                                {% if special.image %}
+                                {% thumbnail special.image gs.ITEM_THUMBNAIL_SIZE as image %}
+                                    <div class="image"><img src="{{ image.url }}" alt="{{ special.title }}"></div>
+                                {% endthumbnail %}
+                                {% else %}
+                                    <div class='image'>
+                                        <img src='/media/img/no-content-{{ special.container.owner.service.codename }}.jpg'
+                                            alt='{{ special.title }}'>
+                                   </div>
+                                {% endif %}
+                                <a href="{% url catalog:special-edit special.pk %}" class="button">редактировать</a>
+                                <span class="title">{{ special.title }}</span>
+                                <span class='description'>{{ special.description|safe }}</span>
+
+                                <a href="{% url catalog:special-del special.pk %}" class="del-item"><img src="/media/img/icon/del.png" alt="Удалить" title="Удалить"></a>
+
+                                </div>
+                            </div></div>
+                        {% endfor %}
+                    </div>
+                   {% else %}
+                   <h3>Специальных акций пока нет</h3>
+                   {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+<script type='text/javascript'>
+    $(".del-item").click(function(e){
+        url = $(this).attr('href');
+        var nt = noty({
+            text: "Вы хотите исключить данный товар из акции?",
+            buttons:[
+                {
+                    addClass: 'btn btn-primary',
+                    text: 'Да',
+                    onClick: function($noty){
+                        document.location.href = url;
+                    }
+                },
+                {
+                    addClass: 'btn btn-danger',
+                    text: 'Нет',
+                    onClick: function($noty){
+                        $noty.close();
+                        noty({
+                            'text': 'Отменено',
+                            type: 'warning',
+                            timeout: 2000,
+                        });
+                    }
+                }
+            ]
+        });
+        return false;
+    });
+</script>
+{% endblock %}

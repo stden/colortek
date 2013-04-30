@@ -1,0 +1,32 @@
+{% load corefilters %}
+{% for field in form.visible_fields %}
+    <div class="line">
+        {% if 'atom' in field.name %}
+        <div class='left'>
+            {{ field.label }}:
+        </div>
+        <div class="right">
+            <div class="radiogroup">
+                {% if field.errors %}
+                    {{ field.errors }}
+                {% endif %}
+                {% for radio in field %}
+                    <div class='lb'>{{ radio.choice_value }}&nbsp;<br>
+                        <label><input type='radio' value='{{ radio.choice_value }}' name='{{ radio.name }}'>&nbsp;</label>
+                    </div>
+                {% endfor %} 
+            </div>
+        </div>
+        {% else %}
+        <div class="right">
+            <!--{{ field.label }}: -->
+            {% if field.errors %}
+            {{ field.errors }}
+            {% endif %}
+            <div class='text'>
+                {{ field }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endfor %}

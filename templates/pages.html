@@ -1,0 +1,100 @@
+{% load i18n %}
+
+<div class="pagination">
+<ul>
+{% if page.has_previous %}
+<li class='prev'><a href='javascript:getPage("?{{ page_kw|default:"page" }}={{ page.previous_page_number }}");'>&larr; {% trans "Назад" %}</a></li>
+{% endif %}
+{% if page.has_other_pages %}
+{% for num in page.page_range %}
+    {% if not num %}
+        <li><a href='#'>...</a></li>
+    {% else %}
+        {% ifequal page.number num %}
+            <li class='active'><a href='#'>{{ num }}</a></li>
+        {% else %}
+            <li><a href="javascript:getPage('?{{ page_kw|default:"page" }}={{ num }}{% if page.jump %}{{ page.jump }}{% endif %}');">{{ num }}</a></li>
+        {% endifequal %}
+    {% endif %}
+{% endfor %}
+{% endif %}
+{% if page.has_next %}
+<li class='next'><a href='javascript:getPage("?{{ page_kw|default:"page" }}={{ page.next_page_number }}");'>{% trans "Вперед" %} &rarr;</a></li>
+{% endif %}
+</ul>
+</div>
+<script type='text/javascript'>
+    var getPage = function(url){
+        /* cleanup */
+        keyword = url.match(/[\w\d-_]+/);
+        var search = window.location.search;
+        $.each(keyword, function(idx, value){
+            r = new RegExp("[&|?]"+value+"=[\\d\\w-_]+", 'g');
+            search = search.replace(r, '');
+        });
+
+        var wl = window.location;
+        if (search){
+            url = url.replace('?', '&');
+            window.location.href = search + url;
+        } //if wl.search
+        else{
+            window.location.href = url;
+        }
+    }
+</script>
+
+
+
+
+
+{% comment %}
+{% if page.has_next %}
+<a class="load-more-content" href='javascript:getPage("?{{ page_kw|default:"page" }}={{ page.next_page_number }}");'><img alt="" src="/media/img/preloader.gif">&nbsp;отобразить еще 10</a>
+{% endif %}
+
+<script type='text/javascript'>
+    var getPage = function(url){
+		var nextPage = url,
+			loadMoreUrl;
+			/* cleanup */
+			keyword = url.match(/[\w\d-_]+/);
+        var search = window.location.search;
+			$.each(keyword, function(idx, value){
+				r = new RegExp("[&|?]"+value+"=[\\d\\w-_]+", 'g');
+				search = search.replace(r, '');
+			});
+
+        var wl = window.location;
+			if (search){
+				url = url.replace('?', '&');
+				loadMoreUrl = search + url;
+			} //if wl.search
+			else{
+				loadMoreUrl = url;
+			}
+		
+
+				var list = $(this).prev('.b-item-list'),
+					loadBlock = list.find('.items-loaded');
+					//console.log(loadMoreUrl);
+					if (loadMoreUrl){
+						$.ajax({
+							type: "GET",
+							url: window.location.href + loadMoreUrl,
+							success: function(data){
+								//console.log($(data).find('.b-item-list').html());
+								var dataHTML = $(data).find('.b-item-list').html();
+								if (list.length > 0 && loadBlock.length > 0){
+									dataHTML.appendTo(loadBlock);
+									$('.load-more-content').attr('href', 'javascript:getPage('+ nextPage*1 + 1 +');');
+									
+								}
+							}
+						});
+					}
+			
+    }
+	
+</script>
+{% endcomment %}

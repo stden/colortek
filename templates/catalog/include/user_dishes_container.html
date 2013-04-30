@@ -1,0 +1,78 @@
+<div class="item"> {% load thumbnail pytils_numeral %}
+    <div class="preview">
+        <div class="image" data-img="{% url catalog:item-description-popup item.pk %}">
+			{% if item.image %}
+				{% thumbnail item.image gs.ITEM_THUMBNAIL_SIZE_SMALL as image %}
+					<img src="{{ image.url }}" alt="{{ item.title }}">
+				{% endthumbnail %}
+			{% else %}
+				<img src="/media/img/no-content-{{ item.container.owner.service.codename }}.jpg" alt="">
+			{% endif %}
+        </div>		
+        <div class="rating">
+            <!--<p class="value">10 баллов из 10</p> -->
+            {% if item.container.get_votes_count > 0 %}
+            <p class="comment">(<a href="{% url catalog:service-rating item.container.owner.pk %}">{{ item.container.get_votes_count }} {{ item.container.get_votes_count|choose_plural:"оценка, оценки, оценок" }}</a>)</p>
+            {% endif %}
+        </div>
+        <div class="p-logo">
+        {% if item.container.owner.logo %}
+        {% thumbnail item.container.owner.logo gs.ITEM_SERVICE_THUMBNAIL_SIZE_SMALL as image %}
+            <a href="{% url catalog:service-page item.container.owner.pk %}"><img src="{{ image.url }}" alt="{{ item.container.owner.service_name|default_if_none:item.container.owner.username }}"></a>{% endthumbnail %}
+        {% else %}
+            <a href="{% url catalog:service-page item.container.owner.pk %}">
+                <img src="/media/img/no-logo.png"
+                    alt="{{ item.container.owner.service_name|default_if_none:item.container.owner.username }}">
+            </a>
+        {% endif %}
+        </div>
+    </div>
+    <div class="preview-text">
+        <!--<a class="supplements" href="#">Добавки</a>-->
+        <h3>{{ item.title }}</h3>
+        <p class="ingredient">
+            {{ item.description|safe }}
+            {% if item.container.owner.has_online_payment %}
+                <img src="/media/img/icon/card.png" alt="" title="Оплата картой" class="tool">
+            {% endif %}
+        </p>
+        <table class="price">
+            <tbody><tr>
+                <td><em>Мин. сумма заказа:</em> <strong>{{ item.container.owner.minimal_cost|default_if_none:0|floatformat:"-2" }} <span class="rub">р.</span></strong></td>
+                <td><em>Стоимость доставки:</em> <strong>{{ item.container.owner.avarage_deliver_cost|default_if_none:0 }} <span class="rub">р.</span></strong></td>
+
+            </tr>
+            <tr>
+                <td colspan="2"><a href="{% url catalog:service-page item.container.owner.pk %}">{{ item.container.owner.service_name|default_if_none:item.container.owner.username }}</a> / Категория:
+                {% if item.container.container %}{{ item.container.container.title }},{% endif %}
+                {{ item.container.title }}
+                {% if item.is_special_active %}
+                    <br>
+                    <strong>Акция до: {{ item.special_expires|date:"d.m.Y" }}</strong>
+                {% endif %}
+                </td>
+            </tr>
+        </tbody></table>
+        <div class="order-action">
+            <form action='{% url catalog:cart-item-add %}' method='POST' class=''
+                data-service-name='{{ item.container.owner.service_name }}'>
+                {% csrf_token %}
+                <input class='purchase orderCheck' type="submit" value="Заказать" data-id='{{ item.pk }}'>
+                <div class="params">
+                    {% if item.mass %}<span class='size'>{{ item.mass }} гр. /</span>{% endif %}
+                    Цена: <strong>
+                    {{ item.get_generic_cost|floatformat:"-2" }}
+                    <span class="ruble">n</span></strong>
+                    {% if item.mass %}
+                    {% endif %}
+                </div>
+                <div class="count">
+                    <a class="minus" data-threshold='-{{ item.category.threshold }}'></a>
+                    <input name='quantity' id='id_quantity' type="text" value="{{ item.category.get_rate }}">
+                    <input name='item' value='{{ item.pk }}' type='hidden'>
+                    <a class="plus" data-threshold='{{ item.category.threshold }}'></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+{% load i18n %}
+    <div class='modal hide fade in' id='inform-messages'>
+        <div class='modal-header'>
+            <a class='close' href='#' data-dismiss='modal'>x</a>
+            <h1>{% trans "Information" %}</h1>
+        </div>
+        <div class='modal-body'>
+            <ul class='messages'>
+                {% for message in messages %}
+                    <li class='{{ message.tags|default_if_none:'' }}'>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class='modal-footer'>
+            <a class='btn' href='{{ global_referer }}'>{% trans "Back" %}</a>
+            <a class='btn' href='#' data-dismiss='modal'>{% trans "Close" %}</a>
+        </div>
+    </div>
+
+<script type='text/javascript'>
+$(document).ready(function(){
+    $("#inform-messages").modal({'backdrop': 'static'}).modal('show');
+});
+</script>

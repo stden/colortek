@@ -1,0 +1,40 @@
+<div class="top">
+    <a href="#" class="first"><img src="/media/img/icon/mobile.png" alt="">&nbsp;Мобильная&nbsp;версия</a>
+    <a href="#"><img src="/media/img/icon/fb.png" alt="f"></a>
+    <a href="#"><img src="/media/img/icon/vk.png" alt="v"></a>
+    <a href="#" class="last"><img src="/media/img/icon/tw.png" alt="t"></a>
+</div>
+<div id="logo">
+    <a href="#"><img src="/media/img/logo.gif" alt="Уже везу"></a>
+</div>
+<div class="about"><div>Независимый клубный проект, объединивший сотни служб доставки еды, продуктов и цветов в Единую систему заказов</div></div>
+<div class="phone"><strong>(812) 137-61-92</strong><br>круглосуточно</div>
+<ul class="menu">
+    <li class="active">
+        <a href="{% url catalog:catalog-list 'food' %}" class="header">
+            Готовая еда 
+            <span class="note">из ресторанов</span>
+        </a>
+        <div class="options">
+            <ul class="dish-menu">
+                {% for container in containers %}
+                    <li class='{{ forloop.first|yesno:"active,hidden" }}'>
+                        <a href='#'>{{ container.title }}</a>
+                        {% if container.children_by_title.all %}
+                        <ul>
+                        {% for container in container.children_by_title.all %}
+                            <li><a href='#'>{{ container.title }}</a></li>
+                        {% endfor %}
+                        </ul>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+         </div>
+   </li>
+</ul>
+<script type='text/javascript'>
+    $(".dish-menu li a").click(function(e){
+        $(this).parent().addClass('active');
+    });
+</script>

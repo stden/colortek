@@ -1,0 +1,7 @@
+{% load pytils_numeral %}
+{% for atom in atoms %}
+<div class="r-line">
+    <div class="name">{{ atom.atom.title }}:</div>
+    <div class="r">{{ atom.get_value }} {{ atom.get_value|choose_plural:"балл, балла, баллов" }}</div>
+</div>
+{% endfor %}

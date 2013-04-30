@@ -1,0 +1,43 @@
+*{
+	margin:0;
+	padding:0;
+}
+body{
+	background:url(../img/bg.gif);
+	min-height:630px;
+	line-height:120%;
+}
+
+a img{
+	border:0;
+}
+
+.popup{
+	position:absolute;
+	width:710px;
+	height:600px;
+	left:50%;
+	top:50%;
+	padding:10px 40px;
+	margin:-315px 0 0 -395px;
+	background:#fff;
+	-webkit-border-radius: 70px;
+	-moz-border-radius: 70px;
+	border-radius: 70px;
+	border:5px solid #e4dbdc;
+	text-align:center;
+	behavior: url(/js/pie.htc);
+}
+
+.popup .enter{
+	display:block;
+	width:333px;
+	height:58px;
+	margin: 20px auto 0;
+	overflow:hidden;
+	text-indent:-9999px;
+	background:url(../img/enter.png) 0 -70px no-repeat;
+}
+.popup .enter:hover{
+	background-position:0 0;
+}

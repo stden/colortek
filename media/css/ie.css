@@ -1,0 +1,62 @@
+.b-item-list .item{
+	filter: progid:DXImageTransform.Microsoft.Shadow(OffX=1, OffY=1, Color=#c7c7c7, Strength=5, Direction=0),
+			progid:DXImageTransform.Microsoft.Shadow(OffX=2, OffY=2, Color=#c7c7c7, Strength=5, Direction=90),
+			progid:DXImageTransform.Microsoft.Shadow(OffX=3, OffY=3, Color=#c7c7c7, Strength=5, Direction=180),
+			progid:DXImageTransform.Microsoft.Shadow(OffX=4, OffY=4, Color=#c7c7c7, Strength=5, Direction=270);
+}
+.b-item-list .item:hover{
+	filter: progid:DXImageTransform.Microsoft.Shadow(OffX=1, OffY=1, Color=#999999, Strength=5, Direction=0),
+			progid:DXImageTransform.Microsoft.Shadow(OffX=2, OffY=2, Color=#999999, Strength=5, Direction=90),
+			progid:DXImageTransform.Microsoft.Shadow(OffX=3, OffY=3, Color=#999999, Strength=5, Direction=180),
+			progid:DXImageTransform.Microsoft.Shadow(OffX=4, OffY=4, Color=#999999, Strength=5, Direction=270);
+}
+.b-item-list.detail-page .item{
+	filter: progid:DXImageTransform.Microsoft.Shadow(OffX=0, OffY=0, Color=#ffffff, Strength=0, Direction=0);
+}
+.b-item-list.detail-page .item:hover{
+	filter: progid:DXImageTransform.Microsoft.Shadow(OffX=0, OffY=0, Color=#ffffff, Strength=0, Direction=0);
+}
+ 
+
+.b-item-list .item,
+.b-steps-info .step .num,
+.b-steps-info .step .step-info span{
+	position:relative;
+	z-index:0;
+	zoom:1;
+}
+.fancybox-overlay {
+	background:url(../img/bg/fancy-overlay.png)!important;
+}
+.p-order-form .form input[type="text"], .p-order-form .form input[type="password"],
+.contentform .line input[type="text"], .contentform .line input[type="password"]{
+	line-height:28px;
+}
+.b-steps-info .step .step-info span{
+	margin:0;
+}
+.blogs .mainBlock2 .rCol .onePosts .comments {
+	display:block;
+	overflow:hidden;
+}
+.b-overlay-all{
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=20);
+	filter:alpha(opacity=20);
+}
+#side-basket div.bonus div.count input[type="text"] {
+	line-height:18px;
+}
+
+/*.b-item-list .item,*/
+.b-invite-friend,
+/*.b-steps-info .step .num,
+.b-steps-info .step .step-info span*/
+{
+	behavior: url(/media/js/pie.htc);
+}
+.b-steps-info .step .num{
+	background:url(../img/r1.gif) 0 0 no-repeat!important;
+}
+.b-steps-info .step .step-info span{
+	background:url(../img/r2.gif) 0 0 no-repeat!important;
+}

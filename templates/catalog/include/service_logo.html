@@ -1,0 +1,9 @@
+<div class="image">{% load thumbnail %}
+    {% if service.logo %}
+    {# <img src='{{ service.logo.url }}' alt='{{ service.service_name }}'> #}
+    {% thumbnail service.logo gs.ITEM_THUMBNAIL_SIZE_SMALL as image %}
+    <a href="{% url catalog:service-page service.pk %}"><img src="{{ image.url }}" alt="{{ service.service_name }}"></a>{% endthumbnail %}
+    {% else %}
+        <a href='{% url catalog:service-page service.pk %}'><img src='/media/img/no-logo.png' alt='logo'></a>
+    {% endif %}
+</div>

@@ -1,0 +1,11 @@
+{% load pytils_numeral %}
+<div class="rating">
+    {% if service.get_avarage_rating %}
+        <p class="value">{{ service.get_avarage_rating }} {{ service.get_avarage_rating|choose_plural:"балл, балла, баллов" }} из {{ service.get_max_rates }}</p>
+        {% if service.get_votes_count > 0 %}
+        <p class="comment">(<a href="{% url catalog:service-rating service.pk %}">{{ service.get_votes_count }} {{ service.get_votes_count|choose_plural:"оценка, оценки, оценок" }}</a>)</p>
+        {% endif %}
+    {% else %}
+        <p class='value'>Рейтинг: нет</p>
+    {% endif %}
+</div>

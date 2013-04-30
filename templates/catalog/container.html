@@ -1,0 +1,294 @@
+{% extends base %} {% load coretags %}
+{% block body-class %}{% endblock %}
+{% block all_content %}
+    <div class="partners">
+        <div class="menu">	
+            <div class="b-inner">
+                <div class="content">
+                    <ul>
+                        <li><a href="{% url accounts:profile-edit %}">мои настройки</a></li>
+                        <li><a href="{% url catalog:service-orders %}">Мои заказы</a></li>
+                        <li class="active">Мои товары</li>
+                        <li><a href="{% url catalog:service-partner-specials user.pk %}">Мои акции</a></li>
+                        <li><a href='{% url catalog:csv-import %}'>Импортирование базы</a></li>
+                    </ul>
+                    <div class="Clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="b-inner">
+            <div class="content">
+                <div class="header">
+
+                    <div class="rText">Здесь вы можете создавать категории и подкатегории товаров, а&nbsp;также добавлять информацию о самих товарах</div>
+                    <h1>{{ container.title }}</h1>
+					<br>
+					<p><a class="back-to-list" href='{% url catalog:container-list %}'>Назад к списку категорий</a></p>
+                    <div class="Clear"></div>
+                </div>
+                <div class="product_list">
+                    <div class="item addSubCategory">
+                        {% if not container.container %}
+                        <a class='btnAdd' href="{% url catalog:container-add container.pk %}" title="#"><h2>Добавить подкатегорию</h2></a>
+                        {% endif %}
+                        <a class='btnAddon' href="{% url catalog:addon-list container.pk %}" title="#"><h2>Добавки</h2></a>
+                    </div>
+
+                    <div class="popup popup-addsubcat">
+                        <div class="block">
+                                <form method='POST' action='{% url catalog:container-add %}' enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <a title="Закрыть" class="btnClose">&nbsp;</a>
+                                <span class="textfield1"><input name='title' id='id_title' type="text"
+                                    placeholder='Введите название категории' value=""
+                                    onfocus='this.placeholder=""'></span>
+
+                                <span class='textfield2'>
+                                    <input placeholder='Порядок' onfocus='this.placeholder=""'
+                                        onchange='this.placeholder="Порядок"'
+                                        name='weight' id='id_weight' value='0' />
+                                </span>
+
+                                <textarea style="width: 442px; height: 160px;" id='id_description'
+                                    name='description' placeholder='Описание категории'
+                                    onfocus='this.placeholder=""'></textarea>
+                                <div class="hidden-info">
+                                    <div class="hidden-infoBlock">
+                                        <input type='hidden' name='container' value='{{ container.pk }}' id='id_container'>
+                                        <input type='hidden' name='next' value='{{ current_referer }}' id='id_next'>
+                                    </div>
+                                </div>
+                                <div class="btns">
+                                    <!--<input type="button" class="btnClear" value="отменить изменения"> -->
+                                    <input type="submit" class="btnSave postAjax" value="сохранить">
+                                </div>
+                                </form>
+                        </div>
+                    </div>
+
+                    {% include "catalog/include/container.html" %}
+                    {% for container in container.children.all %}
+                        {% include "catalog/include/container.html" %}
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% include "jtmpl/containers.html" %}
+
+    <script type='text/html' id='editItemTemplate'>
+        <div class="popup edit">
+        <div class="block">
+            <form method='POST' action='${ url }' enctype="multipart/form-data">
+            {% csrf_token %}
+            <a title="Закрыть" class="btnClose" onClick='$(this).parents(".popup").hide();return false;'>&nbsp;</a>
+            <span class="textfield1 allwidth">
+                <input name='title' id='id_title' type="text" placeholder='Введите название' value="${ item.title }">
+			</span>
+			<div class="info select">
+				<span class="txt">Единицы измерения</span>
+				<select name='category' id='id_category'>
+					{% get_instances 'catalog.itemcategory' as options %}
+					{% for option in options %}
+					<option value='{{ option.pk }}' {% spaceless %}
+						{% templatetag openvariable %}if ({{ option.pk }}==item.category_id){% templatetag closevariable %}
+						selected
+						{% raw %}{{/if}}{% endraw %}{% endspaceless %}>{{ option.title }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="info select">
+				<span class="txt">Категория</span>
+				<select name='container' id='id_container'>
+					{% for container in user.containers.all %}
+					<option {% spaceless %}
+						value='{{ container.pk }}'
+						{% templatetag openvariable %}if {{ container.pk }} == item.container_id{% templatetag closevariable %}
+						selected='selected'
+						{% templatetag openvariable %}/if{% templatetag closevariable %}{% endspaceless %}>{{ container.title }}</option>
+					{% endfor %}
+				</select>
+			</div>
+            <span class="Img">{#<a href="#" title="#" style='padding: 0px;'>#}
+                <img src="${ parseImage(item.image, item.service_name) }" alt="" style='max-width: 180px; max-height: 130px'>
+                {#<p>Загрузить фото</p></a>#}
+            </span>
+            <span class="textarea itm">
+				<textarea placeholder='Введите описание' id='id_description' name='description'>${ item.description }</textarea>
+			</span>
+            <div class="addPhoto">
+                <div class="item1">
+                    <span class="txt">
+                        <a href="#" title="#"><img src="/media/img/icon/add.gif" alt=""> Загрузить фото</a></span>
+                    <span class="addFile"><span class="textfield3">
+                        <input type="text" value=""></span> <span class="filefield">обзор<input type="file" name='image' id='id_image'></span>
+                    </span>
+                </div>
+                <p>Вы можете загрузить только фотографию расширения JPG, PNG или GIF. Файлы размером более 5 MB не загрузятся. В случае возникновения проблем попробуйте загрузить фотографию меньшего размера.</p>
+            </div>
+            <div class="info">
+                <div class="infoBlock">
+                    <span class="txt">Цена</span>
+					<span class="textfield2">
+                        <input name='cost' placeholder='0' onfocus='this.placeholder=""' id='id_cost' type="text" value="${ item.cost }">
+					</span>
+					<span class="txt"><span class="ruble">n</span></span>&nbsp;&nbsp;&nbsp;
+					<span class='txt'>Вес (гр)</span> <span class='textfield2'>
+                        <input name='mass' id='id_mass' value='${ item.mass }' />
+                    </span>&nbsp;&nbsp;&nbsp;
+                    <span class='txt'>Порядок</span> <span class='textfield2'>
+                            <input name='weight' id='id_weight' value='${ item.weight }' />
+                    </span>&nbsp;&nbsp;&nbsp;
+					<br><br>
+                    <span class='txt'>
+                        <input name='is_special_active' id='id_is_special_active' type='checkbox' {% raw %}{{ if item.is_special_active}}checked{{/if}}{% endraw %}>
+                    </span>
+					<span class='txt'>Действует акция?</span>&nbsp;&nbsp;&nbsp;
+					<br><br>
+                    <span class='txt'>Специальная цена</span>
+					<span class='textfield2'>
+                        <input name='special_cost' id='id_special_cost' value='${ item.special_cost }' />
+                    </span>&nbsp;&nbsp;&nbsp;
+                    <span class='txt'>Специальная цена истекает</span><span class='textfield2'>
+                        <input name='special_expires' id='id_special_expires' value='${ parseDate(item.special_expires) }' />
+                    </span>&nbsp;&nbsp;&nbsp;
+                    <span class='hide'>
+                        {% comment %}<input type='hidden'
+                            name='container' id='id_container' value='${ item.container_id }'>{% endcomment %}
+                    </span>
+                </div>
+            </div>
+            <div class="btns">
+                <!--<input type="button" class="btnClear" value="отменить изменения"> -->
+                <input type="submit" class="btnSave" value="сохранить">
+            </div>
+            </form>
+        </div>
+        </div>
+    </script>
+
+    <script type='text/javascript'>		
+        var parseImage = function(img, container){
+            if (img){
+                return '/uploads/' + img;
+            }
+            return '/media/img/no-content-' + container + '.jpg';
+        }
+        var parseDate = function(dat){
+            if (!dat) return '';
+            _dt = [dat[0], dat[1], dat[2]];
+            dt = new Date(_dt);
+            return (dt.getUTCDate()+1) + "." + (dt.getMonth()+1) + "." + dt.getFullYear();
+        }
+        $('.product_list h2').click(function(e) {
+                $product_list = $('.product_list');
+                if($(this).parent().hasClass('active')){
+                    $(this).parent().removeClass('active');
+                }
+                else{
+                    $product_list.find('.active').removeClass('active');
+                    $(this).parent().addClass('active');
+                }
+        });
+        $('.product_list .btnAdd').click(function(e) {
+                //$popup = $(this).parent().parent().find('.popup');
+				$popup = $(this).parent().parent().find('.popup-addsubcat');
+                if($popup.is(':visible')) $popup.hide();
+                else $popup.show();
+                return false;
+        });
+        $('.product_list .popup .btnClose').on('click', function(e){
+                $(this).parents('.popup').hide();
+                return false;
+        });
+        $('.addPhoto .addFile input:file').change(function(e) {
+                $('.addPhoto .addFile input:text').val($(this).val());
+        });
+        $('.product_list .editItem').click(function(e){
+            id = $(this).data('id');
+            url = String("{% url json:catalog:item 0 %}").replace(0, id);
+            edit_url = String("{% url catalog:item-edit 0 %}").replace(0, id);
+            parnt = $(this).parents('.item');
+            blk = $(parnt).find('.popup .edit');
+            if (!blk.length){
+                $.getJSON(url, function(response){
+					var top = getScrollTop() - $('.product_list').offset().top,
+						blkHeight;
+						
+					$('.product_list .popup').remove();
+					tmpl = $.template('#editItemTemplate');
+					blk = $.tmpl(tmpl, {url: edit_url, item: response, id: id});
+					//blk.appendTo(parnt);
+					blk.appendTo('.product_list');
+						
+					blkHeight = blk.innerHeight();
+						
+					/*if (blk.parents('.item').hasClass('last')){
+						blk.css({
+							'top': 0,
+							'margin-top': top + ($(window).height() - blkHeight)/2
+						});
+					} else {*/
+						blk.css({
+							'top': 0,
+							'margin-top': top + ($(window).height() - blkHeight)/2
+						});
+					/*}*/
+                    blk.show();
+					var params = {
+						changedEl: "select#id_category, select#id_container",
+						visRows: 5,
+						scrollArrows: true
+					}
+					cuSel(params);
+                });
+            }else{
+				/*if (blk.parents('.item').hasClass('last')){
+					blk.css('margin-top', -100);
+				} else {
+					blk.css('margin-top', 0);
+				}*/
+				blk.show();
+            }
+            return false;
+        });
+        $('.loadPhoto').click(function(e){
+            form = $(this).parents('form');
+            file = $(form).find('input[type=file]');
+            file.click();
+        });
+    $(document).ready(function(){
+		
+        $('body').on('click', '.del-item', function(e){
+            $this = this;
+			
+			var ntTextMsg = '';
+				ntTextMsg = ($($this).hasClass('delAllCat')) ? "Вы действительно хотите удалить категорию со всеми товарами этой категории?" : "Вы действительно хотите удалить данный товар?"
+
+            var nt = noty({
+                text: ntTextMsg,
+                buttons: [
+                    {
+                        addClass: 'btn btn-primary',
+                        text: "Да",
+                        onClick: function($noty){
+                            document.location.href = $($this).attr('href');
+                        }
+                    },
+                    {
+                        addClass: 'btn btn-danager', text: 'Нет',
+                        onClick: function($noty){
+                            $noty.close();
+                            noty({text: "Отменено", type: "information", timeout: 2000});
+                        }
+                    }
+                ]
+            });
+            return false;
+        });//click del-item
+		$('.fblink').fancybox({
+			helpers: { overlay: { css: { 'background': 'rgba(0, 0, 0, 0.2)' } } }
+		});
+    });
+    </script>
+{% endblock %}

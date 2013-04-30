@@ -1,0 +1,173 @@
+{% extends base %}
+{% block all_content %}
+<div class="partners">{% load coretags corefilters accountstags %}
+    <div class="menu">
+        <div class="b-inner">
+            <div class="content">
+                <ul>
+                    <li class="active">мои настройки</li>
+                    <li><a href="{% url catalog:service-orders %}" title="#">Мои заказы</a></li>
+                    <li><a href="{% url catalog:container-list %}" title="#">Мои товары</a></li>
+                    <li><a href="{% url catalog:service-partner-specials user.pk %}" title="#">Мои акции</a></li>
+					<li><a href='{% url catalog:csv-import %}'>Импортирование базы</a></li>
+                </ul>
+                <div class="Clear"></div>
+            </div>
+        </div>
+    </div>
+    <div class="b-inner">
+        <div class="content">
+            <div class="header">
+                <div class="rText">Здесь вы можете редактировать данные своего профиля:<br>логин, пароль, адреса и т.д.</div>
+                <div class="Clear"></div>
+            </div>
+
+            <p class="commission-info right">Ваша комиссия: {{ user.commission|multiply:gs.HUNDRED|safe|floatformat }} %</p>
+
+            <div class="b-content-filter">
+                {% if user.is_partner %}
+                <a class='active'><span>Данные об организации</span></a>
+                <a href='{% url accounts:profile-edit %}'><span>Данные о контактном лице</span></a>
+                {% else %}
+                <a class="active"><span>Данные о пользователе</span></a>
+                {% endif %}
+                <a href='{% url accounts:set-coordinates %}'>Привязка к карте</a>
+            </div>
+
+            {% if success %}
+            <div class='info'>
+                <h3>Профиль успешно сохранен</h3>
+            </div>
+            {% endif %}
+            {% comment %}
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
+            {% endcomment %}
+
+            <style type='text/css'>
+                form textarea{
+                    margin-left: 225px;
+                }
+                #id_description_tbl, #id_additional_tbl{
+                    margin-left: 225px;
+                }
+            </style>
+
+            <form method="POST" action='{% url accounts:profile-edit-org %}' id='update-form' enctype='multipart/form-data'>
+                {% csrf_token %}
+                <div class="contentform editform">
+                    <h4>Доступ в личный кабинет</h4>
+                    <!-- it's like shoot in my face, why are you doing this?? -->
+                    {% include "forms/form.html" %}
+					<br><br>
+					
+					<div class="line">
+						<span class="name">Время приема заказов<span class="req">*</span></span>
+						<div class="time-block">
+                            {% for day in "1234567"|make_list %}
+							<div class="item">
+                                {% get_timeday user day as td %}
+								<label>
+                                    <input type="checkbox" {% if td.is_active %}checked='checked'{% endif %} name='day-{{ day }}'>{{ day|select_day }}
+								</label>
+								<select name='day-{{ day }}-since' {% if td.is_active %}enabled='enabled' %}{% else %}disabled="disabled"{% endif %}>
+                                    {% include "accounts/include/time_options.html" with timeday=td tm=td.since %}
+								</select>
+								&nbsp;-&nbsp;
+								<select name='day-{{ day }}-until' {% if td.is_active %}enabled='enabled'%}{% else %}disabled="disabled"{% endif %}>
+                                    {% include "accounts/include/time_options.html" with timeday=td tm=td.until %}
+								</select>
+								<label class="allday"><input type="checkbox" value="">круглосуточно</label>								
+							</div>
+                            {% endfor %}
+						</div>
+					</div>
+
+                    {% comment %}
+                    {% if user.deliver_cost.all %}
+                    {% for deliver_cost in user.deliver_cost.all %}
+                    <div class="line">
+                        <span class="name">Цена доставки</span>
+                        <div class="phone">
+                            <div class="clone">
+                                <input type="text"
+                                    value="{{ deliver_cost.min }}"
+                                    class="number" name='deliver_min' id='id_deliver_min-{{ deliver_cost.pk }}'>
+                                <input type="text" value="{{ deliver_cost.max }}"
+                                    class="number" name='deliver_max' id='id_deliver_max-{{ deliver_cost.pk }}'>
+                                <input type="text" value="{{ deliver_cost.cost }}"
+                                    class="number" name='deliver_cost' id='id_deliver_cost-{{ deliver_cost.pk }}'>
+                            </div>
+                            <a href="#" class="add">добавить</a>
+                            <a class='del'
+                                href='{% url accounts:deliver-cost-delete deliver_cost.pk %}'>удалить</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="line">
+                        <span class="name">Цена доставки</span>
+                        <div class="phone">
+                            <div class="clone">
+                                <input type="text" placeholder='0' onfocus='this.placeholder=""'
+                                    value="{{ deliver_cost.min }}"
+                                    class="number" name='deliver_min'>
+                                <input type="text" value="{{ deliver_cost.max }}"
+                                    placeholder='5' onfocus='this.placeholder=""'
+                                    class="number" name='deliver_max'>
+                                <input type="text" value="{{ deliver_cost.cost }}"
+                                    placeholder='100' onfocus='this.placeholder=""'
+                                    class="number" name='deliver_cost'>
+                            </div>
+                            <a href="#" class="add">добавить</a>
+                        </div>
+                    </div>
+
+                    {% endif %}
+                    {% endcomment %}
+
+                    <div class="line submit">
+                        <input type="submit" value="Сохранить">
+                    </div>
+
+                </div>
+            </form>
+            {% if form.media %}{{ form.media }}{% endif %}
+
+        </div>
+    </div>
+
+<script type='text/javascript'>
+{% if form.errors %}
+    form = {
+        errors: {
+            {% for error in form.errors %}"{{ error }}": '{{ form.errors|get:error }}' {% if forloop.last %},{% endif %}{% endfor %}
+        }
+    }
+    var updateErrorFields = function(frm){
+        for (item in form.errors){
+            blk = $(form.errors[item]);
+            //console.log(blk);
+            insert_before_blk = $($("#id_" + item).parents('.line').children()[0]);
+            blk.insertBefore(insert_before_blk);
+        }
+    }
+    $(document).ready(function(){
+        updateErrorFields('#update-form');
+    });
+{% else %}
+$(document).ready(function(){
+    $("span[for=id_apartment]").text('Офис');
+    $("span[for=id_avarage_cost]").text('Cумма заказа');
+    blk = $("<br><span class='name'></span><span class='text'>сумма заказа, при которой доставка осуществляется бесплатно</span>"
+    );
+    target = $('span[for=id_avarage_cost]').parents('div.line').find('input');
+    blk.insertAfter(target);
+    $("span[for=id_avarage_deliver_cost]").text('Стоимость доставки');
+});
+{% endif %}
+</script>
+
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+<link rel="stylesheet" type="text/css" media="screen" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+<div class="popup order-detail-info">
+    <h1>Заказ №{{ order.pk }}</h1>
+    <form class='ajaxForm' method='POST' action='{% url catalog:service-order-update order.pk %}'><div class="contentform">
+        {% csrf_token %}
+        <select class="order-status" name='status' id='id_status'>
+            {% for status in order_statuses %}
+            {% if status.0 == 'not_confirmed' or status.0 == '1rejected' or status.0 == 'checking' %}
+                {% if user.is_partner %}
+                {# skip #}
+                {% else %}
+                    <option value="{{ status.0 }}" {% if order.status == status.0 %}selected='selected'{% endif %}>{{ status.1 }}</option>
+                {% endif %}
+            {% else %}
+                    <option value="{{ status.0 }}" {% if order.status == status.0 %}selected='selected'{% endif %}>{{ status.1 }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        {% include 'catalog/include/order_detail.html' %}
+        <h5>Комментарий</h5>
+        <div class="b-popup-comment">
+            <textarea id='id_comment' name='comment'>{{ order.comment|default_if_none:"" }}</textarea>
+            <div class="arr"></div>
+        </div>
+        <input type="submit" value="сохранить" class='saveBtn postAjax'>
+
+    </div></form>
+</div>
+
+<script type='text/javascript'>
+$(document).ready(function(){
+
+});
+</script>

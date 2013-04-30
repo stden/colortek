@@ -1,0 +1,72 @@
+/*spacers */
+.top.spacer{
+    margin-bottom: 60px;
+}
+.spacer{
+    margin-bottom: 15px;
+}
+/* news */
+.post{
+    margin-bottom: 10px;
+}
+.textarea.input{
+    width: 675px;
+}
+/* endof news */
+
+/* forms */
+.filter-form{
+    display: inline-block;
+}
+
+.form-errors, ul.errorlist{
+    color: red;
+}
+ul.errorlist{
+    margin-left: 0;
+}
+.container-item, .service-item{
+    border: 1px dotted black;
+    padding: 5px;
+    margin: 5px;
+}
+.container-item .title{
+    display: block-inline; 
+}
+.container-item ul.items div{
+    display: inline-block;
+}
+.container-item ul, .container-item ul li{
+    list-style-type: none;
+}
+.container-item ul li{
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px dotted #ccc;
+}
+.container-item ul li:hover{
+    border: 1px dotted #888;
+}
+form li{
+    list-style-type: none;
+}
+.order.list div.title{
+    font-weight: bold;
+    font-size: 15pt;
+    margin-bottom: 3px;
+}
+.order.list .items .item{
+    padding: 5px 10px;
+    margin: 5px;
+}
+.order.list .items .item div{
+    display: inline;
+}
+.order.list .item .title,
+.order.list .item .cost{
+    vertical-align: top;
+}
+.move-right{
+    text-align: right !important;
+}
+

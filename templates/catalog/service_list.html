@@ -1,0 +1,13 @@
+{% extends base %}{% load i18n thumbnail %}
+{% block content %}
+    {% if services %}
+        {% for service in services %}
+            <div class='service-item'>
+                <div class='title'><a href='{% url catalog:catalog-list service.pk %}'>{{ service.title }}</a></div>
+                <div class='description'>{{ service.description|safe }}</div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3>{% trans "No services was initiated" %}</h3>
+    {% endif %}
+{% endblock %}

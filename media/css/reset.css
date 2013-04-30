@@ -1,0 +1,45 @@
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, em, img, strong, sub, sup, b, u, i, dl, dt, dd, ol, ul, li, form, label, table, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	vertical-align: baseline;
+	background: transparent;
+}
+html { 
+	font-size: 100.01%;
+	height:100%;
+}
+body {
+	height:100%;
+	line-height: 1;
+	background: #fff;
+	color: #3e3e3e;
+	text-align: left;
+	font: 12px Arial, Helvetica, sans-serif;
+}
+:focus {
+	outline: 0;
+}
+a img{
+	border:0;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 100%;
+}
+a {
+	color: #221e1b;
+}
+a:visited{
+	color: #221e1b;
+}
+a:hover{
+	color:#ef4c3d;
+}
+input::-moz-focus-inner /*Remove button padding in FF*/
+{ 
+    border: 0;
+    padding: 0;
+}

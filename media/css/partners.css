@@ -1,0 +1,108 @@
+.partners-promo-block{
+	font-size:16px;
+}
+.partners-promo-block span.sel{
+	color:#d6564b;
+	font-weight:bold;
+}
+.partners-promo-block h3{
+	color:#ef4e3f;
+	font-size:30px;
+	text-align:center;
+	text-transform:uppercase;
+	margin:0 0 20px 0;
+}
+.partners-promo-block p{
+	margin:0 0 20px 0;
+}
+.partners-promo-block div.ol{
+	margin:0 0 20px 50px;
+}
+.partners-promo-block div.ol div.li{
+	position:relative;
+	padding:10px;
+	border-top:1px dotted #c4c4c4;
+}
+.partners-promo-block div.ol div.li:first-child{
+	border:0;
+}
+.partners-promo-block div.ol div.li img.icon{
+	position:absolute;
+	margin:0 0 0 -50px;
+}
+.partners-promo-block .info-frame{
+	position:relative;
+	width:694px;
+	height:456px;
+	margin:0 auto 20px auto;
+	background:url(../img/bg/partners.png) 0 0 no-repeat;
+	overflow:hidden;
+}
+.partners-promo-block .info-frame .left{
+	width:50%;
+	float:left;
+	clear:right;
+	color:#fff;
+	text-align:center;
+}
+.partners-promo-block .info-frame .right{
+	width:50%;
+	float:right;
+	clear:right;
+}
+.partners-promo-block .info-frame .left p.title,
+.partners-promo-block .info-frame .right p.title{
+	text-align:center;
+	font-size:20px;
+	line-height:30px;
+}
+.partners-promo-block .info-frame .left p.title{
+	color:#ef4e3f;
+}
+.partners-promo-block .info-frame .right p.title{
+	color:#fff;
+}
+.partners-promo-block .info-frame .left p{
+	margin:0 25px 20px 25px;
+}
+.partners-promo-block .info-frame .left p.price{
+	font-size:27px;
+	text-transform:uppercase;
+	margin:0 0 40px 0;
+	text-shadow: 2px 0px 0px #af0706;
+}
+.partners-promo-block .info-frame .left p.price strong{
+	display:block;
+	font-size:300px;
+	line-height:80%;
+	text-shadow: 4px 1px 0px #af0706;
+}
+.partners-promo-block .info-frame .left p.note{
+	font-size:20px;
+	text-shadow: 2px 0px 0px #af0706;
+}
+.partners-promo-block .info-frame ul{
+	list-style-type:circle;
+	color:#363636;
+	font: 15px 'trebuchet ms', geneva;
+	margin:25px;
+}
+.partners-promo-block .info-frame ul li{
+	padding:0;
+	margin:0 0 10px 0;
+	background:none;
+}
+.partners-promo-block .address{
+	font-size:20px;
+	width:728px;
+	height:89px;
+	background:url(../img/bg/partners-btm.png) 0 0 no-repeat;
+	margin:0 auto;
+	padding-top:10px;
+	color:#fff;
+	text-align:center;
+	text-shadow: 2px 0px 0px #af0706;
+}
+.partners-promo-block .address a{
+	color:#fff;
+}

@@ -1,0 +1,434 @@
+{% load thumbnail corefilters coretags %}
+<link rel="stylesheet" type="text/css" media="screen" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+
+<div class="popup">
+    {% if kart.products %}
+	<h1>Оформление заказа</h1>
+	{% if not user.is_authenticated %}
+		{% include "catalog/include/anonymous_user_order_info.html" %}
+	{% endif %}
+	<form method='POST' action='{% url catalog:order %}' id='order-form'>
+        {% csrf_token %}
+        <div class='hidden'>
+            <input type='hidden' name='deliver_cost' id='id_deliver_cost' value="{{ kart.deliver_cost }}">
+        </div>
+		<div class="p-order-form">
+			<div class="right">
+				<div class="box">
+					<div class="place">
+						<div class="i">
+						{% thumbnail kart.service.logo gs.ITEM_THUMBNAIL_SIZE_SMALL as image %}
+						<a href="#"><img src="{{ image.url }}" alt="{{ kart.service.service_name }}"></a>
+                        {% endthumbnail %}
+						</div>
+						<div class="n">
+							<a href="#">{{ kart.service.service_name|default_if_none:kart.service.username }}</a>
+						</div>
+					</div>
+					<div class="price">
+						<p><strong>Сумма заказа:</strong>
+                            <em id='total_price'><span class="cn">{{ kart.total_price }}</span><span class="ruble">n</span></em></p>
+						<p><strong>Доставка:</strong>
+                            <em><span id='id-deliver-cost'></span>{{ kart.deliver_cost }}<span class='ruble'>n</span></em>
+                            <!--
+                                <a href='#' class='reload deliver cost' data-service-id='{{ kart.service.pk }}'>Узнать цену доставки</a> -->
+                            <!--<em>{{ kart.deliver_cost }} <span class="ruble">n</span></em> -->
+                        </p>
+					</div>
+				</div>
+                {% if user.is_authenticated and user.bonus_score != 0 %}
+				<div class="box bonus">
+					<p>Внести баллы (не более {{ kart.bonus_max|int }}):</p>
+					<input name='discount' id='id_discount' type="text" value="0"> баллов <em><span id='bonus-score-ruble'></span><!--span class="ruble">n</span--></em>
+				</div>
+				<div class="box total">
+					Итого: <em><span id='total-price'>{{ kart.total_price|add:kart.deliver_cost }}</span> <span class="ruble">n</span></em>
+				</div>
+                {% endif %}
+				<div class="box more-bonus">
+					<p><strong>{# {{ user.is_authenticated|yesno:",* " }} #}Вы получите баллов:</strong>
+                    <em id='get-bonus'>{{ kart.total_price|multiply:gs.DEFAULT_BONUS_RATE|multiply:gs.MBONUS_RATE_THRESHOLD }}</em></p>
+                    {% if not user.is_authenticated %}
+                        {# <i>(*) Если вы выберете вариант с регистрацией</i> #}
+                        <i><small>* при условии регистрации</small></i>
+                    {% endif %}
+				</div>
+				<label class="rules"{% if user.is_authenticated %} style="display:none;	"{% endif %}><input type="checkbox" name='agree' id='id_agree' checked='checked'><a href="/media/d/websiterules.pdf" target="_blank" onclick="window.open(this.href);return false;" class="link">Согласен с условиями соглашения</a></label>
+				<label id="id_contractoffer" style="display:none;"><input type="checkbox" checked="checked"><a href="/media/d/contractoffer.pdf" target="_blank" onclick="window.open(this.href);return false;" class="link">Договор оферты</a></label>
+                {% comment %}
+                {% if not user.is_authenticated %}
+                <label><input type='checkbox' name='is_register' id='id_is_register'><a href='#'>Зарегистроваться</a></label>
+                <br />
+                {% endif %}
+                {% endcomment %}
+				<p class="noted"><span class="req">*</span> - поля, обязательные для заполнения</p>
+				<input type="submit" value="оформить заказ" class='postAjax'>
+				<a class="submit" href="#" onclick="$(this).parents('.fancybox-wrap').find('.fancybox-close').click();return false;">Редактировать заказ</a>
+				
+				
+				
+			</div>
+			<div class="form">
+			<!-- div class="form" action='{% url catalog:order %}' method='POST'> -->
+				<div class="box">
+					<div class="line">
+						<span class="name">Имя<span class="req">*</span></span>
+						<input type="text" value="{{ user.get_real_name|default_if_none:"" }}" name='name' id='id_name'>
+					</div>
+                    <div class="line">
+						<span class="name">Контактный телефон<span class="req">*</span></span>
+						<input class='required size-2' name='phone' id='id_phone' type="hidden" value="{{ user.phone|default_if_none:"" }}">
+						<div id="phone-from-profile">
+							+7
+							<input type="text" id='phone_code' maxlength='3' value="{{ user.phone|phone_split|first }}" class="required size-1">
+							<input class='required size-2' id='phone_number' type='text' maxlength='7' value="{{ user.phone|phone_split:"1" }}">
+							<!--<input name='phone2' name='phone2' id='id_phone2' type="text" value="" class="size-2">-->
+						</div>
+						
+						{% if user.is_authenticated %}
+						<p id="show_additional_phones_wrap"><a href="#" id="show_additional_phones"><span>Добавить новый номер</span></a></p>
+						{% endif %}
+					</div>
+					
+					{% if user.is_authenticated %}
+					<div class="line" id="additional_phones">
+						<div></div>
+						<script type="text/javascript">
+							(function( $ ) {
+								function drawPhoneSelect(){
+									$.getJSON('{% url json:accounts:phones %}', function(data) {
+										if (data.phones.length > 0){
+											var profile_phone_numbers = [],
+												profile_phone_numbers_select = '';
+											
+											$.each(data, function(key, val) {
+												profile_phone_numbers.push(val);
+											});											
+											profile_phone_numbers_select += '<option value="{{ user.phone }}">' + {{ user.phone }} + '</option>';
+											for (var i = 0; i < profile_phone_numbers.length; i++){
+												$.each(profile_phone_numbers[i], function(key, val) {
+													profile_phone_numbers_select += '<option value="' + val.phone + '">' + val.phone + '</option>'
+												});
+											}
+											if (profile_phone_numbers_select != ''){
+												$('#phone-from-profile').html('<select id="profile_phone_numbers_select">' + profile_phone_numbers_select + '</select>');
+												$('#profile_phone_numbers_select').change(function(){
+													$('#id_phone').val($(this).val());
+												});
+												var params = {
+													changedEl: "#profile_phone_numbers_select",
+													visRows: 15,
+													scrollArrows: true
+												}
+												cuSel(params);
+											}
+											
+										} else {
+											$('#show_additional_phones_wrap').hide();
+										}
+									})
+								}
+								drawPhoneSelect();
+								
+								$('#show_additional_phones').on('click', function(){
+									if ($(this).find('span').text() == 'Добавить новый номер'){
+										$('#phone-from-profile').html('+7&nbsp;<input type="text" id="phone_code" maxlength="3" value="" class="required size-1"><input class="required size-2" id="phone_number" type="text" maxlength="7" value="">');
+										$(this).find('span').text('Выбрать номер из списка');
+									} else {
+										drawPhoneSelect();
+										$(this).find('span').text('Добавить новый номер');
+									}
+									return false;
+								});
+								
+								
+								
+								
+							})( jQuery );
+						</script>
+					</div>
+					{% endif %}
+
+                    {% if not user.is_authenticated and gs.VERY_ANGRY %}
+                    <div class='line'>
+                        <span class='name'>E-адрес<span class="req">*</span></span>
+                        <input name='email' id='id_email' type='text' value='{{ user.email|default_if_none:"" }}'>
+                    </div>
+                    {% endif %}
+
+					<div class="line">
+						<span class="name">Город<span class="req">*</span></span>
+						<select name='city' id='id_city'>
+                            {% get_instances 'geo.city' as cities %}
+                            {% for city in cities %}
+                                <option value="{{ city.pk }}"
+                                    {% if user.city.pk == city.pk and not session.city %}selected='selected'{% endif %}
+                                    {% if session.city == city.pk %}selected='selected'{% else %}
+                                    {% if rgeoip.city and rgeoip.city == city.title %}
+                                    selected='selected'{% endif %}
+                                    {% endif %}
+                                {% comment %}{% spaceless %}
+                                {% if user.is_authenticated %}
+                                    {% if user.city == city %}
+                                        selected="selected"
+                                    {% endif %}
+                                {% else %}
+                                    {% if geoip.city.city == city.iso and geoip.city.city %}
+                                        selected='selected'
+                                    {% endif %}
+                                {% endif %}
+                                {% endspaceless %}{% endcomment %}>{{ city.title }}</option>
+                            {% endfor %}
+						</select>
+					</div>
+                        <div class="line">
+                            <span class="name">Улица<span class="req">*</span></span>
+						<input type="text" value="{{ user.address|default_if_none:"" }}" name='street' id='id_street'>
+					</div>
+					<div class="line">
+						<span class="name">Дом<span class="req">*</span></span>
+						<input type="text" maxlength=10
+                            value="{{ user.building|default_if_none:"" }}" class="size-1 required" name='building' id='id_building'>
+						<span class="name">Корпус</span>
+						<input type="text" maxlength=5
+                            value="" class="size-1" name='building_attr' id='id_building_attr'>
+						<span class="name">Квартира/офис<span class="req">*</span></span>
+						<input type="text" maxlength=7
+                            value="{{ user.apartment|default_if_none:"" }}" class="size-1 required" name='apartment' id='id_apartment'>
+					</div>	
+				</div>
+
+                <!-- box -->
+                <div class="box">
+                    <div class='line'>
+                        <span class='name'>Ближайшая станция метро</span>
+                        <input class='size-2 required' type='text' value="{{ user.subway.title|default_if_none:"" }}" name='subway' id='id_subway'>
+                    </div>
+
+					<div class="line">
+						<span class="name">дата поставки</span>
+						<input type="text" placeholder='{% now "d.m.Y" %}' value='{% now "d.m.Y" %}' class="date size-3" name='deliver_date' id='id_deliver_date'>
+						<input type="text" placeholder='12:00' value='' onfocus='this.placeholder="";' class="time size-3" name='deliver_time' id='id_deliver_time'>
+					</div>
+
+                    <div class="line">
+						<span class="name">Добавить комментарий к заказу</span>
+						<textarea name='comment' id='id_comment'></textarea>
+					</div>
+                    {% if user.is_authenticated and kart.service.has_online_payment %}
+                    <div class="line">
+						<span class="name">Способ оплаты</span>
+						<select name='payment_redirect' id="payment_redirect_select">
+							<option value='deliver'>наличными курьеру</option>
+							<option value='online'>электронный платеж</option>
+						</select>
+					</div>
+                    {% else %}
+                    <div class='hidden'>
+                        <input type='hidden' name='payment_redirect' id='payment_redirect' value='deliver'>
+                    </div>
+                    {% endif %}
+					<div class="line">
+                            <span class="name">Нужна сдача с&nbsp;</span>
+						<input type="text" placeholder='5000' onfocus='this.placeholder=""'
+                            class="size-3" name='need_change' id='id_need_change' value='0'><span class="ruble">n</span>
+					</div>
+                    <div class="line">
+                            <span class="name">Промо-код&nbsp;</span>
+						<input type="text" onfocus='this.placeholder=""'
+                            class="size-1" name='promo_code' id='id_promo_code' value=''>
+					</div>
+                    {% comment %}
+                    <div class='line'>
+                        <span class='name'>Код домофона</span>
+                        <input type='text' value="" class='size-1' name='code' id='id_code'>
+                    </div>
+                    {% endcomment %}
+				</div>
+                {% comment %}
+				<div class="box">	
+				</div>
+                {% endcomment %}
+			</div>
+		</div>
+	</form>
+    {% else %}
+    <h3>В корзине ничего нет</h3>
+    {% endif %}
+</div>
+
+{# <script src='/media/js/jquery.min.js'></script> #}
+
+<script type='text/javascript'>
+$(document).ready(function(){
+
+    $("#order-form #id_discount").val($("#bonus-discount").val());
+	//$("#order-form #id_discount").val(0);
+
+    /* globals */
+    var exchange_rate = {{ gs.BONUS_EXCHANGE_RATE|safe }};
+    var bonus_rate = {{ gs.BONUS_RATE|floatformat }};
+    var bonus_threshold = {{ gs.BONUS_RATE_THRESHOLD|floatformat }};
+    var bonus_max_discount = {{ gs.BONUS_MAX_DISCOUNT|safe }};
+    var deliver_cost = {{ kart.deliver_cost|safe }};
+    var _total_price = {{ kart.total_price|safe }};
+
+    var reloadDeliveryCost = function(cost){
+        form = $("#order-form");
+        form.find('#id_deliver_cost').val(cost);
+        form.find("#id-deliver-cost").text(cost);
+        new_total = _total_price + cost;
+        form.find('#total-price').text(new_total);
+        $('#id_discount').keydown();
+
+    }
+
+    $('#id_discount').keydown(function(e){
+        $this = this;
+        clearTimeout(typeof tid == 'undefined' ? null : tid);
+        tid = setTimeout(function(){
+            val = parseInt($($this).val()) || 0;
+            //console.log(val);
+			var total_price_str = $("#total_price .cn").text();
+            var total_price = parseFloat(total_price_str);
+				bonus_max = total_price * bonus_max_discount / exchange_rate;
+				bonus_currency = val * exchange_rate;
+				bonus_get = (total_price - bonus_currency) / bonus_threshold * bonus_rate;
+            if (val > bonus_max){
+                $("#get-bonus").html("<b>Максимальная установленная планка для скидки по бонусным балам 10%, то есть:" + bonus_max + "</b>");
+            }else {
+                $("#get-bonus").text(bonus_get.toFixed(0));
+                total = total_price + deliver_cost - val * exchange_rate;
+                $("#total-price").text(total);
+            }
+        }, 400);
+    });
+    $("#id_discount").keydown(); //initial
+
+    $(".postAjax").click(function(e){
+		
+		if ($(this).hasClass('notActive')) return false;
+	
+        form = $(this).parents('form');
+        form.find('.postAjax').attr({disabled: 'disabled'});
+
+        global_noty = new noty({
+            //ext: "Пожалуйста дождитесь конца выполнения реквизирования заказа, воздержитесь от нажатия различных кнопок, а также оставайтесь на странице, до тех пор пока не увидите сообщение о успешном резерве",
+			text: "Пожалуйста, оставайтесь на странице и дождитесь завершения операции.",
+            type: "information",
+            timeout: false,
+            dismissQueue: true
+        });
+        //successMsg = "<img src='/media/icon/success.png' style='vertical-align:middle'>&nbsp;Спасибо за ваш заказ, он направлен в очередь на обработку";
+		successMsg = "<img src='/media/icon/success.png' style='vertical-align:middle'>&nbsp;Ваш заказ отправлен оператору. Спасибо!";
+        {% if kart.service.has_online_payment %}
+        successMsg += "<br><b>Вы можете оплатить заказ онлайн, проследовав по ссылке из " +
+            "<a href='{% url catalog:orders %}'>личного кабинета</a></b>";
+        {% endif %}
+        //console.log(successMsg);
+        postFormAjax({
+            url: form.attr('action'),
+            form: form,
+            successMsg: successMsg,
+            failureMsg: "Произошел сбой сервера, пожалуйста обновите страницу, если ошибка повторится обратитесь к администрации",
+            notyTimeout: false,
+            success: function(response){
+                errors = (typeof response.form != 'undefined') ? response.form.errors : null;
+                if (!errors){
+                    //console.log(errors);
+                    if ('payment_redirect' in response){
+                        document.location.href = response['payment_redirect'];
+                    } else {
+                        SUB_ID = response.order_id;
+                        AMOUNT = response.order_amount;
+                        noty({
+                            text: '<!-- Offer Conversion: Уже Везу --><iframe src="http://track.cpatool.net/SL1k?adv_sub=' + SUB_ID + '&amount='+ AMOUNT + '" scrolling="no" frameborder="0" width="1" height="1"></iframe><!-- // End Offer Conversion -->',
+                            dismissQueue: true
+                        });
+                         setTimeout(function(){
+                            {% if kart.service.has_online_payment %}
+                                document.location.href = '{% url catalog:orders %}';
+                            {% else %}
+                                document.location.reload();
+                            {% endif %}
+                        }, {% if kart.service.has_online_payment %}15000{% else %}7000{% endif %});
+                    }
+                } else {
+                    setTimeout(function(){
+                        global_noty.close();
+                    }, 1000);
+                    if (errors.deliver_cost){
+                        /*noty({
+                            text: "Вы должны узнать стоимость доставки, пожалуйста нажмите на ссылку в форме заказа",
+                            type: 'warning',
+                            dismissQueue: true
+                        });*/
+                    }
+                }
+                form.find('.postAjax').removeAttr('disabled');
+            },
+            failure: function(response){
+                form.find('.postAjax').removeAttr('disabled');
+            }
+        });
+        return false;
+    });
+
+    $(".reload.deliver.cost").click(function(e){
+        service_id = $(this).data('service-id');
+        form = $(this).parents('form');
+        city = form.find('span[selected]').text();
+        address = form.find('#id_street').val();
+        building = form.find('#id_building').val();
+        url = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+        query = city + "+" + "ул.+"+ address + "д.+" + building;
+        url += query + "&sensor=true";
+        var geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({'address': query}, function(data, status){
+            if (status == 'OK'){
+                pos = data[0].geometry.location;
+                url = String("{% url json:catalog:order-price 0 %}").replace(0, service_id);
+                postAjax({
+                    url: url,
+                    data: "lat=" + pos.$a + "&lng=" + pos.ab,
+                    success: function(response, code){
+                        //console.log(response);
+                        if (response.success){
+                            reloadDeliveryCost(response.deliver_cost);
+                        } else {
+                            noty({
+                                type: "error",
+                                text: response.message,
+                                timeout: false,
+                                dismissQueue: true
+                            })
+                        }
+                    }
+                });
+            } else {
+                noty({
+                    type: "warning",
+                    text: "Пожалуйста введите правильный адрес, для того чтобы его распознать",
+                    timeout: false,
+                    dismissQueue: true
+                });
+            }
+        });//getlocation
+
+        return false;
+    });
+    // update discount set in basket menu
+    $('#phone_code, #phone_number').live('change', function(e){
+        prefix = '7';
+        num = $("#phone_number").val();
+        code = $("#phone_code").val();
+        $("#id_phone").val(prefix + code + num);
+    });
+	
+	$('#payment_redirect_select').change(function(e){
+		($(this).val() == 'online') ? $('#id_contractoffer').show() : $('#id_contractoffer').hide();
+	});
+	
+}); // document ready
+</script>

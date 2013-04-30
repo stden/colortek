@@ -1,0 +1,21 @@
+{% load coretags corefilters %}
+	<span class="dem">
+		<span class="price">{{ addon.cost|floatformat:"-2" }}<span class="ruble">n</span></span>
+		<span class="size-sel active new">
+			<span class="selected"
+				addition-count="{{ addon.category.threshold }}" max-count="{{ addon.category.threshold|multiply:10 }}">{{ addon.category.get_rate }}</span>
+			<span class='title'>{{ addon.category.short_rate_title }}</span>
+			<span class="plus"></span>
+			<span class="minus"></span>
+			<input type="hidden" name='quantity-{{ addon.pk }}' value="{{ addon.category.threshold }}"><!-- this field value eq span.selected content -->
+		</span>
+	</span>
+	<label>
+		<input type='checkbox' name='addons' value='{{ addon.pk }}' class="name">
+		<span class="label-text">
+			<!--div class='hide'>
+				<input type='checkbox' name='addons' value='{{ addon.pk }}' class="name"><span class='name'>{{ addon.title }}</span>
+			</div-->
+			<span class="name">{{ addon.title }}</span>
+		</span>
+	</label>

@@ -1,0 +1,84 @@
+{% extends base %}{% load i18n thumbnail %}
+{% block css %}
+    {{ block.super }}
+{% endblock %}
+
+{% block all_content %}
+<div class="partners">
+	<div class="menu">
+            <div class="b-inner">
+                <div class="content">
+                    <ul>
+                        <li><a href="{% url accounts:profile-edit %}">мои настройки</a></li>
+                        <li><a href="{% url catalog:service-orders %}">Мои заказы</a></li>
+                        <li class="active"><a href="{% url catalog:container-list %}">Мои товары</a></li>
+                        <li><a href="{% url catalog:service-partner-specials user.pk %}">Мои акции</a></li>
+                        <li><a href='{% url catalog:csv-import %}'>Импортирование базы</a></li>
+                    </ul>
+                    <div class="Clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="b-inner">
+            <div class="content">
+			<div class='control-group contentform'>
+				{% if user.is_partner and container.owner == user %}
+					{# <a class='btn btn-success' href='{% url catalog:addon-add %}'>{% trans "Addon add" %}</a> #}
+					<div class="header">
+						<div class="rText">Здесь вы можете создавать категории и подкатегории товаров, а также добавлять информацию о самих товарах</div>
+						<h1>Разместить добавку</h1>
+						<br>
+						<p><a class="back-to-list" href="{% url catalog:container container.pk %}">Назад к списку подкатегорий</a></p>
+						<div class="Clear"></div>
+					</div>
+					<form action='{% url catalog:addon-add container.pk %}' method='post'>
+						{% csrf_token %}
+						<ul class="ul-addon-add">{{ form.as_ul }}</ul>
+						<div class='actions a-addon-add'>
+							<input type='submit' value='сохранить' class="s-addon-add">
+							{# <a class='s-addon-add' href='{% url catalog:container container.pk %}'>Назад</a> #}
+						</div>
+					</form>
+				{% endif %}
+				{% if not user.is_partner %} 
+					<a href='{% url catalog:cart %}' class='btn'>{% trans "Back to cart" %}</a>
+				{% endif %}
+			</div>
+
+			{% if addons %}
+				<table class='table striped addons orders'>
+					<tr class='title'>
+						<th>{% trans "#" %}</th>
+						<th>{% trans "Title" %}</th>
+						{# <th>{% trans "Description" %}</th> #}
+						<th>{% trans "Cost" %}</th>
+						<th>{% trans "Actions" %}</th>
+					</tr>
+				{% for addon in addons %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td>{{ addon.title }}</td>
+						{# <td>{{ addon.description }}</td> #}
+						<td>{{ addon.cost }} руб.</td>
+						<td class='actions'>
+							{% if not user.is_partner and item %}
+								<a class='btn btn-success'
+									href='{% url catalog:cart-addon-add item.pk addon.pk %}'>
+										{% trans "Add to cart" %}
+								</a>
+							{% endif %}
+							{% if user.is_partner %}
+								<a class='del' href='{% url catalog:addon-delete addon.pk %}'>удалить</a>
+								<a class='edit-link' href='{% url catalog:addon-edit addon.pk %}'>править</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+				</table>
+			{% else %}
+				<h3>{% trans "You have no any addon on this container" %}</h3>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

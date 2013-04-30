@@ -1,0 +1,16 @@
+{% load corefilters coretags catalogtags %}
+{% if gs.VOTES_POPUP_ENABLE %}
+{% for vote in active_votes %}
+<div class="b-r-feedback">
+    <h4>Оставьте свой отзыв</h4>
+    <form class='order vote form' id='order-vote-form' method='POST' action='{% url catalog:order-vote vote.sid %}'>
+        {% generate_vote_form vote as form %}
+        {% csrf_token %}
+        {% include "forms/form_rating.html" with form=form %}
+        <div class="actions">
+            <input class='submit' type='submit' value="Оставить отзыв">
+        </div>
+    </form>
+</div>
+{% endfor %}
+{% endif %}

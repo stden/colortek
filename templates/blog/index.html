@@ -1,0 +1,74 @@
+{% extends base %} {% load blogtags coretags thumbnail %}
+{% block title %}Уже везу, Блоги{% endblock %}
+{% block head %}{% include "blog/include/blog_index_seo.html" %}{% endblock %}
+{% block body-class %}text-pages{% endblock %}
+{% block all_content %}
+    <div class="blogs">
+        <div class="b-inner">
+            <div class="content">
+                <div class="mainBlock1">
+                    <form class='' method='GET' action='{% url blog:search %}'>
+                    <div class="item">
+                        <span class="textfield"><input type="text" class="textfield1"
+                            placeholder='Введите запрос' onfocus='this.placeholder=""'
+                            name='q' id='id_q'
+                            value="{{ G.q|default_if_none:"" }}"></span>
+                        <span class="btn"><input type="submit" value="подобрать"></span>
+                    </div>
+                    <div class="item">
+                        <!--<span class="chk"><input type="checkbox"></span> <span class="chkLabel">по дате</span>
+                        <span class="chk chkChecked"><input type="checkbox" checked=""></span>
+                        <span class="chkLabel">по количеству комментариев</span> -->
+                    </div>
+                    </form>
+                </div>
+                <div class="mainBlock2">
+                    <div class="lCol">
+                        <h2>Категории:</h2>
+                        {% for serv in servs %}
+                            {% if serv.blog_types.count > 0 %}
+                            {% if services.count > 1 %}<h3>{{ serv.title }}</h3>{% endif %}
+                            <ul class='types'>
+                                {% blog_types serv category=category %}
+                            </ul>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="rCol">
+                        <div class="list">
+                            {% if search and not posts.object_list %}
+                                <h3 style='color: #000;'>Извините, но по вашему запросу ничего не найдено</h3>
+                            {% endif %}
+                            {% if not posts %}
+                                {% get_instances 'blog.post' as posts "slice" %}
+                            {% endif %}
+                            {% comment %}{% slice_instances posts.object_list as psts %}
+                            <span class="col">
+                                {% include "blog/include/posts_index.html" with posts=psts.0 %}
+                            </span>
+                            <span class="col">
+                                {% include "blog/include/posts_index.html" with posts=psts.1 %}
+                            </span>{% endcomment %}
+                            {% include "blog/include/posts_index.html" %}
+                        </div>
+                        <div class="else">
+                            {% include "pages.html" with page=posts %}
+                            {# <span class="ico"></span> <a href="#" title="#">отобразить еще 10</a> #}
+                        </div>
+                    </div>
+                    <div class="Clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script type='text/javascript'>
+$(document).ready(function(){
+    $('.chk').click(function(e){
+        $(this).toggleClass('chkChecked');
+        $(this).hasClass('chkChecked')
+           ? $(this).find('input[type=checkbox]').removeAttr('checked')
+           : $(this).find('input[type=checkbox]').attr({'checked':''});
+    });
+});
+</script>
+{% endblock %}

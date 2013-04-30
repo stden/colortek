@@ -1,0 +1,133 @@
+{% extends base %} {% load corefilters pytils_numeral %}
+{% block css %}
+    {{ block.super }}
+    <link rel='stylesheet' href='/media/css/invite.css' type='text/css' media='screen'>
+{% endblock %}
+{% block all_content %}
+<div class="partners">
+    <div class="menu">  
+        <div class="b-inner">
+            <div class="content">
+                {% if user.is_authenticated %}
+                <ul>
+                    {% if user.is_partner %}
+                        <li><a href="{% url accounts:profile-edit %}">мои настройки</a></li>
+                        <li><a href="{% url catalog:service-orders %}">Мои заказы</a></li>
+                        <li><a href="{% url catalog:container-list %}">Мои товары</a></li>
+                        <li><a href="{% url catalog:service-partner-specials user.pk %}">Мои акции</a></li>
+                        <li><a href='{% url catalog:csv-import %}'>Импортирование базы</a></li>
+
+                    {% else %}
+                    <li><a href="{% url accounts:profile-edit %}">мои настройки</a></li>
+                    <li><a href="{% url catalog:orders %}">Мои заказы</a></li>
+                    <li class="active">Мои бонусы</li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+                <div class="Clear"></div>
+            </div>
+        </div>
+    </div>
+    <div class="b-inner">
+        <div class="content">
+            <div class="header" style="width:auto;float:right;">
+                {% if user.is_authenticated %}
+                <div class="rText">Здесь вы можете просматривать поступления<br>бонусов на счет</div>
+                <div class="Clear"></div>
+                {% endif %}
+            </div>
+            
+            <h1 style="padding-top:20px;" class="dark">Накапливайте бонусные баллы и получайте скидку до 10% на заказ</h1>
+            
+            <div class="b-bonus-detail">
+                <div class="text">
+                    <p>При совершении заказа на сайте www.UzeVezu.ru, вам автоматически зачисляются бонусные баллы. Вы можете воспользоваться баллами при оплате своих последующих заказов у наших партнеров по Москве и Санкт-Петербургу.</p>
+                    <h3>Условия</h3>
+                    <table class="inner">
+                        <tbody><tr>
+                            <td><span class="bonus">500<br>баллов</span></td>
+                            <td>При регистрации на сайте и совершении первого заказа на ваш счет автоматически  зачисляются 500 баллов, эквивалентных 50 рублям.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="bonus">500<br>баллов</span></td>
+                            <td>При регистрации вашего друга на сайте и совершении им первого заказа Вы получаете на свой счет дополнительные 500 баллов.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="bonus">20<br>баллов</span></td>
+                            <td>При последующих заказах вы получаете от 20 баллов за каждые потраченные 100 рублей.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="bonus">50<br>баллов</span></td>
+                            <td>За каждый оставленный отзыв о заведении вы получаете 50 баллов.</td>
+                        </tr>
+                    </tbody></table>
+                    
+                    <p>
+                        Баллы начисляются в течение 24 часов после оформления заказа.<br>
+						Баллами можно оплачивать до 10% суммы заказа.<br>
+						Из расчета 1 рубль = 10 баллов.<br>
+						На часть суммы заказа, оплаченной бонусными баллами, баллы не начисляются.
+                    </p>
+                    
+                    {% if user.is_authenticated %}
+                    <div class="user-bonus-info">
+                        Текущий баланс: <strong><span class="count">{{ user.bonus_score|int }}</span>
+                        {{ user.bonus_score|int|choose_plural:"балл, балла, баллов" }}</strong>
+                    </div>
+                    {% endif %}
+                    
+                </div>
+                
+                {% if user.is_authenticated %}
+                <div class="b-invite-friend">
+                    <p class="title">Пригласи друга<br>и получи еще 500 баллов<br>на счет*!</p>
+                    <div class="email">
+                        <p class="name">Пригласить друга по электронной почте</p>
+                        <form action="{% url accounts:invite %}" method='POST' id='bonus-form'><div class="form">
+                            {% csrf_token %}
+                            <input type="text" name='email' id='id_email' value="">
+                            <input type="submit" value="Пригласить" class='postAjax'>
+                        </div></form>
+                        <p class="note">введите e-mail друга и отправьте прямое приглашение</p>
+                    </div>
+                    <div class="social">
+                        <p class="name">Пригласить друга из социальных сетей</p>
+                        <p class="social-icons">
+                            <a href="http://vk.com/uzevezu" target="_blank"><img src="/media/img/icon/vk.gif" alt=""></a>
+                            <a href="https://twitter.com/UzeVezu" target="_blank" class="last"><img src="/media/img/icon/tw.gif" alt=""></a>
+							{% comment %}
+                            <a href="#"><img src="/media/img/icon/mr.gif" alt=""></a>
+							{% endcomment %}
+                            <a href="http://www.facebook.com/pages/%D0%A3%D0%B6%D0%B5-%D0%92%D0%B5%D0%B7%D1%83/466897706689300?ref=hl" target="_blank"><img src="/media/img/icon/fb.gif" alt=""></a>
+                        </p>
+                        <p class="note">кликните на выбранную иконку и пригласите ваших друзей из социальных сетей</p>
+                    </div>
+                    <p class="footnote">* - после его первого заказа</p>
+                </div>
+                {% endif %}
+
+            </div>
+            
+        </div>
+    </div>
+</div>
+<script type='text/javascript'>
+$(document).ready(function(){
+    $(".postAjax").click(function(e){
+        form = $("#bonus-form");
+        form.find('ul.errors').detach().remove();
+        postFormAjax({
+            form: form,
+            successMsg: "Успешно отправлено",
+            notyTimeout: 5000
+        });
+        return false;
+    });
+
+    $("form").submit(function(e){
+        $(this).find('.postAjax').click();
+        return false;
+    });
+});
+</script>
+{% endblock %}

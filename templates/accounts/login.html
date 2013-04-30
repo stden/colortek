@@ -1,0 +1,21 @@
+{% extends base %} {% load i18n %}
+{% block body-class %}text-pages{% endblock %}
+{% block css %}
+    {{ block.super }}
+	{% comment %}
+    <link rel='stylesheet' href='/media/css/auto_forms.css' type='text/css'>
+	{% endcomment %}
+{% endblock %}
+{% block content %}
+<form class='login form' id='login-form' action='{% url accounts:login %}' method='POST'><div class="contentform">
+    {% csrf_token %}
+    {% include "forms/bootstrap.html" %}
+	<div class="line">
+		<span class="name">&nbsp;</span>
+		<a type='' class='btn btn-primary' href='{% url accounts:password-restore-initiate %}'>Забыли пароль?</a>
+	</div>
+    <div class='line submit'>
+        <input type='submit' class='btn btn-primary btn-medium' value='{% trans "Login" %}' />
+    </div>
+</div></form>
+{% endblock %}

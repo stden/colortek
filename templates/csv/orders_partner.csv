@@ -1,0 +1,2 @@
+{% spaceless %}{% for item in orders %}
+"{{ item.id }}", "{{ item.created_on|date:"H:i:s Y-m-d" }}", "{{ item.cost }}", "{{ item.status }}", "{% for container in item.containers.all %}{{ container.product.title }}{% if not forloop.last %}, {% endif %}{% endfor %}", "{{ item.client.username }}"{% endfor %}{% endspaceless %}

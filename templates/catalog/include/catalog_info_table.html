@@ -1,0 +1,33 @@
+{% load pytils_numeral corefilters %}
+<table class="price">
+                <tbody><tr>
+                    {% comment %}
+                    {% if service.avarage_cost %}
+                    <td><em>Сумма заказа:</em> <strong>{{ service.avarage_cost|default_if_none:0 }} <span class="rub">р.</span></strong></td>
+                    {% endif %}
+                    {% endcomment %}
+                    {% if service.minimal_cost %}
+                    <td><em>Мин. сумма заказа:</em> <strong>{{ service.minimal_cost|default_if_none:0|floatformat:"-2" }} <span class="rub">р.</span></strong></td>
+                    {% endif %}
+                    {% if service.avarage_deliver_time %}
+                    <td><em>Среднее время доставки:</em> <strong>
+                        {% with dt=service.get_deliver_time %}
+                            {% if dt.days %}{{ dt.days }} {{ dt.days|choose_plural:"день, дня, дней" }}{% endif %}
+                            {% if dt.hours %}{{ dt.hours }} {{ dt.hours|choose_plural:"час, часа, часов" }}{% endif %}
+                            {% if dt.minutes %}{{ dt.minutes }} {{ dt.minutes|choose_plural:"минуты, минуту, минут" }}{% endif %}
+                        {% endwith %}
+                        </strong></td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    {% if service.avarage_deliver_cost %}
+                    <td colspan="2">
+                        <em>Стоимость доставки:</em>
+                        <strong>{{ service.avarage_deliver_cost|default_if_none:0|floatformat:"-2" }} <span class="rub">р.</span></strong>
+                        {% if service.avarage_cost %}
+                        Бесплатная доставка при заказе от <strong>{{ service.avarage_cost|floatformat:"-2" }}</strong> <span class='rub'>р.</span>
+                        {% endif %}
+                    </td>
+                    {% endif %}
+                </tr>
+            </tbody></table>

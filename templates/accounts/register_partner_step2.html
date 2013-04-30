@@ -1,0 +1,188 @@
+{% extends base %} {% load i18n corefilters coretags %}
+{% block css %}
+    {{ block.super }}
+    <style type='text/css'>
+        form ul.errors, form ul.errors li{
+        list-style-type: none;
+    }
+    form ul.errors{
+        margin-left: 230px;
+    }
+    form ul.errors li{
+        color: red;
+    }
+    </style>
+{% endblock %}
+{% block js %}
+    {{ block.super }}
+{% endblock %}
+{% block head %}
+{{ wizard.form.media }}
+{% endblock %}
+
+{% block all_content %}
+    <div class="partners registration"><!-- /add class registration -->
+        <div class="head">
+            <div class="b-inner">
+                <div class="content">
+                    <h1>Регистрация</h1>
+                </div>
+            </div>
+        </div><!-- /add head -->
+
+        <div class="menu">
+            <div class="b-inner">
+                <div class="content">
+                    <div class="step-info">
+                        <form style='display: inline;' action='{% url accounts:register-partner %}' method='POST'>
+                            {% csrf_token %}
+                            {{ wizard.management_form }}
+                            <button name='wizard_goto_step' type='submit' value='{{ wizard.steps.prev }}'
+                        class="active">Шаг 1</button>
+                        </form>
+
+                        <span class="active">Шаг 2
+                        <span class="title">Информация о контактном лице</span>
+                    </span></div>
+                </div>
+            </div>
+        </div><!-- /steps -->
+
+        <div class="b-inner">
+            <div class="content">
+                {% with step=wizard.steps.current form=wizard.form %}
+                <form action="{% url accounts:register-partner %}" method="POST"
+                        id='register-partner-form'>
+                    {% csrf_token %}
+                    {{ wizard.management_form }}
+                    {% comment %}
+                    {% if wizard.form.errors %}
+                    <div class='errors'>
+                        {{ wizard.form.errors }}
+                    </div>
+                    {% endif %}
+                    {% endcomment %}
+
+                    <div class="contentform">
+                        <div class="line">
+                            <span class="name">ФИО контактного лица<span class="req">*</span></span>
+                            <input name='{{ step }}-real_name' id='{{ step }}-id_real_name' type="text" value="{{ form.data.real_name|default_if_none:"Иванов Иван Иванович" }}">
+                        </div>
+
+                        {% get_instances 'accounts.contactphonetype' as mobile_types %}
+                        <div class="line">
+                            <span class="name">Телефон<span class="req">*</span></span>
+                            <div class="phone">
+                                <div class="">
+                                    <div class="cusel   cuselScrollArrows" id="cuselFrame-cuSel-0" style="width:111px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">{{ mobile_types.0.title }}</div><div class="cusel-scroll-wrap"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-0">
+                                        {% for type in mobile_types %}
+                                        <span val="1" class="{{ forloop.first|yesno:"cuselActive," }}">{{ type.title }}</span>
+                                        {% endfor %}
+                                    </div></div><input type="hidden" id="{{ step }}-id_phone_type" name="{{ step }}-phone_type" value="{{ mobile_types.0.pk }}"></div>
+                                    <!--<input type="text" value="" class="code"> -->
+                                    <input type="text" value="" name="{{ step }}-phone" id='{{ step }}-id_phone' class="number">
+                                    <span class="cc"><small>(пример: +79008005544)</small></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="line">
+                            <span class="name">Контактный телефон<span class="req">*</span></span>
+                            <div class="phone">
+                                <div class="clone">
+                                    <div class="cusel   cuselScrollArrows" id="cuselFrame-cuSel-0" style="width:111px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">{{ mobile_types.0.title }}</div><div class="cusel-scroll-wrap"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-0">
+                                        {% for type in mobile_types %}
+                                        <span val="{{ type.pk }}" class="{{ forloop.first|yesno:"cuselActive," }}">{{ type.title }}</span>
+                                        {% endfor %}
+                                    </div></div>
+                                    <input type="hidden" id="id_contact_phone_type" name="{{ step }}-contact_phone_type" value="1"></div>
+                                    <!--<input type="text" value="" class="code"> -->
+                                    <input type="text" value="" name="{{ step }}-contact_phone" id='{{ step }}-id_contact_phone' class="number">
+                                    <span class="cc"><small>(пример: +79008005544)</small></span>
+                                </div>
+                                <a href="#" class="add">добавить</a>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="line">
+                            <span class="name">номер для смс-уведомлений<span class="req">*</span></span>
+                            <div class="phone">
+                                <span class="cc">+7</span>
+                                <input type="text" value="" class="code">
+                                <input type="text" value="" class="number">
+                            </div>
+                        </div> -->
+                        <div class="line">
+                            <span class="name">E-mail для получения заказов<span class="req">*</span></span>
+                            <div class="inputBox">
+                                <div class="clone">
+                                    <input type="text" name='{{ step }}-email' id='{{ step }}-id_email' value="" class="size-2">
+                                </div>
+                                <!--<a href="#" class="add">добавить</a> -->
+                            </div>
+                        </div>
+                        <div class="line">
+                            <span class="name">контактный e-mail<span class="req">*</span></span>
+                            <div class="inputBox">
+                                <div class="clone">
+                                    <input type="text" value="" name='{{ step }}-contact_email' id='{{ step }}-id_contact_email' class="size-2">
+                                </div>
+                                <a href="#" class="add">добавить</a>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="line">
+                            <span class="name">e-mail<span class="req">*</span></span>
+                            <input type="text" value="" class="size-2">
+                        </div> -->
+                        <div class="line">
+                            <span class="name">логин<span class="req">*</span></span>
+                            <input type="text" name='{{ step }}-username' id='{{ step }}-id_username' value="{{ form.data.username|default_if_none:"" }}" class="size-2">
+                        </div>
+                        <div class="line">
+                            <span class="name">пароль<span class="req">*</span></span>
+                            <input type="password" name='{{ step }}-password' id='{{ step }}-id_password' value="" class="size-2">
+                        </div>
+                        <div class="line">
+                            <span class="name">повтор пароля<span class="req">*</span></span>
+                            <input type="password" name='{{ step }}-password2' id='{{ step }}-id_password2' value="" class="size-2">
+                        </div>
+                        <div class="line">
+                            <span class="name">дополнительно</span>
+                            <textarea name='{{ step }}-description' id='{{ step }}-id_description'></textarea>
+                        </div>
+                        <div class="line submit">
+                            <!-- <a class="button left" href="#">вернуться к шагу 1</a> -->
+                            <button name='wizard_goto_step'
+                                type='submit' value='{{ wizard.steps.prev }}'
+                                class="button left">вернуться к шагу 1</button>
+
+                            <input type="submit" value="Зарегистрироваться">
+                        </div>
+                    </div>
+                </form>
+                {% endwith %}
+
+            </div>
+        </div>
+    </div>
+{% with form=wizard.form step=wizard.steps.current %}
+    {% include "accounts/wizard_restore_values.js" %}
+{% endwith %}
+<script type='text/javascript'>
+var form_data = {
+    {% for key in wizard.form.data %}"{{ key }}": "{{ wizard.form.data|get:key }}"{% if not forloop.last %},{% endif %}
+    {% endfor %}
+}
+
+$(document).ready(function(){
+    form = (typeof form == 'undefined') ? {} : form
+    if (form.errors){
+        updateFormErrors("#register-partner-form", form.errors, prefix='1-');
+    }
+    for (key in form_data){
+        $("[name=" + key + ']').val(form_data[key]);
+    }
+});
+</script>
+{% endblock %}

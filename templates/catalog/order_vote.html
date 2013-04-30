@@ -1,0 +1,58 @@
+{% extends base %}
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" media="screen" href="/media/css/jquery.rating.css" />
+{% endblock %}
+{% block js %}
+    {{ block.super }}
+    <script src='/media/js/jquery.rating.js'></script>
+{% endblock %}
+{% block content %}{% load i18n %}
+
+<style type='text/css'>
+    label.lbl{
+        background: none;
+        padding: 0px;
+        margin: 0px;
+    }
+    label.lbl.active{
+        background: none;
+    }
+    form li .helptext{ display: none; }
+    form > li > label[for*=id_atom_]{
+        float: left;
+        text-align: right;
+        width: 180px;
+        font-style: bold;
+    }
+    form li label[for*=id_atom_]:after, label:before{
+        clear: both;
+    }
+    form ul, form li{ list-style-type: none; }
+    form li ul li label.lbl{ }
+    form li ul li, form li ul{ display: inline; }
+    form li ul{ margin-left: 10px;}
+    form label[for='id_comment']{ display: none;}
+</style>
+
+<form class='order vote form' id='order-vote-form' method='POST' action='{% url catalog:order-vote form.instance.sid %}'>
+    {% csrf_token %}
+    {{ form.as_ul }}
+    <input class='btn btn-success' value='{% trans "Save" %}' type='submit' id='id_submit'/>
+</form>
+{% if form.media %}{{ form.media }}{% endif %}
+
+<script type='text/javascript'>
+    $(".rating").rating({
+        callback: function(value, link){
+            //console.log([value, link]);
+        }
+    });
+    $(document).ready(function(){
+        blk = $("#id_comment").parents('li');
+        blk.detach();
+        blk.insertBefore($("#order-vote-form").find('#id_submit'));
+    });
+</script>
+
+{% endblock %}

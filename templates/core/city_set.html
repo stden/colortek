@@ -1,0 +1,38 @@
+{% load coretags %}
+<div class="partners">
+	<div id="set-city-inline" class="popup" style="display:block;"><div class="block">
+		<div class='set city'>
+			<h3>{% if city_not_in_list %}Внимание!<br />Доставка осуществляется только по городам из списка.<br />{% endif %}Пожалуйста, выберите город</h3>
+			<br>
+				
+			{% get_instances 'geo.city' as cities %}
+			<select id="set-city-inline-select">
+			{% for city in cities %}
+				<option value='{% url geo:city-set city.id %}' onclick="setCityTo('{% url geo:city-set city.id %}')">{{ city.title }}</option>
+				<!--a href='{% url geo:city-set city.id %}'>{{ city.title }}</a-->
+			{% endfor %}
+			</select>
+			<br>
+			<a href="#" class="button">Ok</a>
+			<!--
+			url: {% url geo:city-set 0 %} where is 0 is city.id
+			-->
+		</div>
+		<!--a title="Закрыть" class="btnClose">&nbsp;</a-->
+	</div></div>
+	<div class="b-overlay-all"></div>
+</div>
+<script type="text/javascript">
+	var params = {
+		changedEl: "#set-city-inline-select",
+		visRows: 15,
+		scrollArrows: true
+	}
+	cuSel(params);
+	var default_city_url = $(params.changedEl).val();
+		$('#set-city-inline .button').attr('href', default_city_url);
+	function setCityTo(url){
+		default_city_url = url;
+		$('#set-city-inline .button').attr('href', default_city_url);
+	}
+</script>

@@ -1,0 +1,111 @@
+{% extends base %} {% load i18n corefilters %}
+{% block content %}
+<form class='invite register form contentform' id='invite-register-form' action='{% url accounts:invite-register sid %}' method='POST'>
+    {% csrf_token %}
+    {% include "forms/bootstrap.html" %}
+	<!-- Birthday example -->
+	<div class="line" id='id_birthday_line'>
+		<span class="name">Дата рождения:</span>
+		<select class="birth-day">
+            {% for day in days %}
+                <option {% if form.data.birthday|split:"-"|select:"2"|int == day %}
+                    selected='selected'
+                    {% endif %}
+                    value="{{ day }}" onclick="get_birth_day(this);">{{ day }}</option>
+            {% endfor %}
+		</select>
+		<select class="birth-month">
+            {% for month in months %}
+                <option {% if form.data.birthday|split:"-"|select:"1"|int == month %}
+                    selected='selected'
+                    {% endif %}
+                    value="{{ month}}" onclick="get_birth_month(this);">{{ month|select_month }}</option>
+            {% endfor %}
+		</select>
+		<select class="birth-year">
+            {% for year in years %}
+                <option
+                    {% if form.data.birthday|split:"-"|select:"0"|int == year %}
+                    selected='selected'
+                    {% endif %}
+                    value="{{ year }}" onclick="get_birth_year(this);">{{ year }}</option>
+            {% endfor %}
+		</select><br>
+        <span class='name'>&nbsp;</span>
+        <span class='txt'>Заполните это поле для получения дополнительных бонусов в Ваш день рождения</span>
+	</div>
+	<!-- /Birthday example -->
+	<!-- Phone example -->
+	<div class="line" id='id_phone_line'>
+		<span class="name">Телефон:</span>
+		<div class="phone">
+			<span class="cc">+7</span>
+			<input type="text" value="{{ form.data.phone|phone_split|first }}"
+                maxlength=3
+                class="code" id='phone_code'>
+			<input type="text"
+                value="{{ form.data.phone|phone_split:"1"}}" class="number" id='phone_number'
+                maxlength=7>
+		</div>
+	</div>
+	<!-- /Phone example -->
+    <div class='line submit'>
+        <input type='submit' class='btn-primary btn-medium' value='{% trans "Register" %}' />
+    </div>
+</form>
+
+<script type='text/javascript'>
+$(document).ready(function(){
+    /* moving birthday block */
+    birth = $("#id_birthday_line");
+    blk = $("#id_birthday");
+    birth.insertAfter($("#line_" + blk.attr('data-after')));
+    /* moving phone block */
+    phone = $("#id_phone_line");
+    blk = $("#id_phone");
+    phone.insertAfter($("#" + blk.attr('data-after')));
+
+    /* moving hidden phone errors right above phones in the block */
+    phone_block = $("#id_phone").parents('.hide');
+    if (phone_block.find('ul.errorlist').length){
+        error_block = phone_block.find('ul.errorlist');
+        error_block.insertBefore($("#id_phone_line"));
+    }
+    // update discount set in basket menu
+    $('#phone_code, #phone_number').change(function(e){
+        prefix = '7';
+        num = $("#phone_number").val();
+        code = $("#phone_code").val();
+        $("#id_phone").val(prefix + code + num);
+    });
+
+
+});
+
+// Birthdays
+var birthDate = '',
+    {% if form.data.birthday %}
+    birthDay = '{{ form.data.birthday|split:"-"|select:"2"|int }}';
+    birthMonth = '{{ form.data.birthday|split:"-"|select:"1"|int }}';
+    birthYear = '{{ form.data.birthday|split:"-"|select:"0"|int }}';
+    {% else %}
+	birthDay = '01', birthMonth = '01', birthYear = '1930';
+    {% endif %}
+	
+function get_birth_day(e) {
+	birthDay = $(e).attr('val');
+	if (birthDay < 10) birthDay = '0' + birthDay;
+	$('.hide input[name="birthday"]').val(birthYear + "-" + birthMonth + "-" + birthDay);
+}
+function get_birth_month(e) {
+	birthMonth = $(e).attr('val');
+	if (birthMonth < 10) birthMonth = '0' + birthMonth;
+	$('.hide input[name="birthday"]').val(birthYear + "-" + birthMonth + "-" + birthDay);
+}
+function get_birth_year(e) {
+	birthYear = $(e).attr('val');
+	$('.hide input[name="birthday"]').val(birthYear + "-" + birthMonth + "-" + birthDay);
+}
+</script>
+
+{% endblock %}

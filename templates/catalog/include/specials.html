@@ -1,0 +1,47 @@
+{% load thumbnail %}
+    {% for item in specials.object_list %}
+    <div class="item">
+        <div class="col"><div class="i">
+            <span class="title">{{ item.title }}</span>
+            <div class='owner'>
+            
+            {% with owner=item.container.owner %}
+                {% if item.expires %}
+				<span class='date' style='color:#999; float: right; clear: both;'>действует до {{item.expires|date:"d.m.Y"}}</span>
+				{% endif %}
+				{% if owner.logo %}
+                    {% thumbnail owner.logo gs.ITEM_THUMBNAIL_SIZE_TINY as logo %}
+                        <a href='{% url catalog:service-page item.container.owner.pk %}'><img src='{{ logo.url }}' alt='{{ owner.service_name }}' /></a>
+                    {% endthumbnail %}
+                {% else %}
+                <img src='{{ owner.get_logo }}' alt='{{ owner.service_name }}' class='image thumbnail tiny'/>
+                {% endif %}
+            {% endwith %}
+            </div>
+            <hr />
+            {% if item.image %}
+            {% thumbnail item.image gs.SPECIAL_ITEM_THUMBNAIL_SIZE as image %}
+            <div class="image">
+                <img src="{{ image.url }}" alt="{{ item.title }}">
+            </div>
+            {% endthumbnail %}
+            {% else %}
+            <div class='image'>
+                <img src='/media/img/no-content-{{ item.container.owner.service.codename }}.jpg' alt='{{ item.title }}' />
+            </div>
+            {% endif %}
+
+            {% if item.cost %}
+            <span class="price">цена по акции: <span><s>{{ item.cost|floatformat:"-2" }}</s>
+                {{ item.get_generic_cost|floatformat:"-2" }}<span class="ruble">n</span></span>
+            </span>
+            {% endif %}
+            {% if item.description %}
+                <span class='description'>{{ item.description|safe }}</span>
+			{% else %}
+				<span class='description'>&nbsp;</span>
+            {% endif %}
+
+        </div></div>
+    </div>
+    {% endfor %}

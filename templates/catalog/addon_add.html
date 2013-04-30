@@ -1,0 +1,15 @@
+{% extends base %}{% load i18n %}
+{% block css %}
+    {{ block.super }}
+    <link rel='stylesheet' href='/media/css/auto_forms.css' type='text/css'>
+{% endblock %}
+
+{% block content %}
+<form class='add addon form' method='POST' url='{% url catalog:addon-add %}' id='add-addon-form'>
+    {% csrf_token %}
+    {% include "forms/bootstrap.html" %}
+    <div class='actions'>
+        <input class='btn btn-success' type='submit' value='{% trans "Save" %}' />
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends base %}{% load thumbnail %}
+{# {% block title %}Акции{% endblock %} #}
+{% block body-class %}text-pages action-pages{% endblock %}
+{% block all_content %}
+    <div class="partners">
+        {% comment %}
+        <div class="menu">
+            <div class="b-inner">
+                <div class="content">
+                    <ul>
+                        <li><a href="{% url accounts:profile-edit %}">мои настройки</a></li>
+                        <li><a href="{% url catalog:service-orders %}">Мои заказы</a></li>
+                        <li><a href="{% url catalog:container-list %}">Мои товары</a></li>
+                        <li class="active">Мои акции</li>
+                        <li><a href='{% url catalog:csv-import %}'>Импортирование базы</a></li>
+                    </ul>
+                    <div class="Clear"></div>
+                </div>
+            </div>
+        </div>
+        {% endcomment %}
+        <div class="b-inner">
+            <div class="content">
+                <div class="header">
+                    {% comment %}
+                    <div class="rText">Здесь вы можете редактировать акции</div>
+                    <div class="Clear"></div>
+                    {% endcomment %}
+                </div>
+                <h1 class="like-text">Акции</h1>
+                <div class="service title block b-content-filter actions">
+					
+                    {#<a class="active" href="{% url catalog:all-specials %}">Все</a>#}
+                    {% for object in services %}
+                        <a href="{% url catalog:all-specials service_name=object.codename %}"
+                            {% ifequal service_name object.codename %}
+                                class="active"
+                            {% endifequal %}
+                            >{{ object.title }}
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="action_list">
+                   {% if specials %}
+						<div class="line">
+							{% include "catalog/include/specials.html" %}
+							<div class="items-loaded"></div>
+						</div>
+						<br>
+						{% comment %}
+                        {% include "pages.html" with page=specials %}
+						{% endcomment %}
+						{% include "pages_service.html" with page=specials %}
+                   {% else %}
+                       <h3>Специальных акций пока нет</h3>
+                   {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+<script type='text/javascript'>
+    $(".del-item").click(function(e){
+        url = $(this).attr('href');
+        var nt = noty({
+            text: "Вы хотите исключить данный товар из акции?",
+            buttons:[
+                {
+                    addClass: 'btn btn-primary',
+                    text: 'Да',
+                    onClick: function($noty){
+                        document.location.href = url;
+                    }
+                },
+                {
+                    addClass: 'btn btn-danger',
+                    text: 'Нет',
+                    onClick: function($noty){
+                        $noty.close();
+                        noty({
+                            'text': 'Отменено',
+                            type: 'warning',
+                            timeout: 2000
+                        });
+                    }
+                }
+            ]
+        });
+        return false;
+    });
+</script>
+{% endblock %}

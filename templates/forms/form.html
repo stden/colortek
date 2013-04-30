@@ -1,0 +1,112 @@
+{% for field in form.visible_fields %}
+{% comment %}
+<div class="line {{ field.field.required|yesno:" required," }}{{ field.errors|yesno:" control-group error,"}}{% if field.name == 'image' %} image-field{% endif %}">
+{% endcomment %}
+<div class="line {{ field.errors|yesno:" control-group error,"}}{% if field.name == 'image' %} image-field{% endif %}">
+    {% if form.errors %}{% spaceless %}
+        {% for e in field.errors %}
+            <{{error_block|default:"span"}} class='form-errors'>{{ e }}</{{ error_block|default_if_none:"span" }}>
+        {% endfor %}{% endspaceless %}{% endif %}
+	{% if field.name == 'logo' %}
+		<span class="name" for='id_{{ field.name }}'>{{ field.label }}{% if field.field.required %}<span class="req">*</span>{% endif %}</span>
+		<span class="logo-info">
+		{{ field }}
+		</span>	
+	{% else %}
+		{% if field.name == 'avarage_deliver_time' %}
+		<div class="avarage_deliver_time_fk_wrap">
+			<span class="name" for='id_{{ field.name }}'>{{ field.label }}{% if field.field.required %}<span class="req">*</span>{% endif %}</span>
+			<select>
+				<option value="0" onclick="set_deliver_day(this);" selected="selected">0</option>
+				<option value="1" onclick="set_deliver_day(this);">1</option>
+				<option value="2" onclick="set_deliver_day(this);">2</option>
+				<option value="3" onclick="set_deliver_day(this);">3</option>
+				<option value="4" onclick="set_deliver_day(this);">4</option>
+				<option value="5" onclick="set_deliver_day(this);">5</option>
+				<option value="6" onclick="set_deliver_day(this);">6</option>
+				<option value="7" onclick="set_deliver_day(this);">7</option>
+				<option value="8" onclick="set_deliver_day(this);">8</option>
+				<option value="9" onclick="set_deliver_day(this);">9</option>
+				<option value="10" onclick="set_deliver_day(this);">10</option>
+			</select>
+			<input type="text" id="avarage_deliver_time_fk">
+			<div style="display:none">{{ field }}</div>
+		</div>
+		{% else %}
+			<span class="name" for='id_{{ field.name }}'>{{ field.label }}{% if field.field.required %}<span class="req">*</span>{% endif %}</span>
+			{% if field.name == 'image' %}
+				<div class="image-field-form-el">
+					{{ field }}
+				</div>
+			{% else %}
+				{{ field }}
+			{% endif %}
+		{% endif %}
+	{% endif %}
+</div>
+{% endfor %}
+
+<script type='text/javascript'>
+
+	var avarage_deliver_time_str,
+		avarage_deliver_time = [],
+		avarage_deliver_time_short = [],
+		avarage_deliver_time_day;
+		
+	function set_deliver_day(t){
+		avarage_deliver_time_day = $(t).attr('val');
+		set_deliver_time_full(avarage_deliver_time_day,avarage_deliver_time_short[0],avarage_deliver_time_short[1]);
+	}
+	function set_deliver_time_full(dd,hh,mm){
+		dd = dd || '0';
+		hh = hh || avarage_deliver_time[1] || '0';
+		mm = mm || avarage_deliver_time[2] || '0';
+		$('#id_avarage_deliver_time').attr('value', parseInt(dd) + 'd' + parseInt(hh) + 'h' + parseInt(mm) + 'm');
+	}
+
+$(document).ready(function(){
+	
+	var avarage_deliver_time_str = $('#id_avarage_deliver_time').val();
+	//if (!avarage_deliver_time_str || avarage_deliver_time_str == '') set_deliver_time_full(0,0,0);
+	if (!avarage_deliver_time_str || avarage_deliver_time_str == ''){
+		avarage_deliver_time_str = '0d0h0m';
+		$('#id_avarage_deliver_time').val('0d0h0m');
+	}
+		
+	if (avarage_deliver_time_str != ''){
+		avarage_deliver_time_str = avarage_deliver_time_str.replace('d',':::');
+		avarage_deliver_time_str = avarage_deliver_time_str.replace('h',':::');
+		avarage_deliver_time_str = avarage_deliver_time_str.replace('m','');
+		//console.log(avarage_deliver_time_str);
+		avarage_deliver_time = avarage_deliver_time_str.split(':::');
+		/*
+		$('.avarage_deliver_time_fk_wrap select option').each(function(i){
+			if ($(this).attr('value') == avarage_deliver_time[0]){
+				$(this).attr('selected', 'selected');
+			}
+		})
+		*/
+		$('.avarage_deliver_time_fk_wrap .cusel-scroll-wrap span').each(function(i){
+			if ($(this).attr('val') == avarage_deliver_time[0]){
+				$('.avarage_deliver_time_fk_wrap .cusel-scroll-wrap span').removeClass('cuselActive');
+				$(this).addClass('cuselActive');
+				$('.avarage_deliver_time_fk_wrap .cuselText').text(avarage_deliver_time[0]);
+			}
+		})
+		
+		$('#avarage_deliver_time_fk').val(((avarage_deliver_time[1] < 10) ? "0" + avarage_deliver_time[1] : avarage_deliver_time[1]) + ':' + ((avarage_deliver_time[2] < 10) ? "0" + avarage_deliver_time[2] : avarage_deliver_time[2]));
+		$('#avarage_deliver_time_fk').on('change', function() {
+			avarage_deliver_time_short = $(this).val().split(':');
+			set_deliver_time_full(avarage_deliver_time_day,avarage_deliver_time_short[0],avarage_deliver_time_short[1]);
+		});
+		
+	}
+	//console.log(avarage_deliver_time_day, avarage_deliver_time_short);
+	
+    $.each($("[data-text]"), function(item, idx){
+        text = $("&nbsp;<span>" + '<a href="' + $(this).data('link') + '">' + $(this).data('text') + "</a></span>");
+        text.insertAfter($(this));
+    });
+	
+});
+</script>

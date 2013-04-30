@@ -1,0 +1,16 @@
+{% load thumbnail %}{% for post in posts %}
+<div class="item">
+    {% thumbnail post.image gs.ITEM_THUMBNAIL_SIZE_SMALL as logo %}
+    <div class="Img">
+        <a href='{% url blog:post post.pk %}'>
+        <img src="{{ logo.url }}" alt="{{ post.title }}"><span class="txt">{{ post.type.title }}</span>
+        </a>
+     </div>
+    {% endthumbnail %}
+    <div class="date"><span>{{ post.created_on|date:"d E, Y"}}</span></div>
+    <h1><a href='{% url blog:post post.pk %}'>{{ post.title }}</a></h1>
+    {{ post.announce|safe }}
+    <div class="comment"><span class="num">&nbsp;!&nbsp;<span class="bg_r"></span></span>
+    <a href="{% url blog:post post.pk %}" title="Прокомментировать запись блога">Комментировать</a></div>
+</div>
+{% endfor %}

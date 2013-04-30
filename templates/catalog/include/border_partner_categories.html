@@ -1,0 +1,29 @@
+<div class="options">
+	{% load thumbnail %}
+	{% thumbnail service.logo gs.ITEM_THUMBNAIL_SIZE_TINY as image %}
+    <div class="service-filter-logo">
+        <a href="{% url catalog:service-page service.pk %}"><img src="{{ image.url }}" alt="{{ kart.service.service_name }}"></a>
+    </div>
+    {% endthumbnail %}
+    <ul class="dish-menu">
+        {% for category in service.get_top_containers %}
+            {% if category.items.all or category.children.all %}
+            <li class='{% if get_full_path|urlencode == category.get_border_url %}active{% endif %}'>
+                <a href='{{ category.get_border_url }}'>{{ category.title }}</a>
+                <ul>
+                {% for container in category.item_children %}
+                    <li class='{% if get_full_path|urlencode == container.get_border_url %}active{% endif %}'><a href='{{ container.get_border_url }}'>{{ container.title }}</a></li>
+                {% endfor %}
+                </ul>
+            </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+ </div>
+<script type='text/javascript'>
+$(document).ready(function(){
+    $.each($(".dish-menu li ul li.active"), function(idx, item){
+        $(item).parents('li').addClass('active');
+    });
+});
+</script>

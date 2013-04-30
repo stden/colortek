@@ -1,0 +1,28 @@
+{% extends base %}{% load i18n thumbnail %}
+{% block content %}
+    {% if containers %}
+        {% for container in containers %}
+            <div class='container-item'>
+                <div class='title'>{{ container.get_title }}</div>
+                <div class='description'>{{ container.description|safe }}</div>
+                {% if container.items.all %}
+                    <ul class='items'>
+                    {% for item in container.items.all %}
+                        <li>
+                            {% thumbnail item.image global_settings.DEFAULT_THUMBNAIL_SIZE|default_if_none:"150x70" as im %}
+                            <div class='image'>
+                                <img src='{{ im.url }}' alt='{{ item.title }}'>
+                            </div>
+                            {% endthumbnail %}
+                            <div class='title'>{{ item.title }}</div>
+                            <div class='cost'>{{ item.cost }} {% trans "$." %}</div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3>{% trans "You have no any container" %}</h3>
+    {% endif %}
+{% endblock %}

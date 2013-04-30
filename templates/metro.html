@@ -1,0 +1,18 @@
+{% if city.subway_links.all %}
+<div id="metroView" class="b-metro">
+	<map name="metroMap">
+		{% for subway in city.subways.all %}
+			{% if subway.yalink %}
+			<area id='{{ subway.yalink.id }}' data-title='{{ subway.title }}' shape='{{ subway.yalink.type.title }}' coords='{{ subway.yalink.coords }}'>
+			{% endif %}
+		{% endfor %}
+	</map>
+	<img class="metro" src="/media/metroes/{{ city.codename|default_if_none:city.pk }}.gif" usemap="#metroMap" alt="">
+</div>
+{% else %}
+    {% if city.subways %}
+    <h3>Карты метро для города <strong>{{ city.title }}</strong> еще не добавлены</h3>
+    {% else %}
+    <h3>В данном городе отсутствует метрополитен</h3>
+    {% endif %}
+{% endif %}

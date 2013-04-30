@@ -1,0 +1,7 @@
+{% load i18n thumbnail %}
+<tr class='addon'> {% trans "$." context "currency" as currency %}
+    <td>{{ forloop.counter }}</td>
+    <td class='title'>{{ item.product.title }}</td>
+    <td class='quantity'>{{ item.quantity }}</td>
+    <td class='cost'>{{ item.total_price }} {{ currency }}</td>
+</tr>

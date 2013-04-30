@@ -1,0 +1,124 @@
+		{% load catalogtags %}
+		<div class="options">
+			<form action="{% url catalog:catalog-list serv.codename %}" class='side-action-form' id='side-action-form'>
+				<p class="reset-form"><a href="#"><span>сбросить</span>&nbsp;<img src="/media/img/icon/reset.png" alt="x"></a></p>
+
+				<div class="search box">
+					<h4>Поиск:</h4>
+					<div class="radiogroup">
+						<label class='{% if search_type != '1' %}active{% endif %}'><input type="radio" value="0" name="search-type" {% if search_type == '1' %}checked{% endif %}>&nbsp;служба доставки</label>
+						<label class='{% if search_type == '1' %}active{% endif %}'><input type="radio" value="1" name="search-type"{% if search_type == '1' %}checked {% endif %}>&nbsp;{% get_term serv 'item' 'блюдо' %}</label>
+					</div>
+					<input type="text" 
+						name='title' id='id_title'
+						placeholder="Или введите искомое название" onfocus='this.placeholder=""'
+						value='{{ G.title }}'>
+					<div class="button"><input type="submit" value="Выбрать" class="btn"></div>
+				</div>
+			</form>
+			
+			<div class="filter-options">
+				<div class="box">
+					<h4>{% get_term serv 'type' 'Кухни' %} / {% get_term serv 'items' 'блюда' %}:</h4>
+					<div class="group">
+						{% comment %}
+						{% for type in unique_containers %}
+							<label><input type='checkbox' value='{{ type.title }}' name='type'>
+								{{ type.title }}
+							</label>
+						{% endfor %}
+						{% endcomment %}
+						{% for category in serv.categories.all %}
+						<label class='{% if category.pk in types %}active{% endif %}'>
+							<input type='checkbox' value="{{ category.pk }}" name='type' {% if category.pk in types %}checked='checked'{% endif %}>
+							{{ category.title }}
+						</label>
+						{% endfor %}
+					</div>
+					{% comment %}
+					<a class="show-toggle"><span>еще</span></a>
+					<div class="toggle-content">
+						<div class="group">
+							<label><input type="checkbox" value="7" name="dish-type">&nbsp;Пицца</label>
+							<label><input type="checkbox" value="8" name="dish-type">&nbsp;Суши</label>
+							<label><input type="checkbox" value="9" name="dish-type">&nbsp;Бургеры</label>
+						</div>
+					</div>
+					{% endcomment %}
+				</div>
+
+				<div class="price box">
+					
+					<h4>Минимальная сумма заказа:</h4>
+					до   <input type="text" value="{{ G.minimal_cost|default:500 }}" id="price-slider-amount-{{serv.id}}" class="price-slider-amount" name='minimal_cost'> <span class="rub">р.</span>
+					<div id="price-slider-{{serv.id}}" class="price-slider"></div>
+				</div>
+				<script type="text/javascript">
+					$(function() {
+						$('#price-slider-{{serv.id}}').slider({
+							min: 1,
+							max: 5000,
+							value: {{ G.minimal_cost|default:5000 }},
+							slide: function( event, ui ) {
+								$('#price-slider-amount-{{serv.id}}').val(ui.value);
+							},
+							change: function(event, ui) {
+								var url = '?minimal_cost=' + ui.value,
+									keyword = url.match(/[\w\d-_]+/),
+									search = window.location.search,
+									setMinPrice;
+									$.each(keyword, function(idx, value){
+										r = new RegExp("[&|?]"+value+"=[\\d\\w-_]+", 'g');
+										search = search.replace(r, '');
+									});
+									
+									if (search){
+										url = url.replace('?', '&');
+										setMinPrice = search + url;
+									} else {
+										setMinPrice = url;
+									}
+									window.location.search = setMinPrice;
+									
+							}
+						});
+						$('#price-slider-amount-{{serv.id}}').val($('#price-slider-{{serv.id}}').slider('values', 1));
+						$('#main-filter .wrap-content .content ul.menu div.options a.show-toggle').on('click', function(){
+							$('#main-filter .wrap-content .content ul.menu div.options .toggle-content').slideToggle();
+						});
+						$('input[type=checkbox]').click(function(e){
+							$(this).parent().toggleClass('active');
+						});
+					});
+				</script>
+				<div class="more box">
+					<h4>Критерии:</h4>
+					<div class="group">
+						<label class='{% if G.free_deliver %}active{% endif %}'>
+							<input type="checkbox"
+								{% if G.free_deliver %}checked='checked'{% endif %}
+								value="1" name="free_deliver">с бесплатной доставкой</label>
+						<label class='{% if G.is_special %}active{% endif %}'>
+							<input type="checkbox"
+								{% if G.is_special %}checked='checked'{% endif %}
+								value="1" name="is_special">действует акция</label>
+						<label class='{% if G.new_ones %}active{% endif %}'>
+							<input type="checkbox"
+								{% if G.new_ones %}checked='checked'{% endif %}
+								value="1" name="new_ones">новые</label>
+					</div>
+					{% comment %}
+					<div class='hidden'>
+						<input type='radio' value='{{ G. }}' name='state' id='id_state_all' value='0' />
+						<input type='radio' value='{{ G. }}' name='state' id='id_state_opened' value='1' />
+						<input type='checkbox' value='{{ G. }}' name='cardpay' id='id_cardpay' />
+						<input type='checkbox' value='{{ G. }}' name='by_rating' id='id_by_rating' />
+						<input type='text' value='{{ G. }}' name='subway' id='id_subway' />
+					</div>
+					{% endcomment %}
+					
+				</div>
+			</div><!-- /filter-options -->
+
+        </div>
+

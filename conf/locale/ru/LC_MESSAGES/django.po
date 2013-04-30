@@ -1,0 +1,3263 @@
+# Translation for Ужевезу project.
+# Copyright (C) 2012, Colortek
+# This file is distributed under the same license as the BSD package.
+# Nickolas Fox <lilfoxster@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-23 19:12+0400\n"
+"PO-Revision-Date: 2012-11-27 21:00+0400\n"
+"Last-Translator: Nickolas Fox <lilfoxster@gmail.com>\n"
+"Language-Team: Russian <RU@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: apps/accounts/forms.py:29 apps/accounts/forms.py:133
+msgid "E-mail"
+msgstr "Адрес электронной почты"
+
+#: apps/accounts/forms.py:31 apps/accounts/forms.py:68
+#: apps/accounts/forms.py:505 apps/accounts/forms.py:642
+msgid "Password"
+msgstr "Пароль"
+
+#: apps/accounts/forms.py:41
+msgid "Sorry your username or/and password are invalid"
+msgstr "Извините имя пользователя и/или пароль введены неправильно"
+
+#: apps/accounts/forms.py:47
+msgid "Only verified users allowed to login"
+msgstr "Только подтвержденные пользователи могут выполнить вход"
+
+#: apps/accounts/forms.py:56 templates/accounts/include/user_profile.html:3
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: apps/accounts/forms.py:62
+msgid ""
+"Try to pass only latin symbols, numbers andunderscores with your nickname"
+msgstr ""
+
+#: apps/accounts/forms.py:64
+msgid "Only latin symbols and numbers and underscoreare allowed"
+msgstr "Допускаются только латинские символы и цифры"
+
+#: apps/accounts/forms.py:71
+msgid "Repeat password"
+msgstr "Повтор пароля"
+
+#: apps/accounts/forms.py:78
+msgid "Such username is already exists"
+msgstr "Такое имя пользовтеля уже существует"
+
+#: apps/accounts/forms.py:86
+msgid "Sorry passwords you entered does not match each other"
+msgstr "Пароли не совпадают"
+
+#: apps/accounts/forms.py:100 apps/accounts/forms.py:287
+msgid "You can enter only numerals here"
+msgstr ""
+
+#: apps/accounts/forms.py:106 apps/accounts/forms.py:293
+msgid "User with given phone exists, please login"
+msgstr ""
+"Пользователь с таким номером телефона уже существует, пожалуйста используйте "
+"вход(логин)"
+
+#: apps/accounts/forms.py:120
+msgid "User with given email exists, please login"
+msgstr ""
+"Пользователь с таким электронным адресом почты существует, пожалуйста "
+"используйте вход(логин)"
+
+#: apps/accounts/forms.py:135 apps/accounts/models.py:43
+#: apps/catalog/models.py:620
+msgid "phone"
+msgstr "телефон"
+
+#: apps/accounts/forms.py:143 apps/accounts/forms.py:146
+msgid "User agreement"
+msgstr "Я согласен с условиями Пользовательского соглашения"
+
+#: apps/accounts/forms.py:244 apps/accounts/models.py:257
+#: apps/catalog/models.py:638
+msgid "building"
+msgstr "здание"
+
+#: apps/accounts/forms.py:245 apps/accounts/forms.py:327
+#: apps/accounts/models.py:247
+msgid "address"
+msgstr "адрес"
+
+#: apps/accounts/forms.py:271 apps/accounts/forms.py:448
+#: apps/accounts/models.py:234 apps/catalog/forms.py:170 apps/sms/models.py:36
+#: templates/accounts/include/user_profile.html:15
+msgid "Phone"
+msgstr "Телефон"
+
+#: apps/accounts/forms.py:307
+msgid "You can not choose this username"
+msgstr "Вы не можете выбрать данное пользовательское имя"
+
+#: apps/accounts/forms.py:398
+msgid "Service name"
+msgstr "Имя сервиса"
+
+#: apps/accounts/forms.py:399
+msgid "Your service name"
+msgstr "Имя вашего сервиса"
+
+#: apps/accounts/forms.py:405
+msgid "Address"
+msgstr "Адрес"
+
+#: apps/accounts/forms.py:406
+msgid "Address where are you located"
+msgstr "Адрес, где вы находитесь"
+
+#: apps/accounts/forms.py:408
+msgid "Avarage cost"
+msgstr "Мин. сумма заказа"
+
+#: apps/accounts/forms.py:409
+msgid "Avarage cost for purchase"
+msgstr "Цена для заказа с бесплатной доставкой"
+
+#: apps/accounts/forms.py:411
+msgid "Avarage deliver cost"
+msgstr "Стоимость доставки"
+
+#: apps/accounts/forms.py:412
+msgid "Avarage deliver cost for customers"
+msgstr "Стоимость доставки до клиента"
+
+#: apps/accounts/forms.py:414
+msgid "Avarage deliver time"
+msgstr "Время доставки"
+
+#: apps/accounts/forms.py:415
+msgid "Avarage deliver time for customers"
+msgstr "Время доставки продукции до клиента"
+
+#: apps/accounts/forms.py:419
+msgid "Office"
+msgstr "Офис"
+
+#: apps/accounts/forms.py:432 templates/accounts/include/user_profile.html:7
+msgid "Real name"
+msgstr "Реальное имя"
+
+#: apps/accounts/forms.py:433
+msgid ""
+"Your surname, forname and middle name:            <i>Ivanov Ivan Ivanich</i>"
+msgstr "Ваше имя, фамилия, отчество: <i>Иванов Иван Иванович</i>"
+
+#: apps/accounts/forms.py:437 apps/accounts/models.py:59
+msgid "Contact phone"
+msgstr "Контактный телефон"
+
+#: apps/accounts/forms.py:438 apps/catalog/models.py:620
+msgid "Your contact phone"
+msgstr "Ваш контактный телефон"
+
+#: apps/accounts/forms.py:442
+msgid "May be the same as phone"
+msgstr "Может быть как и основной телефон"
+
+#: apps/accounts/forms.py:444 apps/accounts/models.py:71
+msgid "Contact email"
+msgstr "Контактный адрес эл. почты"
+
+#: apps/accounts/forms.py:445
+msgid "May be the same as common email"
+msgstr "Может быть как и основной адрес эл. почты"
+
+#: apps/accounts/forms.py:464
+msgid ""
+"Please input your surname,                    in the follow direction: "
+"surname, forename middle name                    dividing by space"
+msgstr ""
+"Пожалуйста введите ваше имя в нужной последовательности: фамилия, имя, "
+"отчество, разделяя их знаком пробела"
+
+#: apps/accounts/forms.py:521
+msgid "This email account was registered already, please login"
+msgstr ""
+"Данный адрес электронной почты уже зарегестрирован, пожалуйста, используйте "
+"вход."
+
+#: apps/accounts/forms.py:556
+msgid "This user had been already invited, sorry"
+msgstr "На этот адрес уже было выслано приглашение, приносим свои извинения"
+
+#: apps/accounts/forms.py:564
+msgid "Your are out of invite limit, sorry for that :)"
+msgstr "Вы исчерпали лимит инвайтов"
+
+#: apps/accounts/forms.py:626 apps/accounts/models.py:172
+#: templates/accounts/include/user_profile.html:11
+msgid "Email"
+msgstr "Эл. адрес"
+
+#: apps/accounts/forms.py:626
+#, fuzzy
+msgid "Your email"
+msgstr "эл. адрес"
+
+#: apps/accounts/forms.py:634
+msgid "Users with given email does not exists"
+msgstr "Пользователя с таким электронным адресом почты не существует"
+
+#: apps/accounts/forms.py:645
+msgid "Password repeat"
+msgstr "Повтор пароля"
+
+#: apps/accounts/forms.py:654
+msgid "Passwords don't match"
+msgstr "Пароли не совпадают"
+
+#: apps/accounts/models.py:21 apps/core/templatetags/corefilters.py:59
+msgid "Mon"
+msgstr "Пн"
+
+#: apps/accounts/models.py:22 apps/core/templatetags/corefilters.py:59
+msgid "Tue"
+msgstr "Вт"
+
+#: apps/accounts/models.py:23 apps/core/templatetags/corefilters.py:59
+msgid "Wed"
+msgstr "Ср"
+
+#: apps/accounts/models.py:24 apps/core/templatetags/corefilters.py:59
+msgid "Thu"
+msgstr "Чт"
+
+#: apps/accounts/models.py:25 apps/core/templatetags/corefilters.py:59
+msgid "Fri"
+msgstr "Пт"
+
+#: apps/accounts/models.py:26 apps/core/templatetags/corefilters.py:59
+msgid "Sat"
+msgstr "Сб"
+
+#: apps/accounts/models.py:27 apps/core/templatetags/corefilters.py:59
+msgid "Sun"
+msgstr "Вс"
+
+#: apps/accounts/models.py:32 apps/blog/models.py:20 apps/blog/models.py:44
+#: apps/catalog/models.py:45 apps/catalog/models.py:233
+#: apps/catalog/models.py:257 apps/catalog/models.py:372
+#: apps/catalog/models.py:400 apps/catalog/models.py:419
+#: apps/catalog/models.py:519 apps/catalog/models.py:536
+#: apps/catalog/models.py:582 apps/catalog/models.py:913
+#: apps/catalog/models.py:920 apps/catalog/models.py:931
+msgid "title"
+msgstr "заголовок"
+
+#: apps/accounts/models.py:38
+msgid "Contact phone type"
+msgstr "Тип контактного телефона"
+
+#: apps/accounts/models.py:39
+msgid "Contact phone types"
+msgstr "Типы контактного телефона"
+
+#: apps/accounts/models.py:46
+msgid "phone type"
+msgstr "Тип телефона"
+
+#: apps/accounts/models.py:49
+msgid "phone user"
+msgstr "Владелец"
+
+#: apps/accounts/models.py:60
+msgid "Contact phones"
+msgstr "Контактные телефоны"
+
+#: apps/accounts/models.py:64 apps/catalog/models.py:617
+msgid "email"
+msgstr "эл. адрес"
+
+#: apps/accounts/models.py:72
+msgid "Contact emails"
+msgstr "Контактные эл. адреса"
+
+#: apps/accounts/models.py:86
+#, python-format
+msgid "%s schedule"
+msgstr "расписание %s"
+
+#: apps/accounts/models.py:89
+msgid "Schedule"
+msgstr "Расписание"
+
+#: apps/accounts/models.py:90
+msgid "Schedules"
+msgstr "Расписания"
+
+#: apps/accounts/models.py:95
+msgid "week day"
+msgstr "день недели"
+
+#: apps/accounts/models.py:102
+msgid "since"
+msgstr "с"
+
+#: apps/accounts/models.py:103
+msgid "until"
+msgstr "до"
+
+#: apps/accounts/models.py:106
+msgid "schedule"
+msgstr "расписание"
+
+#: apps/accounts/models.py:108 apps/banner/models.py:36
+#: apps/catalog/models.py:579
+msgid "is active?"
+msgstr "активна?"
+
+#: apps/accounts/models.py:109
+msgid "marks if this schedule point is active"
+msgstr "отмечает, если точка в расписании активна"
+
+#: apps/accounts/models.py:118
+msgid "Time and day"
+msgstr "Режим работы"
+
+#: apps/accounts/models.py:119
+msgid "Time and days"
+msgstr "Режимы работы"
+
+#: apps/accounts/models.py:126 apps/catalog/models.py:936
+msgid "min"
+msgstr "мин"
+
+#: apps/accounts/models.py:127
+msgid "min border value in killometers"
+msgstr "мин граница в киллометрах"
+
+#: apps/accounts/models.py:130 apps/catalog/models.py:940
+msgid "max"
+msgstr "макс"
+
+#: apps/accounts/models.py:131
+msgid "max border value in killometers"
+msgstr "максимальная граница в киллометрах"
+
+#: apps/accounts/models.py:134 apps/catalog/models.py:434
+#: apps/catalog/models.py:539 apps/catalog/models.py:712
+msgid "cost"
+msgstr "цена"
+
+#: apps/accounts/models.py:134
+msgid "Deliver cost for this distance range"
+msgstr "Цена доставки для диапазонов расстояний"
+
+#: apps/accounts/models.py:141
+msgid "Deliver cost"
+msgstr "Цена доставки"
+
+#: apps/accounts/models.py:142
+msgid "Deliver costs"
+msgstr "Цены доставки"
+
+#: apps/accounts/models.py:147
+msgid "is expired?"
+msgstr "истекает?"
+
+#: apps/accounts/models.py:149
+msgid "expire date"
+msgstr "дата истечения"
+
+#: apps/accounts/models.py:149
+msgid "date and time when invite is expired"
+msgstr "дата и время, когда истекает инвайт"
+
+#: apps/accounts/models.py:153 apps/banner/models.py:21 apps/blog/models.py:74
+#: apps/catalog/models.py:462 apps/catalog/models.py:732
+#: apps/catalog/models.py:1039 apps/catalog/models.py:1091
+#: apps/catalog/models.py:1129 apps/catalog/models.py:1132
+#: apps/core/models.py:24 apps/sms/models.py:30
+msgid "created on"
+msgstr "создано"
+
+#: apps/accounts/models.py:153
+msgid "created date of invitation"
+msgstr "дата создания инвайта(приглашения)"
+
+#: apps/accounts/models.py:157 apps/banner/models.py:25 apps/blog/models.py:78
+#: apps/catalog/models.py:466 apps/catalog/models.py:735
+#: apps/catalog/models.py:1043 apps/catalog/models.py:1093
+#: apps/core/models.py:28 apps/sms/models.py:32
+msgid "updated on"
+msgstr "обновлено"
+
+#: apps/accounts/models.py:157
+msgid "date when this was updated last time"
+msgstr "дата, когда сущность была обновлена"
+
+#: apps/accounts/models.py:163
+msgid "sender"
+msgstr "отправитель"
+
+#: apps/accounts/models.py:169
+msgid "reciever"
+msgstr "получатель"
+
+#: apps/accounts/models.py:172
+msgid "Friend email"
+msgstr "Эл. адрес друга"
+
+#: apps/accounts/models.py:176 apps/core/models.py:15
+msgid "SID"
+msgstr "СИД"
+
+#: apps/accounts/models.py:176
+msgid "SpecialID for registration"
+msgstr "СпециальныйИД для регистрации"
+
+#: apps/accounts/models.py:180 apps/accounts/models.py:202
+#: apps/accounts/models.py:371
+msgid "is verified?"
+msgstr "подтвержден?"
+
+#: apps/accounts/models.py:180
+msgid "shows if user is verified"
+msgstr "показывает статус подтверждения пользователя"
+
+#: apps/accounts/models.py:187 templates/accounts/invite.html:6
+msgid "Invite"
+msgstr "Инвайт"
+
+#: apps/accounts/models.py:188
+msgid "Invites"
+msgstr "Инвайты"
+
+#: apps/accounts/models.py:194 apps/catalog/models.py:1126
+msgid "is processed?"
+msgstr "обработан?"
+
+#: apps/accounts/models.py:211 apps/accounts/models.py:212
+msgid "Verification"
+msgstr "Подтверждение"
+
+#: apps/accounts/models.py:216
+msgid "invites"
+msgstr "инвайты"
+
+#: apps/accounts/models.py:216
+msgid "intites count"
+msgstr "количество инвайтов"
+
+#: apps/accounts/models.py:219 apps/catalog/models.py:630
+#: apps/geo/models.py:10 apps/geo/models.py:49
+msgid "city"
+msgstr "город"
+
+#: apps/accounts/models.py:223
+msgid "middle name"
+msgstr "отчество"
+
+#: apps/accounts/models.py:227 apps/accounts/models.py:389
+msgid "is partner?"
+msgstr "партнер?"
+
+#: apps/accounts/models.py:239 apps/blog/models.py:24 apps/blog/models.py:68
+#: apps/catalog/models.py:97 apps/catalog/models.py:160
+#: apps/catalog/models.py:239 apps/catalog/models.py:740
+#: apps/catalog/models.py:916 apps/catalog/models.py:1036
+msgid "service"
+msgstr "сервис"
+
+#: apps/accounts/models.py:243
+msgid "service name"
+msgstr "имя сервиса"
+
+#: apps/accounts/models.py:247
+msgid "for example: <i>Petrogradskaya</i>"
+msgstr "например: <i>Петроградская</i>"
+
+#: apps/accounts/models.py:252
+msgid "aparment"
+msgstr "квартира"
+
+#: apps/accounts/models.py:252
+msgid "Apartment number, for example:<i>17</i>"
+msgstr "Номер квартиры, например: <i>17</i>"
+
+#: apps/accounts/models.py:257
+msgid "for example: <i>2/2 attr 3</i>"
+msgstr "например: <i>2/2 корпус 3</i>"
+
+#: apps/accounts/models.py:262
+msgid "site url"
+msgstr "адрес сайта"
+
+#: apps/accounts/models.py:262
+msgid "Your company site url"
+msgstr "Адрес сайта вашей компании"
+
+#: apps/accounts/models.py:267 apps/catalog/models.py:651
+#: apps/geo/models.py:46 apps/geo/models.py:92
+msgid "subway"
+msgstr "метро"
+
+#: apps/accounts/models.py:268
+msgid "the nearest subway station"
+msgstr "ближайшая станция метро"
+
+#: apps/accounts/models.py:273
+msgid "mean cost"
+msgstr "Мин. сумма заказа"
+
+#: apps/accounts/models.py:273
+msgid "Avarage cost for purchase with deliver for free"
+msgstr "Порог цены, при которой доставка осуществляется бесплатно"
+
+#: apps/accounts/models.py:279
+msgid "avarage delive time"
+msgstr "среднее время доставки"
+
+#: apps/accounts/models.py:280
+msgid "1d10h15m"
+msgstr "10d10h15m"
+
+#: apps/accounts/models.py:291 apps/catalog/models.py:720
+msgid "deliver cost"
+msgstr "Стоимость доставки"
+
+#: apps/accounts/models.py:291
+msgid "Avarage cost for deliver"
+msgstr "Цена доставки"
+
+#: apps/accounts/models.py:297
+msgid "minimal cost"
+msgstr "минимальная цена"
+
+#: apps/accounts/models.py:297
+msgid "Minimal cost allowed to order"
+msgstr "Минимальная разрешенная цена для осуществления заказа"
+
+#: apps/accounts/models.py:303 apps/banner/models.py:32
+#: apps/catalog/admin.py:39 apps/catalog/admin.py:50 apps/catalog/models.py:47
+#: apps/catalog/models.py:235 apps/catalog/models.py:388
+#: apps/catalog/models.py:421 apps/catalog/models.py:520
+#: apps/catalog/models.py:537 apps/catalog/models.py:585
+#: apps/catalog/models.py:1096 apps/geo/models.py:136
+msgid "description"
+msgstr "описание"
+
+#: apps/accounts/models.py:304
+msgid "partner given description"
+msgstr "описание, данное партнером (о заведении)"
+
+#: apps/accounts/models.py:309
+msgid "bonus score"
+msgstr "бонус баллы"
+
+#: apps/accounts/models.py:315 apps/catalog/models.py:58
+msgid "logo"
+msgstr "логотип"
+
+#: apps/accounts/models.py:315
+msgid "service logo"
+msgstr "логотип сервиса"
+
+#: apps/accounts/models.py:322
+msgid "google latitude"
+msgstr "широта"
+
+#: apps/accounts/models.py:322
+msgid "google maps latitude coordinate"
+msgstr "широта для гугл карт"
+
+#: apps/accounts/models.py:328
+msgid "google longitude"
+msgstr "долгота"
+
+#: apps/accounts/models.py:329
+msgid "google maps longitude coordinate"
+msgstr "долгота для гугл карт"
+
+#: apps/accounts/models.py:335 apps/accounts/models.py:390
+msgid "is operator?"
+msgstr "оператор?"
+
+#: apps/accounts/models.py:340
+msgid "has online payment?"
+msgstr "имеет онлайн оплату?"
+
+#: apps/accounts/models.py:345
+msgid "birthday"
+msgstr "день рождения"
+
+#: apps/accounts/models.py:350 apps/catalog/models.py:750
+msgid "commission"
+msgstr "комиссия"
+
+#: apps/accounts/models.py:352
+msgid ""
+"commission value should be lower than 1, for example: 0.1 - 10%, 0.15 - 15% "
+"and so on"
+msgstr ""
+"комиссия должна выставляться в значения не превышающих 1 (единицу)например: "
+"0.1 - 10%, 0.15 - 15% и так далее"
+
+#: apps/accounts/models.py:360 apps/catalog/models.py:1011
+#: apps/pages/models.py:30
+msgid "is published?"
+msgstr "опубликован?"
+
+#: apps/accounts/models.py:365
+msgid "additional"
+msgstr "дополнительная информация"
+
+#: apps/accounts/models.py:366
+msgid "additional information"
+msgstr "дополнительная информация"
+
+#: apps/accounts/models.py:372
+msgid "marks if user passed through post-registraction verification"
+msgstr ""
+
+#: apps/accounts/models.py:379
+msgid "publish date"
+msgstr "дата публикации"
+
+#: apps/accounts/models.py:380
+msgid ""
+"date when the service was approved to use in the user search output list"
+msgstr ""
+
+#: apps/accounts/models.py:403
+msgid "Profile"
+msgstr "Профиль"
+
+#: apps/accounts/models.py:618
+msgid ""
+"We apologize, but You can not order with given service becauseit does not "
+"work in your coverage area,please select another place to order"
+msgstr ""
+"Приносим свои извенения, Вы не можете осуществить этот заказ, потому как "
+"сервис не предоставляет услугу доставки в ваш район, пожалуйста "
+"воспользуйтесь другим сервисом"
+
+#: apps/accounts/views.py:315
+msgid "Your password requested to change"
+msgstr "Запрос изменения пароля"
+
+#: apps/banner/models.py:8
+msgid "url"
+msgstr ""
+
+#: apps/banner/models.py:8
+msgid "where should click on banner go"
+msgstr ""
+
+#: apps/banner/models.py:12 apps/catalog/models.py:453
+#: apps/catalog/models.py:588
+msgid "image"
+msgstr "изображение"
+
+#: apps/banner/models.py:12
+msgid "banner image"
+msgstr ""
+
+#: apps/banner/models.py:29 apps/catalog/models.py:63
+#: apps/catalog/models.py:167 apps/catalog/models.py:247
+#: apps/catalog/models.py:470
+msgid "weight"
+msgstr "порядок"
+
+#: apps/banner/models.py:32
+#, fuzzy
+msgid "banner description"
+msgstr "описание"
+
+#: apps/banner/models.py:36
+#, fuzzy
+msgid "marks if banner is active"
+msgstr "отмечает, если точка в расписании активна"
+
+#: apps/banner/models.py:41
+msgid "Banner"
+msgstr ""
+
+#: apps/banner/models.py:42
+msgid "Banners"
+msgstr ""
+
+#: apps/blog/admin.py:35
+msgid "Announce"
+msgstr "Анонс"
+
+#: apps/blog/models.py:34
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:12
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:13
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/tableheader.html:12
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/tableheader.html:13
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:12
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:13
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/tableheader.html:12
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/tableheader.html:13
+msgid "Type"
+msgstr "Тип"
+
+#: apps/blog/models.py:35
+msgid "Types"
+msgstr "Типы"
+
+#: apps/blog/models.py:41 apps/geo/models.py:78 apps/geo/models.py:101
+msgid "type"
+msgstr "тип"
+
+#: apps/blog/models.py:44
+msgid "Post title"
+msgstr "Заголовок поста"
+
+#: apps/blog/models.py:48
+msgid "content"
+msgstr "контент"
+
+#: apps/blog/models.py:48
+msgid "Post content"
+msgstr "Контент поста"
+
+#: apps/blog/models.py:51
+msgid "announce"
+msgstr "анонс"
+
+#: apps/blog/models.py:51
+msgid "Post announce"
+msgstr "Анонс поста"
+
+#: apps/blog/models.py:55
+msgid "post image"
+msgstr "изображение поста"
+
+#: apps/blog/models.py:61
+msgid "inner link"
+msgstr "внутренняя ссылка"
+
+#: apps/blog/models.py:62
+msgid "link for service menu item"
+msgstr "ссылка на меню сервиса"
+
+#: apps/blog/models.py:71 apps/catalog/models.py:1029
+msgid "is approved?"
+msgstr "утверждено?"
+
+#: apps/blog/models.py:85
+msgid "Post"
+msgstr "Пост"
+
+#: apps/blog/models.py:86
+msgid "Posts"
+msgstr "Посты"
+
+#: apps/catalog/admin.py:65 apps/catalog/admin.py:98
+#: apps/catalog/models.py:695 apps/catalog/models.py:1010
+#: apps/catalog/models.py:1068 apps/catalog/models.py:1109
+msgid "client"
+msgstr "клиент"
+
+#: apps/catalog/admin.py:69
+msgid "name"
+msgstr "имя"
+
+#: apps/catalog/admin.py:76
+msgid "is offline"
+msgstr "оффлайн"
+
+#: apps/catalog/decorators.py:75
+msgid "You can not order stuff with another services or providers"
+msgstr "Вы не можете осуществить заказ у других сервисов или поставщиков услуг"
+
+#: apps/catalog/forms.py:49
+msgid "You can not assign container on itself"
+msgstr "Вы не можете пристыковать контейнер к самому себе"
+
+#: apps/catalog/forms.py:123
+msgid "You can not order addons without any items"
+msgstr "Вы не моежете заказать добавки, не добавив при этом ни одного товара"
+
+#: apps/catalog/forms.py:132
+msgid "You can not choose addons of the side services"
+msgstr "Вы не можете выбрать добавки других поставщиков"
+
+#: apps/catalog/forms.py:155
+msgid "Service terms agreement"
+msgstr ""
+
+#: apps/catalog/forms.py:159 apps/catalog/models.py:716
+msgid "discount"
+msgstr "скидка"
+
+#: apps/catalog/forms.py:160
+msgid "up to 10% you can payed by your bonus points"
+msgstr "до 10% вы можете оплатить бонусными баллами"
+
+#: apps/catalog/forms.py:164
+#, fuzzy
+msgid "Payment redirect"
+msgstr "Платежная транзакция"
+
+#: apps/catalog/forms.py:165
+#, fuzzy
+msgid "delivery boy"
+msgstr "Стоимость доставки"
+
+#: apps/catalog/forms.py:166
+#, fuzzy
+msgid "online payment"
+msgstr "имеет онлайн оплату?"
+
+#: apps/catalog/forms.py:169
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:39
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:58
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:39
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:58
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:39
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:58
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:39
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:58
+msgid "Name"
+msgstr "Имя"
+
+#: apps/catalog/forms.py:171
+msgid "Phone2"
+msgstr "Телефон"
+
+#: apps/catalog/forms.py:173
+msgid "Street"
+msgstr "Улица"
+
+#: apps/catalog/forms.py:174
+msgid "Building"
+msgstr "Здание"
+
+#: apps/catalog/forms.py:175
+msgid "Building attr"
+msgstr "Корпус"
+
+#: apps/catalog/forms.py:176
+msgid "Apartment"
+msgstr "Квартира/Офис"
+
+#: apps/catalog/forms.py:177
+msgid "Need change"
+msgstr "Нужна сдача"
+
+#: apps/catalog/forms.py:178
+msgid "Deliver Date"
+msgstr "Дата доставки"
+
+#: apps/catalog/forms.py:179
+msgid "Deliver Time"
+msgstr "Время доставки"
+
+#: apps/catalog/forms.py:183 apps/geo/models.py:71
+msgid "Subway"
+msgstr "Метро"
+
+#: apps/catalog/forms.py:184 apps/sms/forms.py:23
+msgid "Code"
+msgstr "Код"
+
+#: apps/catalog/forms.py:191
+msgid "Only numbers allowed"
+msgstr "разрешены только цифры"
+
+#: apps/catalog/forms.py:209 apps/catalog/forms.py:289
+msgid "You can not order in the past"
+msgstr "Некорректное дата/время заказа"
+
+#: apps/catalog/forms.py:223
+#, python-format
+msgid "Deliver cost should not be lower than'%s' value"
+msgstr "Цена доставки не должна быть ниже значения '%s'"
+
+#: apps/catalog/forms.py:231
+msgid "You may pass only positive amount of money"
+msgstr "Вы можете ввести только положительную сумму денег"
+
+#: apps/catalog/forms.py:238
+msgid "User with such email exists, please login"
+msgstr ""
+"Пользователь с таким электронным почтовым адресом уже существует, пожалуйста "
+"выполните вход"
+
+#: apps/catalog/forms.py:246
+msgid "You can not spend more bonus points than you have"
+msgstr "Вы не можете потратить бонусных балов больше, чем у вас есть"
+
+#: apps/catalog/forms.py:254
+#, python-format
+msgid ""
+"Maxium discount you can get\n"
+"                is '%(percent)s' of '%(amount)s is %(max)s'"
+msgstr ""
+"Максимальная скидка, которую вы получите\n"
+" '%(percent)s' от '%(amount)s' будет '%(max)s'"
+
+#: apps/catalog/forms.py:264
+msgid "You can not proceed negative values for discount"
+msgstr ""
+
+#: apps/catalog/forms.py:280
+#, python-format
+msgid ""
+"Minimal cost for order is '%s' for this service, you should get more items "
+"to process"
+msgstr ""
+"Для данного сервиса установлена минимальная цена заказа в '%s', вам "
+"необходимо добавить еще товаров до этой суммы, чтобы вы смогли осуществить "
+"заказ"
+
+#: apps/catalog/forms.py:363
+msgid "Регистрация на uzevezu.ru"
+msgstr "Регистрация на uzevezu.ru"
+
+#: apps/catalog/forms.py:462
+msgid "Quantity should be possitive"
+msgstr "Количество должно быть больше нуля"
+
+#: apps/catalog/forms.py:469
+msgid "No such item found"
+msgstr "Не найдено таких элементов"
+
+#: apps/catalog/forms.py:487
+msgid "You can not add multiply service items"
+msgstr "Вы не можете добавить товары различных партнеров"
+
+#: apps/catalog/forms.py:491
+#, python-format
+msgid ""
+"You're trying to stock items from \"%(dst)s\" delivery. Do you want to "
+"cleanse \"%(src)s\" items?"
+msgstr ""
+"Вы пытаетесь положить в корзину товары службы доставки \"%(dst)s\". В этом "
+"случае товары службы \"%(src)s\" будут удалены из корзины."
+
+#: apps/catalog/forms.py:503
+msgid "No item was found with such id"
+msgstr "С данным id ничего не найдено"
+
+#: apps/catalog/forms.py:549
+#, python-format
+msgid "You should use values in range of '%(min)s'..'%(max)s'"
+msgstr "Вы должны использовать значения в диапазоне '%(min)s'..'%(max)s"
+
+#: apps/catalog/forms.py:615
+msgid "import file"
+msgstr "файл импорта"
+
+#: apps/catalog/forms.py:617
+msgid "pictures file"
+msgstr "файл изображений"
+
+#: apps/catalog/forms.py:618
+msgid "only zip allowed"
+msgstr "разрешены только zip файлы"
+
+#: apps/catalog/forms.py:635
+msgid "You downloaded non-csv file, please use proper format"
+msgstr "Вы загрузили не csv файл, пожалуйста, используйте правильный формат"
+
+#: apps/catalog/forms.py:648
+msgid ""
+"Sorry, but file you want to downloadis not zip file, please user proper "
+"format"
+msgstr ""
+"Файл, который вы хотите загрузить не является zip файлом, пожалуйста, "
+"используйте правильный формат"
+
+#: apps/catalog/models.py:24 templates/base.html:90
+msgid "Catalog"
+msgstr "Каталог"
+
+#: apps/catalog/models.py:25
+msgid "catalog"
+msgstr "каталог"
+
+#: apps/catalog/models.py:29
+msgid "not confirmed"
+msgstr "не подтвержден"
+
+#: apps/catalog/models.py:30 templates/catalog/include/order_filters.html:68
+msgid "checking"
+msgstr "на проверке"
+
+#: apps/catalog/models.py:31 templates/catalog/include/order_filters.html:44
+#: templates/catalog/include/order_filters.html:73
+msgid "approved"
+msgstr "утвержден"
+
+#: apps/catalog/models.py:32 templates/catalog/include/order_filters.html:37
+msgid "rejected"
+msgstr "отменен"
+
+#: apps/catalog/models.py:34 templates/catalog/include/order_filters.html:24
+msgid "processed"
+msgstr "доставлен"
+
+#: apps/catalog/models.py:36 templates/catalog/include/order_filters.html:27
+msgid "finished"
+msgstr "принят"
+
+#: apps/catalog/models.py:40
+msgid "not_confirmed"
+msgstr "не подтвержден"
+
+#: apps/catalog/models.py:51 apps/geo/models.py:16
+msgid "codename"
+msgstr "кодовое имя"
+
+#: apps/catalog/models.py:53
+msgid "alias for service for internal use, for example food or stuff"
+msgstr ""
+"алиас для сервиса, предназначен для внутреннего пользования, например food "
+"или stuff"
+
+#: apps/catalog/models.py:58
+msgid "Logo for service"
+msgstr "Логотип сервиса"
+
+#: apps/catalog/models.py:63
+msgid "bigger is prior"
+msgstr "чем больше тем главнее"
+
+#: apps/catalog/models.py:89
+msgid "Service"
+msgstr "Сервис"
+
+#: apps/catalog/models.py:90
+msgid "Services"
+msgstr "Сервисы"
+
+#: apps/catalog/models.py:100 apps/catalog/models.py:654
+msgid "code"
+msgstr "код"
+
+#: apps/catalog/models.py:100
+msgid "codename for term"
+msgstr "кодовое имя для термина"
+
+#: apps/catalog/models.py:104
+msgid "term"
+msgstr "термин"
+
+#: apps/catalog/models.py:116
+msgid "Service term"
+msgstr "Сервис-термин"
+
+#: apps/catalog/models.py:117
+msgid "Service terms"
+msgstr "Сервис-термины"
+
+#: apps/catalog/models.py:131 apps/catalog/models.py:957
+msgid "value"
+msgstr "значение"
+
+#: apps/catalog/models.py:152
+msgid "Atom rating"
+msgstr "Рейтинг-атом"
+
+#: apps/catalog/models.py:153
+msgid "Atom ratings"
+msgstr "Рейтинг-атомы"
+
+#: apps/catalog/models.py:162 apps/catalog/models.py:212
+msgid "Category"
+msgstr "Категория"
+
+#: apps/catalog/models.py:163
+msgid "container related category, spanish/chineese and so on"
+msgstr ""
+"категория контейнеров, например испанская, китайская (кухни) и так далее"
+
+#: apps/catalog/models.py:168
+msgid "weight for order, bigger is prior"
+msgstr "порядок, больше - главнее"
+
+#: apps/catalog/models.py:174 apps/catalog/models.py:869
+msgid "parent"
+msgstr "потомок"
+
+#: apps/catalog/models.py:213
+msgid "Categories"
+msgstr "Категории"
+
+#: apps/catalog/models.py:220
+msgid "container owner"
+msgstr "владелец контейнера"
+
+#: apps/catalog/models.py:226 apps/catalog/models.py:426
+#: apps/catalog/models.py:523 apps/catalog/models.py:744
+msgid "container"
+msgstr "контейнер"
+
+#: apps/catalog/models.py:231
+msgid "category"
+msgstr "категория"
+
+#: apps/catalog/models.py:242
+msgid "mean rating"
+msgstr "средний рейтинг"
+
+#: apps/catalog/models.py:247
+#, fuzzy
+msgid "ordering weight bigger is prior"
+msgstr "порядок, больше - главнее"
+
+#: apps/catalog/models.py:358
+msgid "Container"
+msgstr "Контейнер"
+
+#: apps/catalog/models.py:359
+msgid "Containers"
+msgstr "Контейнеры"
+
+#: apps/catalog/models.py:375
+msgid "threshold"
+msgstr "граница"
+
+#: apps/catalog/models.py:378
+msgid "rate"
+msgstr "рейт"
+
+#: apps/catalog/models.py:381
+msgid "short title"
+msgstr "короткий заголовок"
+
+#: apps/catalog/models.py:384
+msgid "short rate title"
+msgstr "короткий заголовок"
+
+#: apps/catalog/models.py:408
+msgid "Item category"
+msgstr "Единица измерения"
+
+#: apps/catalog/models.py:409
+msgid "Item categories"
+msgstr "Единици измерения"
+
+#: apps/catalog/models.py:414
+msgid "Addon category"
+msgstr "Единица измерения для добавок"
+
+#: apps/catalog/models.py:415
+msgid "Addon categories"
+msgstr "Единицы измерения добавок"
+
+#: apps/catalog/models.py:431
+msgid "item category"
+msgstr "единица измерения"
+
+#: apps/catalog/models.py:437
+msgid "special cost"
+msgstr "специальная цена"
+
+#: apps/catalog/models.py:442
+msgid "Special expires"
+msgstr "акция истекает"
+
+#: apps/catalog/models.py:443
+msgid "Date then special cost is expire for this item"
+msgstr "Дата, когда специальная цена(акция) истекает для данного товара"
+
+#: apps/catalog/models.py:448
+msgid "is special active?"
+msgstr "акция активна?"
+
+#: apps/catalog/models.py:449
+msgid "is special cost for this item active?"
+msgstr "специальная цена(акция) активна для данного товара?"
+
+#: apps/catalog/models.py:453 apps/catalog/models.py:588
+msgid "image for item"
+msgstr "изображение для товара"
+
+#: apps/catalog/models.py:458
+msgid "is special?"
+msgstr "спец-товар?"
+
+#: apps/catalog/models.py:459
+msgid "marks if the item is special, e.g. special dish"
+msgstr "отмечает, если товар является спец-товаром, например фирменное блюдо"
+
+#: apps/catalog/models.py:473
+msgid "mass"
+msgstr ""
+
+#: apps/catalog/models.py:475
+#, fuzzy
+msgid "item mass"
+msgstr "товары"
+
+#: apps/catalog/models.py:478
+msgid "is deleted"
+msgstr "удален?"
+
+#: apps/catalog/models.py:478
+msgid "deletes item"
+msgstr "удаляет объект"
+
+#: apps/catalog/models.py:512
+msgid "Item"
+msgstr "Товар"
+
+#: apps/catalog/models.py:513
+msgid "Items"
+msgstr "Товары"
+
+#: apps/catalog/models.py:530
+msgid "Addon List"
+msgstr "Список добавок"
+
+#: apps/catalog/models.py:531
+msgid "Addon Lists"
+msgstr "Списки добавок"
+
+#: apps/catalog/models.py:543
+msgid "addon list"
+msgstr "cписок добавок"
+
+#: apps/catalog/models.py:546
+msgid "is deleted?"
+msgstr ""
+
+#: apps/catalog/models.py:546
+msgid "deletes addon"
+msgstr ""
+
+#: apps/catalog/models.py:552
+msgid "addon category"
+msgstr "Единицы измерения для добавок"
+
+#: apps/catalog/models.py:570
+msgid "Addon"
+msgstr "Добавка"
+
+#: apps/catalog/models.py:571 templates/catalog/cart.html:47
+#: templates/catalog/orders_partner.html:44
+msgid "Addons"
+msgstr "Добавки"
+
+#: apps/catalog/models.py:576
+msgid "expires"
+msgstr "истекает"
+
+#: apps/catalog/models.py:576
+msgid "date and time when special expires"
+msgstr "дата и время, когда истекает спецальная цена(акция)"
+
+#: apps/catalog/models.py:579
+msgid "if the special is active"
+msgstr "если спец-цена(акция) активна"
+
+#: apps/catalog/models.py:594
+msgid "owner"
+msgstr "владелец"
+
+#: apps/catalog/models.py:608
+msgid "Special"
+msgstr "Акция"
+
+#: apps/catalog/models.py:609
+msgid "Specials"
+msgstr "Акции"
+
+#: apps/catalog/models.py:614
+msgid "first name"
+msgstr "имя"
+
+#: apps/catalog/models.py:624
+msgid "phone2"
+msgstr "телефон"
+
+#: apps/catalog/models.py:624
+msgid "Your contact phone, 2"
+msgstr "Ваш контактный телефон"
+
+#: apps/catalog/models.py:633
+msgid "street"
+msgstr "улица"
+
+#: apps/catalog/models.py:634
+msgid "street for deliver"
+msgstr "улица для доставки"
+
+#: apps/catalog/models.py:643
+msgid "apartment"
+msgstr "квартира/офис"
+
+#: apps/catalog/models.py:643
+msgid "apartment or office"
+msgstr "квартира или офис"
+
+#: apps/catalog/models.py:646
+msgid "need change"
+msgstr "нужна сдача"
+
+#: apps/catalog/models.py:654
+msgid "code of the domophone"
+msgstr ""
+
+#: apps/catalog/models.py:687
+msgid "Offline client"
+msgstr "Оффлайн клиент"
+
+#: apps/catalog/models.py:688
+msgid "Offline clients"
+msgstr "Оффлайн клиенты"
+
+#: apps/catalog/models.py:699
+msgid "offline client"
+msgstr "оффлайн клиент"
+
+#: apps/catalog/models.py:704
+msgid "status"
+msgstr "статус"
+
+#: apps/catalog/models.py:708 apps/catalog/models.py:1025
+msgid "comment"
+msgstr "комментарий"
+
+#: apps/catalog/models.py:708
+msgid "Comment to order"
+msgstr "Комментарий для заказа"
+
+#: apps/catalog/models.py:712 apps/catalog/models.py:750
+msgid "oreder's cost"
+msgstr "цена заказа"
+
+#: apps/catalog/models.py:716
+#, fuzzy
+msgid "order's bonus discount"
+msgstr "цена заказа"
+
+#: apps/catalog/models.py:720
+msgid "deliver's cost"
+msgstr "цена доставки"
+
+#: apps/catalog/models.py:724
+msgid "deliver date"
+msgstr "дата доставки"
+
+#: apps/catalog/models.py:728
+msgid "deliver time"
+msgstr "время доставки"
+
+#: apps/catalog/models.py:747
+msgid "is payed?"
+msgstr "оплачено?"
+
+#: apps/catalog/models.py:852
+msgid "Order"
+msgstr "Заказ"
+
+#: apps/catalog/models.py:853
+msgid "Orders"
+msgstr "Заказы"
+
+#: apps/catalog/models.py:859
+msgid "content type"
+msgstr "тип контента"
+
+#: apps/catalog/models.py:861
+msgid "object id"
+msgstr "идентификатор объекта"
+
+#: apps/catalog/models.py:871 cart/models.py:28
+msgid "quantity"
+msgstr "количество"
+
+#: apps/catalog/models.py:873
+msgid "total price"
+msgstr "итоговая цена"
+
+#: apps/catalog/models.py:878 apps/catalog/models.py:1006
+#: apps/catalog/models.py:1072 apps/catalog/models.py:1112
+msgid "order"
+msgstr "заказ"
+
+#: apps/catalog/models.py:908
+msgid "Order container"
+msgstr "Контейнер заказа"
+
+#: apps/catalog/models.py:909
+msgid "Order containers"
+msgstr "Контейнеры заказов"
+
+#: apps/catalog/models.py:926
+msgid "Vote class"
+msgstr "Класс отзыва"
+
+#: apps/catalog/models.py:927
+msgid "Vote classes"
+msgstr "Классы отзывов"
+
+#: apps/catalog/models.py:934
+msgid "vote klass"
+msgstr "класс отзыва"
+
+#: apps/catalog/models.py:936
+msgid "min value validate"
+msgstr "минимальное число для валидации"
+
+#: apps/catalog/models.py:940
+msgid "max value validate"
+msgstr "максимальное число для валидации"
+
+#: apps/catalog/models.py:948
+msgid "Vote atom"
+msgstr "Отзыв-атом"
+
+#: apps/catalog/models.py:949
+msgid "Vote atoms"
+msgstr "Отзыв-атомы"
+
+#: apps/catalog/models.py:955
+msgid "vote atom"
+msgstr "отзыв-атом"
+
+#: apps/catalog/models.py:957
+msgid "vote atom value"
+msgstr "значение отзыв-атома"
+
+#: apps/catalog/models.py:964
+msgid "Vote link"
+msgstr "Отзыв-ссылка"
+
+#: apps/catalog/models.py:965
+msgid "Vote links"
+msgstr "Отзыв-ссылки"
+
+#: apps/catalog/models.py:972
+msgid "vote links"
+msgstr "отзыв-ссылки"
+
+#: apps/catalog/models.py:975
+msgid "mean"
+msgstr "среднее"
+
+#: apps/catalog/models.py:975
+msgid "mean value"
+msgstr "среднее значение"
+
+#: apps/catalog/models.py:995
+msgid "Vote item"
+msgstr "Отзыв-пункт"
+
+#: apps/catalog/models.py:996
+msgid "Vote items"
+msgstr "Отзыв-пункты"
+
+#: apps/catalog/models.py:1002
+msgid "sid"
+msgstr "сид"
+
+#: apps/catalog/models.py:1002
+msgid "secret id"
+msgstr "секретный ид"
+
+#: apps/catalog/models.py:1016
+msgid "vote item"
+msgstr "отзыв-пункт"
+
+#: apps/catalog/models.py:1019
+msgid "is proceeded?"
+msgstr "обработан?"
+
+#: apps/catalog/models.py:1022
+#, fuzzy
+msgid "is send?"
+msgstr "Переотправить?"
+
+#: apps/catalog/models.py:1025
+msgid "Your comment for the vote"
+msgstr "Ваш комментарий для отзыва"
+
+#: apps/catalog/models.py:1026
+msgid "No comment provided"
+msgstr "Комментарий не предоставлен"
+
+#: apps/catalog/models.py:1030
+msgid "marks if vote is approved by moderator"
+msgstr "отмечает, был ли отзыв утвержден модератором"
+
+#: apps/catalog/models.py:1060
+msgid "Vote"
+msgstr "Отзыв"
+
+#: apps/catalog/models.py:1061
+msgid "Votes"
+msgstr "Отзывы"
+
+#: apps/catalog/models.py:1075 apps/catalog/models.py:1117
+msgid "amount"
+msgstr "количество"
+
+#: apps/catalog/models.py:1075
+msgid "bonus amount"
+msgstr "количество бонусов"
+
+#: apps/catalog/models.py:1079
+msgid "exchange rate"
+msgstr "тариф обмена"
+
+#: apps/catalog/models.py:1080
+msgid "real currency echange rate, measure in RUR"
+msgstr "тариф обмена в реальную валюту(измеряемой в рублях)"
+
+#: apps/catalog/models.py:1085
+msgid "is proccessed?"
+msgstr "обработан?"
+
+#: apps/catalog/models.py:1088
+msgid "is discount?"
+msgstr "скидка?"
+
+#: apps/catalog/models.py:1103
+msgid "Bonus transaction"
+msgstr "Бонус транзакция"
+
+#: apps/catalog/models.py:1104
+msgid "Bonus transactions"
+msgstr "Бонус транзакции"
+
+#: apps/catalog/models.py:1115
+msgid "partner"
+msgstr "партнер"
+
+#: apps/catalog/models.py:1121
+msgid "payment id"
+msgstr "id оплаты"
+
+#: apps/catalog/models.py:1121
+msgid "service payment id"
+msgstr "id оплаты сервиса"
+
+#: apps/catalog/models.py:1139
+msgid "Payment transaction"
+msgstr "Платежная транзакция"
+
+#: apps/catalog/models.py:1140
+msgid "Payment transactions"
+msgstr "Платежные транзакции"
+
+#: apps/catalog/signals.py:54
+msgid "Поступил новый заказ"
+msgstr "Поступил новый заказ"
+
+#: apps/catalog/signals.py:104 cron/send_vote_links.py:25
+msgid "Please vote for your order"
+msgstr "Пожалуйста, проголосуйте за ваш заказ"
+
+#: apps/catalog/views.py:888
+msgid "You can not order less of item quantity then given threshold"
+msgstr ""
+"Вы не можете осуществить заказ меньшего количества товара, чем установлено "
+"границей заказа"
+
+#: apps/catalog/views.py:894
+msgid ""
+"Quantity should be proportional to its item category threshold, you can not "
+"add items without it"
+msgstr ""
+"Количество должно быть пропорционально границе, вы не можете добавить товар "
+"игнорируя это правило"
+
+#: apps/catalog/views.py:1098
+msgid ""
+"You can not repeat order if there's something in the cart, please cleanse it"
+msgstr ""
+"Вы не можете повторить заказ, если у вас есть товар в корзине, пожалуйста "
+"очистите корзину для начала"
+
+#: apps/catalog/views.py:1110
+#, python-format
+msgid "Item '%s' does not exist anymore, sorry"
+msgstr ""
+"Товара '%s' больше не существует и он не может быть добавлен еще раз, "
+"приносим свои извинения."
+
+#: apps/catalog/views.py:1215
+msgid "Thank you, your vote proceeded"
+msgstr "Спасибо, ваш голос учтен"
+
+#: apps/core/handlers.py:34
+#, python-format
+msgid "Uploaded file exceeded size limit set to %(size)smb and was dropped"
+msgstr ""
+
+#: apps/core/helpers.py:249
+msgid "Not found"
+msgstr "Не найден"
+
+#: apps/core/models.py:18
+#, fuzzy
+msgid "Expires"
+msgstr "истекает"
+
+#: apps/core/models.py:21
+#, fuzzy
+msgid "expired?"
+msgstr "истекает?"
+
+#: apps/core/models.py:37
+#, fuzzy
+msgid "UserSID"
+msgstr "Пользователь"
+
+#: apps/core/models.py:38
+#, fuzzy
+msgid "UserSIDs"
+msgstr "Пользователь"
+
+#: apps/core/templatetags/corefilters.py:61
+msgid "Monday"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:61
+msgid "Tuesday"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:61
+msgid "Wednesday"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:62
+msgid "Thursday"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:62
+msgid "Friday"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:62
+msgid "Saturday"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:62
+msgid "Sunday"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:71
+msgid "January"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:71
+msgid "February"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:71
+#, fuzzy
+msgid "March"
+msgstr "Поиск"
+
+#: apps/core/templatetags/corefilters.py:71
+msgid "April"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:71
+msgid "May"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:72
+msgid "June"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:72
+msgid "July"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:72
+msgid "August"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:72
+msgid "September"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:72
+msgid "October"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:73
+msgid "November"
+msgstr ""
+
+#: apps/core/templatetags/corefilters.py:73
+msgid "December"
+msgstr ""
+
+#: apps/geo/models.py:11
+msgid "City or other settlement type"
+msgstr "Город или типовое поселение"
+
+#: apps/geo/models.py:13
+msgid "Priority"
+msgstr "Приоретет"
+
+#: apps/geo/models.py:14
+msgid "Ordering priority"
+msgstr "Приоретет сортировки"
+
+#: apps/geo/models.py:16
+msgid ""
+"for fast city access requirements,for example retrieve city's subway map"
+msgstr ""
+"для быстрого доступа к городам, например для получения списка метро для "
+"указанного города"
+
+#: apps/geo/models.py:23
+msgid "iso"
+msgstr "iso"
+
+#: apps/geo/models.py:24
+msgid "iso name for city"
+msgstr "международное имя для города"
+
+#: apps/geo/models.py:36
+msgid "City"
+msgstr "Город"
+
+#: apps/geo/models.py:37
+msgid "Cities"
+msgstr "Города"
+
+#: apps/geo/models.py:47
+msgid "Subway title"
+msgstr "Название станции метро"
+
+#: apps/geo/models.py:64
+msgid "yalink"
+msgstr "Yaлинк"
+
+#: apps/geo/models.py:72
+msgid "Subways"
+msgstr "Метро"
+
+#: apps/geo/models.py:78
+msgid "yalink type"
+msgstr "yalink тип"
+
+#: apps/geo/models.py:86
+msgid "YaType"
+msgstr "YaТип"
+
+#: apps/geo/models.py:87
+msgid "YaTypes"
+msgstr "YaТипы"
+
+#: apps/geo/models.py:95
+msgid "coords"
+msgstr "координаты"
+
+#: apps/geo/models.py:95
+msgid "yandex map coords"
+msgstr "координаты яндекс"
+
+#: apps/geo/models.py:112
+msgid "Yalink"
+msgstr "Yaлинк"
+
+#: apps/geo/models.py:113
+msgid "Yalinks"
+msgstr "Yaлинки"
+
+#: apps/geo/models.py:117
+msgid "latitude"
+msgstr "широта"
+
+#: apps/geo/models.py:120
+msgid "longtitude"
+msgstr "долгота"
+
+#: apps/geo/models.py:133
+msgid "user"
+msgstr ""
+
+#: apps/geo/models.py:145
+msgid "Google position"
+msgstr "Google позиция"
+
+#: apps/geo/models.py:146
+msgid "Goole positions"
+msgstr "Google позиции"
+
+#: apps/pages/admin.py:15
+msgid "text"
+msgstr "текст"
+
+#: apps/pages/models.py:12
+msgid "Auth"
+msgstr "Пользователи"
+
+#: apps/pages/models.py:13
+msgid "Blog"
+msgstr "Блоги"
+
+#: apps/pages/models.py:14
+msgid "Geo"
+msgstr "Географические привязки"
+
+#: apps/pages/models.py:15
+msgid "Sites"
+msgstr "Сайты"
+
+#: apps/pages/models.py:16
+msgid "Sms"
+msgstr "СМС"
+
+#: apps/pages/models.py:17
+msgid "Accounts"
+msgstr "Акаунты"
+
+#: apps/pages/models.py:18
+msgid "accounts"
+msgstr "акаунты"
+
+#: apps/pages/models.py:19
+msgid "auth"
+msgstr "пользователи"
+
+#: apps/pages/models.py:20
+msgid "sms"
+msgstr "смс"
+
+#: apps/pages/models.py:21
+msgid "blog"
+msgstr "блоги"
+
+#: apps/pages/models.py:22
+msgid "geo"
+msgstr "географические привязки"
+
+#: apps/pages/models.py:23
+msgid "sites"
+msgstr "сайты"
+
+#: apps/pages/models.py:27 apps/pages/models.py:51
+#: templates/catalog/addon_list.html:47 templates/catalog/order.html:11
+#: templates/catalog/order.html.py:24
+msgid "Title"
+msgstr "Заголовок"
+
+#: apps/pages/models.py:28
+msgid "Text"
+msgstr "Текст"
+
+#: apps/pages/models.py:29
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:89
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:89
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:96
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:96
+msgid "URL"
+msgstr "URL"
+
+#: apps/pages/models.py:31 apps/pages/models.py:53
+#: templates/catalog/orders_partner.html:21
+msgid "Created on"
+msgstr "Создано"
+
+#: apps/pages/models.py:32 apps/pages/models.py:54
+#: templates/catalog/orders.html:32 templates/catalog/orders_partner.html:22
+msgid "Updated on"
+msgstr "Обновлено"
+
+#: apps/pages/models.py:34
+msgid "template"
+msgstr ""
+
+#: apps/pages/models.py:34
+msgid "template which is using for this content show"
+msgstr ""
+
+#: apps/pages/models.py:46
+msgid "Page"
+msgstr "Страница"
+
+#: apps/pages/models.py:47
+msgid "Pages"
+msgstr "Страницы"
+
+#: apps/pages/models.py:50
+msgid "Codename"
+msgstr "Кодовое имя"
+
+#: apps/pages/models.py:52
+msgid "Content"
+msgstr "Контент"
+
+#: apps/pages/models.py:64
+msgid "Text block"
+msgstr "Текстовый блок"
+
+#: apps/pages/models.py:65
+msgid "Text blocks"
+msgstr "Текстовые блоки"
+
+#: apps/sms/admin.py:15
+msgid "Check status"
+msgstr "Проверка статуса"
+
+#: apps/sms/forms.py:14
+msgid "You have given wrong phone number"
+msgstr "Вы привели неправильный номер телефона"
+
+#: apps/sms/forms.py:16
+msgid "Yes, I approve"
+msgstr "Да, подтверждаю"
+
+#: apps/sms/forms.py:24
+msgid ""
+"Message code you which you should recieve on you phone within several minutes"
+msgstr ""
+"Ваш код, который вы должны получить на ваш телефон в течении нескольких минут"
+
+#: apps/sms/forms.py:39
+msgid "Unknown error"
+msgstr "Незнакомая ошибка"
+
+#: apps/sms/forms.py:91 apps/sms/forms.py:104
+msgid "Signature failed"
+msgstr ""
+
+#: apps/sms/forms.py:169
+msgid "Security issues"
+msgstr ""
+
+#: apps/sms/forms.py:190
+msgid "Md5key is not valid, security error"
+msgstr ""
+
+#: apps/sms/models.py:16
+msgid "delivered"
+msgstr "доставлен"
+
+#: apps/sms/models.py:17
+msgid "not delivered"
+msgstr "не доставлен"
+
+#: apps/sms/models.py:18
+msgid "unknown"
+msgstr "неизвестен"
+
+#: apps/sms/models.py:19
+msgid "blacklisted"
+msgstr "заблокирован"
+
+#: apps/sms/models.py:20
+msgid "invalid phone number"
+msgstr "неправильный номер телефона"
+
+#: apps/sms/models.py:21
+msgid "invalid short-phone number"
+msgstr "неправильный короткий-номер телефона"
+
+#: apps/sms/models.py:23
+msgid "Queued"
+msgstr "В очереди"
+
+#: apps/sms/models.py:24
+msgid "Sent"
+msgstr "Отправлен"
+
+#: apps/sms/models.py:28
+msgid "MID"
+msgstr "MID"
+
+#: apps/sms/models.py:33
+msgid "submited"
+msgstr "добавлено"
+
+#: apps/sms/models.py:34
+msgid "Status Message"
+msgstr "Статус сообщения"
+
+#: apps/sms/models.py:35
+msgid "Text message"
+msgstr "Текст сообщения"
+
+#: apps/sms/models.py:37
+msgid "SMS Provider"
+msgstr "СМС провайдер"
+
+#: apps/sms/models.py:40
+msgid "Resend?"
+msgstr "Переотправить?"
+
+#: apps/sms/models.py:41
+msgid "Resend count"
+msgstr "Количество повторов"
+
+#: apps/sms/models.py:49
+#, python-format
+msgid "unknown [%(status)s]"
+msgstr "неизвестен [%(status)s]"
+
+#: apps/sms/models.py:161 apps/sms/models.py:162
+msgid "SMS Logger"
+msgstr "СМС логгер"
+
+#: cart/models.py:7
+msgid "creation date"
+msgstr "дата создания"
+
+#: cart/models.py:8
+msgid "checked out"
+msgstr ""
+
+#: cart/models.py:11 cart/models.py:27
+msgid "cart"
+msgstr "корзина"
+
+#: cart/models.py:12
+msgid "carts"
+msgstr "корзины"
+
+#: cart/models.py:29
+msgid "unit price"
+msgstr "цена юнита"
+
+#: cart/models.py:44
+msgid "item"
+msgstr "товар"
+
+#: cart/models.py:45 templates/base.html:38
+msgid "items"
+msgstr "товары"
+
+#: settings/dist.py:45
+msgid "Russian"
+msgstr ""
+
+#: settings/dist.py:46
+msgid "English"
+msgstr ""
+
+#: settings/messages.py:4
+#, python-format
+msgid ""
+"\n"
+"    You have been sent an invitation to %(resource)s.\n"
+"\n"
+"    If you don't know whats this site/service does please ignore it or wait\n"
+"    for explanation from your friends.\n"
+"\n"
+"    Please click follow the %(link)s and follow given instructions\n"
+"    to proceed the registration.\n"
+"\n"
+"    If you got this letter accidently, please ignore it,\n"
+"    nothing bad would happen.\n"
+"\n"
+"    Sincerely your, %(resource_name)s administration.\n"
+msgstr ""
+
+#: templates/base.html:37
+msgid "Cart"
+msgstr "Корзина"
+
+#: templates/base.html:48
+msgid "View profile"
+msgstr "Просмотреть профиль"
+
+#: templates/base.html:49
+msgid "Invite friend"
+msgstr "Пригласить друга"
+
+#: templates/base.html:53 templates/base.html.py:55
+msgid "View orders"
+msgstr "Просмотреть заказы"
+
+#: templates/base.html:59
+msgid "Logout"
+msgstr "Выход"
+
+#: templates/base.html:78 templates/accounts/login.html:19
+msgid "Login"
+msgstr "Вход"
+
+#: templates/base.html:79 templates/accounts/invite_register.html:53
+#: templates/accounts/invite_register.html:55
+#: templates/accounts/register_user.html:64
+msgid "Register"
+msgstr "Регистрация"
+
+#: templates/base.html:80
+msgid "Register partner"
+msgstr "Регистрация партнера"
+
+#: templates/base.html:94
+msgid "View containers"
+msgstr ""
+
+#: templates/base.html:97
+msgid "Add container"
+msgstr ""
+
+#: templates/base.html:100
+msgid "Add item"
+msgstr ""
+
+#: templates/base.html:103
+msgid "Add addon"
+msgstr ""
+
+#: templates/pages.html:6
+msgid "Назад"
+msgstr ""
+
+#: templates/pages.html:22
+msgid "Вперед"
+msgstr ""
+
+#: templates/accounts/invite_register_success.html:3
+msgid "You registered successful, please "
+msgstr "Акаунт был успешно зарегистрирован, пожалуйста выполните"
+
+#: templates/accounts/invite_register_success.html:3
+msgid "login"
+msgstr "вход"
+
+#: templates/accounts/invite_success.html:3
+msgid "Invite successful proceeded"
+msgstr "Приглашение успешно отправлено"
+
+#: templates/accounts/password_restore.html:9
+msgid "Change password"
+msgstr "Сменить пароль"
+
+#: templates/accounts/password_restore_initiate.html:4
+msgid "Форма процедуры восстановление забытого пароля"
+msgstr ""
+
+#: templates/accounts/register_partner.html:16
+msgid "Partner register"
+msgstr "Регистрация партнера"
+
+#: templates/accounts/register_partner.html:17
+msgid "step"
+msgstr "шаг"
+
+#: templates/accounts/register_partner.html:17
+msgid "of"
+msgstr "из"
+
+#: templates/accounts/register_partner.html:40
+#: templates/catalog/addon_add.html:12 templates/catalog/container_add.html:6
+#: templates/catalog/item_add.html:13 templates/catalog/order_vote.html:41
+#: templates/catalog/special_add.html:18
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:152
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:152
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:171
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:171
+msgid "Save"
+msgstr "Сохранить"
+
+#: templates/accounts/register_partner.html:40
+msgid "Next step"
+msgstr "Следующий шаг"
+
+#: templates/accounts/register_partner.html:45
+msgid "Prev step"
+msgstr "Предыдуший шаг"
+
+#: templates/accounts/include/user_profile.html:19
+msgid "Edit profile"
+msgstr "Править профиль"
+
+#: templates/admin/app_index.html:12
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/breadcrumbs.html:5
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/breadcrumbs.html:5
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/breadcrumbs.html:6
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/breadcrumbs.html:6
+msgid "Home"
+msgstr ""
+
+#: templates/admin/app_index.html:38
+msgid "Add"
+msgstr "Добавить"
+
+#: templates/admin/app_index.html:39
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/widgets.py:20
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/widgets.py:53
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:130
+#: working/django-filebrowser-3.4.3/filebrowser/widgets.py:20
+#: working/django-filebrowser-3.4.3/filebrowser/widgets.py:53
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filelisting.html:130
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/widgets.py:20
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/widgets.py:53
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:131
+#: working/django-filebrowser-3.5.1/filebrowser/widgets.py:20
+#: working/django-filebrowser-3.5.1/filebrowser/widgets.py:53
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filelisting.html:131
+msgid "Change"
+msgstr ""
+
+#: templates/admin/app_index.html:46
+msgid "You don´t have permission to edit anything."
+msgstr ""
+
+#: templates/catalog/addon_list.html:39
+msgid "Back to cart"
+msgstr "Назад к корзине"
+
+#: templates/catalog/addon_list.html:46 templates/catalog/cart.html:10
+#: templates/catalog/cart.html.py:50 templates/catalog/order.html:10
+#: templates/catalog/order.html.py:22
+msgid "#"
+msgstr "№"
+
+#: templates/catalog/addon_list.html:49
+msgid "Cost"
+msgstr "Цена"
+
+#: templates/catalog/addon_list.html:50 templates/catalog/cart.html:14
+#: templates/catalog/cart.html.py:54 templates/catalog/orders_partner.html:28
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:57
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:57
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:57
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:57
+msgid "Actions"
+msgstr "Действия"
+
+#: templates/catalog/addon_list.html:62
+msgid "Add to cart"
+msgstr "Добавить в корзину"
+
+#: templates/catalog/addon_list.html:74
+msgid "You have no any addon on this container"
+msgstr "Вы не имеете пока добавок для этой категории"
+
+#: templates/catalog/cart.html:4
+msgctxt "currency"
+msgid " $."
+msgstr " руб."
+
+#: templates/catalog/cart.html:6
+msgctxt "Order products"
+msgid "Products"
+msgstr "Продукты"
+
+#: templates/catalog/cart.html:11 templates/catalog/cart.html.py:51
+msgid "Product"
+msgstr "Продукт"
+
+#: templates/catalog/cart.html:12 templates/catalog/cart.html.py:52
+#: templates/catalog/order.html:12 templates/catalog/order.html.py:25
+msgid "Quantity"
+msgstr "Количество"
+
+#: templates/catalog/cart.html:13 templates/catalog/cart.html.py:53
+msgid "Total price"
+msgstr "Итоговая цена"
+
+#: templates/catalog/cart.html:26
+msgid "Remove"
+msgstr "Удалить"
+
+#: templates/catalog/cart.html:29
+msgid "Add extras"
+msgstr "Добавить добавки"
+
+#: templates/catalog/cart.html:35
+msgid "Total price (with extras)"
+msgstr "Итоговая цена (вместе добавками)"
+
+#: templates/catalog/cart.html:41
+msgctxt "Purchase"
+msgid "Order"
+msgstr "Заказать"
+
+#: templates/catalog/cart.html:65
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:151
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:151
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:170
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:170
+msgid "Delete"
+msgstr "Удалить"
+
+#: templates/catalog/cart.html:72
+msgid "No cart items found"
+msgstr "На данный момент товаров в корзине нет"
+
+#: templates/catalog/catalog_list.html:129
+msgid "No items"
+msgstr "Товар не найден"
+
+#: templates/catalog/catalog_list.html:146
+msgid "You have no data to show"
+msgstr ""
+"Извините, но по данным критериям ничего не нашлось. Попробуйте изменить "
+"условия поиска"
+
+#: templates/catalog/container_list.html:18
+msgid "$."
+msgstr "руб."
+
+#: templates/catalog/container_list.html:26
+msgid "You have no any container"
+msgstr "У вас нет ни одной категории(контейнера)"
+
+#: templates/catalog/empty_cart.html:3
+msgid "Sorry, but your cart is empty, please add something to proceed"
+msgstr ""
+"Приносим свои извенения, но ваша корзина пуста, пожалуйста добавьте туда что-"
+"нибудь"
+
+#: templates/catalog/order.html:5
+msgid "Your request order"
+msgstr "Ваш заказ"
+
+#: templates/catalog/order.html:6 templates/catalog/orders_partner.html:5
+#: templates/catalog/include/cart_addon.html:2
+#: templates/catalog/include/cart_item.html:2
+msgctxt "currency"
+msgid "$."
+msgstr "руб."
+
+#: templates/catalog/order.html:7
+msgid "Extras"
+msgstr "Добавки"
+
+#: templates/catalog/order.html:13 templates/catalog/order.html.py:26
+#: templates/catalog/orders_partner.html:23
+msgid "Price"
+msgstr "Цена"
+
+#: templates/catalog/order.html:19
+msgid "Order stuff"
+msgstr "Товар заказа"
+
+#: templates/catalog/order.html:23
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/settings.py:122
+#: working/django-filebrowser-3.4.3/filebrowser/settings.py:122
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/settings.py:124
+#: working/django-filebrowser-3.5.1/filebrowser/settings.py:124
+msgid "Image"
+msgstr "Изображение"
+
+#: templates/catalog/order.html:32
+msgid "Total (with extras):"
+msgstr "Итого (вместе с добавками):"
+
+#: templates/catalog/order.html:41
+msgid "Finish the order"
+msgstr "Закончить заказ"
+
+#: templates/catalog/order.html:45
+msgid "There is nothing you can order, please add something to your cart"
+msgstr ""
+"Нет ничего, что бы вы могли заказать, пожалуйста добавьте что-нибудь в вашу "
+"корзину"
+
+#: templates/catalog/order_success.html:3
+msgid "Your order was successfully queued and soon will be processed"
+msgstr "Ваш заказ был успешно добавлен в очередь обработки"
+
+#: templates/catalog/order_vote_success.html:3
+msgid "Thank you, your vote is applied"
+msgstr "Спасибо, ваш голос учтен"
+
+#: templates/catalog/orders.html:35 templates/catalog/orders_partner.html:25
+msgid "Status"
+msgstr "Статус"
+
+#: templates/catalog/orders_partner.html:3
+msgid "Your orders"
+msgstr "Ваши заказы"
+
+#: templates/catalog/orders_partner.html:11
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/toolbar.html:16
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/toolbar.html:16
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/toolbar.html:16
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/toolbar.html:16
+msgid "Search"
+msgstr "Поиск"
+
+#: templates/catalog/orders_partner.html:13
+msgid "Export as csv"
+msgstr "Экспортировать в csv"
+
+#: templates/catalog/orders_partner.html:20
+msgid "ID"
+msgstr "ID"
+
+#: templates/catalog/orders_partner.html:24
+msgid "Fee"
+msgstr "Комиссия"
+
+#: templates/catalog/orders_partner.html:26
+msgid "Stuff"
+msgstr "Стафф"
+
+#: templates/catalog/orders_partner.html:27
+msgid "User"
+msgstr "Пользователь"
+
+#: templates/catalog/orders_partner.html:50
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/paginator.html:9
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/paginator.html:11
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/paginator.html:9
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/paginator.html:11
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/paginator.html:10
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/paginator.html:12
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/paginator.html:10
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/paginator.html:12
+msgid "total"
+msgstr "итого"
+
+#: templates/catalog/orders_partner.html:61
+msgid "No orders found"
+msgstr "Заказы не найдены"
+
+#: templates/catalog/service_list.html:11
+msgid "No services was initiated"
+msgstr "Ни одного сервиса не было инициализировано"
+
+#: templates/catalog/service_orders.html:146
+#: templates/catalog/service_partner_orders.html:134
+#: templates/catalog/include/order_filters.html:19
+#: templates/catalog/include/order_filters.html:54
+msgid "paid"
+msgstr "оплачен б/н"
+
+#: templates/core/blockage.html:3
+msgid "Sorry, such opperation is blocked for you"
+msgstr "Приносим свои извинения, но данная операция заблокирована для вас"
+
+#: templates/core/fields_required.html:3
+msgid "Sorry, but there are several fields you should fill in your profile"
+msgstr ""
+"Приносим свои извенения, но для осуществления данной операции вам необходимо "
+"заполнить некоторые поля в вашем профиле"
+
+#: templates/core/messages.html:5
+msgid "Information"
+msgstr "Информация"
+
+#: templates/core/messages.html:15
+msgid "Back"
+msgstr "Назад"
+
+#: templates/core/messages.html:16
+msgid "Close"
+msgstr "Закрыть"
+
+#: templates/core/ufo.html:3
+msgid "Sorry, such opperation could not be proceed for some reason"
+msgstr ""
+"Извините, данная операция не может быть выполнена из-за некоторых причин"
+
+#: templates/forms/bootstrap.html:4
+msgid "Error!"
+msgstr "Ошибка!"
+
+#: templates/forms/bootstrap.html:5
+msgid "Form was not filled correctly"
+msgstr "Форма была заполнена неправильно"
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/actions.py:51
+#: working/django-filebrowser-3.4.3/filebrowser/actions.py:51
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/actions.py:51
+#: working/django-filebrowser-3.5.1/filebrowser/actions.py:51
+#, python-format
+msgid "Action applied successfully to '%s'"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/actions.py:56
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:21
+#: working/django-filebrowser-3.4.3/filebrowser/actions.py:56
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:21
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/actions.py:56
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:21
+#: working/django-filebrowser-3.5.1/filebrowser/actions.py:56
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:21
+msgid "Flip horizontal"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/actions.py:62
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:22
+#: working/django-filebrowser-3.4.3/filebrowser/actions.py:62
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:22
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/actions.py:62
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:22
+#: working/django-filebrowser-3.5.1/filebrowser/actions.py:62
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:22
+msgid "Flip vertical"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/actions.py:68
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:23
+#: working/django-filebrowser-3.4.3/filebrowser/actions.py:68
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:23
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/actions.py:68
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:23
+#: working/django-filebrowser-3.5.1/filebrowser/actions.py:68
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:23
+msgid "Rotate 90° CW"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/actions.py:74
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:24
+#: working/django-filebrowser-3.4.3/filebrowser/actions.py:74
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:24
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/actions.py:74
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:24
+#: working/django-filebrowser-3.5.1/filebrowser/actions.py:74
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:24
+msgid "Rotate 90° CCW"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/actions.py:80
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:25
+#: working/django-filebrowser-3.4.3/filebrowser/actions.py:80
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:25
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/actions.py:80
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:25
+#: working/django-filebrowser-3.5.1/filebrowser/actions.py:80
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:25
+msgid "Rotate 180°"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/decorators.py:23
+#: working/django-filebrowser-3.4.3/filebrowser/decorators.py:23
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/decorators.py:23
+#: working/django-filebrowser-3.5.1/filebrowser/decorators.py:23
+msgid ""
+"Error finding Upload-Folder (MEDIA_ROOT + DIRECTORY). Maybe it does not "
+"exist?"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/decorators.py:25
+#: working/django-filebrowser-3.4.3/filebrowser/decorators.py:25
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/decorators.py:25
+#: working/django-filebrowser-3.5.1/filebrowser/decorators.py:25
+msgid "The requested Folder does not exist."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/decorators.py:41
+#: working/django-filebrowser-3.4.3/filebrowser/decorators.py:41
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/decorators.py:41
+#: working/django-filebrowser-3.5.1/filebrowser/decorators.py:41
+msgid "The requested File does not exist."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/decorators.py:47
+#: working/django-filebrowser-3.4.3/filebrowser/decorators.py:47
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/decorators.py:47
+#: working/django-filebrowser-3.5.1/filebrowser/decorators.py:47
+msgid "You do not have permission to access this file!"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/fields.py:65
+#: working/django-filebrowser-3.4.3/filebrowser/fields.py:65
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/fields.py:65
+#: working/django-filebrowser-3.5.1/filebrowser/fields.py:65
+#, python-format
+msgid "Extension %(ext)s is not allowed. Only %(allowed)s is allowed."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:39
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:45
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:58
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:79
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:39
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:45
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:58
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:79
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:39
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:45
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:58
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:79
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:39
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:45
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:58
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:79
+#, fuzzy
+msgid "Only letters, numbers, underscores, spaces and hyphens are allowed."
+msgstr "Допускаются только латинские символы и цифры"
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:48
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:82
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:48
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:82
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:48
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:82
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:48
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:82
+#, fuzzy
+msgid "The Folder already exists."
+msgstr "Такое имя пользовтеля уже существует"
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/forms.py:84
+#: working/django-filebrowser-3.4.3/filebrowser/forms.py:84
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/forms.py:84
+#: working/django-filebrowser-3.5.1/filebrowser/forms.py:84
+#, fuzzy
+msgid "The File already exists."
+msgstr "Такое имя пользовтеля уже существует"
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/settings.py:121
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:21
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:22
+#: working/django-filebrowser-3.4.3/filebrowser/settings.py:121
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/tableheader.html:21
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/tableheader.html:22
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/settings.py:123
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:21
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:22
+#: working/django-filebrowser-3.5.1/filebrowser/settings.py:123
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/tableheader.html:21
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/tableheader.html:22
+msgid "Folder"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/settings.py:123
+#: working/django-filebrowser-3.4.3/filebrowser/settings.py:123
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/settings.py:125
+#: working/django-filebrowser-3.5.1/filebrowser/settings.py:125
+msgid "Video"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/settings.py:124
+#: working/django-filebrowser-3.4.3/filebrowser/settings.py:124
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/settings.py:126
+#: working/django-filebrowser-3.5.1/filebrowser/settings.py:126
+#, fuzzy
+msgid "Document"
+msgstr "комментарий"
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/settings.py:125
+#: working/django-filebrowser-3.4.3/filebrowser/settings.py:125
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/settings.py:127
+#: working/django-filebrowser-3.5.1/filebrowser/settings.py:127
+msgid "Audio"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/sites.py:264
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/breadcrumbs.html:8
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/breadcrumbs.html:10
+#: working/django-filebrowser-3.4.3/filebrowser/sites.py:264
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/breadcrumbs.html:8
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/breadcrumbs.html:10
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/sites.py:264
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/breadcrumbs.html:9
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/breadcrumbs.html:11
+#: working/django-filebrowser-3.5.1/filebrowser/sites.py:264
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/breadcrumbs.html:9
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/breadcrumbs.html:11
+msgid "FileBrowser"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/sites.py:293
+#: working/django-filebrowser-3.4.3/filebrowser/sites.py:293
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/sites.py:289
+#: working/django-filebrowser-3.5.1/filebrowser/sites.py:289
+#, python-format
+msgid "The Folder %s was successfully created."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/sites.py:298
+#: working/django-filebrowser-3.4.3/filebrowser/sites.py:298
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/sites.py:294
+#: working/django-filebrowser-3.5.1/filebrowser/sites.py:294
+msgid "Permission denied."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/sites.py:300
+#: working/django-filebrowser-3.4.3/filebrowser/sites.py:300
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/sites.py:296
+#: working/django-filebrowser-3.5.1/filebrowser/sites.py:296
+msgid "Error creating folder."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/sites.py:307
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/sites.py:310
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/index.html:79
+#: working/django-filebrowser-3.4.3/filebrowser/sites.py:307
+#: working/django-filebrowser-3.4.3/filebrowser/sites.py:310
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/index.html:79
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/sites.py:303
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/sites.py:306
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/index.html:80
+#: working/django-filebrowser-3.5.1/filebrowser/sites.py:303
+#: working/django-filebrowser-3.5.1/filebrowser/sites.py:306
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/index.html:80
+msgid "New Folder"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/sites.py:324
+#: working/django-filebrowser-3.4.3/filebrowser/sites.py:324
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/sites.py:320
+#: working/django-filebrowser-3.5.1/filebrowser/sites.py:320
+msgid "Select files to upload"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/sites.py:327
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/index.html:80
+#: working/django-filebrowser-3.4.3/filebrowser/sites.py:327
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/index.html:80
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/sites.py:323
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/index.html:81
+#: working/django-filebrowser-3.5.1/filebrowser/sites.py:323
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/index.html:81
+msgid "Upload"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/sites.py:358
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/sites.py:361
+#: working/django-filebrowser-3.4.3/filebrowser/sites.py:358
+#: working/django-filebrowser-3.4.3/filebrowser/sites.py:361
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/sites.py:354
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/sites.py:357
+#: working/django-filebrowser-3.5.1/filebrowser/sites.py:354
+#: working/django-filebrowser-3.5.1/filebrowser/sites.py:357
+msgid "Confirm delete"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/sites.py:383
+#: working/django-filebrowser-3.4.3/filebrowser/sites.py:383
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/sites.py:375
+#: working/django-filebrowser-3.5.1/filebrowser/sites.py:375
+#, python-format
+msgid "Successfully deleted %s"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/sites.py:428
+#: working/django-filebrowser-3.4.3/filebrowser/sites.py:428
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/sites.py:413
+#: working/django-filebrowser-3.5.1/filebrowser/sites.py:413
+msgid "Renaming was successful."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/sites.py:437
+#: working/django-filebrowser-3.4.3/filebrowser/sites.py:437
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/sites.py:422
+#: working/django-filebrowser-3.5.1/filebrowser/sites.py:422
+#, fuzzy
+msgid "Error."
+msgstr "Ошибка!"
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/widgets.py:19
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/widgets.py:52
+#: working/django-filebrowser-3.4.3/filebrowser/widgets.py:19
+#: working/django-filebrowser-3.4.3/filebrowser/widgets.py:52
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/widgets.py:19
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/widgets.py:52
+#: working/django-filebrowser-3.5.1/filebrowser/widgets.py:19
+#: working/django-filebrowser-3.5.1/filebrowser/widgets.py:52
+msgid "Currently"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/widgets.py:21
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/widgets.py:54
+#: working/django-filebrowser-3.4.3/filebrowser/widgets.py:21
+#: working/django-filebrowser-3.4.3/filebrowser/widgets.py:54
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/widgets.py:21
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/widgets.py:54
+#: working/django-filebrowser-3.5.1/filebrowser/widgets.py:21
+#: working/django-filebrowser-3.5.1/filebrowser/widgets.py:54
+msgid "Clear"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/createdir.html:24
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:48
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/rename.html:24
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/createdir.html:24
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:48
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/rename.html:24
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/createdir.html:23
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:48
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/createdir.html:23
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:48
+msgid "Please correct the following errors."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/createdir.html:36
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/upload.html:132
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/createdir.html:36
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/upload.html:132
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/createdir.html:36
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:147
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/createdir.html:36
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:147
+msgid ""
+"The Name will be normalized by converting or stripping all non-standard "
+"characters."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/createdir.html:39
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/upload.html:135
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/createdir.html:39
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/upload.html:135
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/createdir.html:39
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:150
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/createdir.html:39
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:150
+msgid ""
+"The Name will be converted to lowercase. Spaces will be replaced with "
+"underscores."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/createdir.html:48
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/rename.html:38
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/createdir.html:48
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/rename.html:38
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/createdir.html:50
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/createdir.html:50
+#, fuzzy
+msgid "Submit"
+msgstr "добавлено"
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/custom_field.html:26
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/widgets/clearablefileinput.html:11
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/widgets/fileinput.html:11
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/custom_field.html:26
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/widgets/clearablefileinput.html:11
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/widgets/fileinput.html:11
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/custom_field.html:26
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/widgets/clearablefileinput.html:11
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/widgets/fileinput.html:11
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/custom_field.html:26
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/widgets/clearablefileinput.html:11
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/widgets/fileinput.html:11
+#, fuzzy
+msgid "File not found"
+msgstr "Не найден"
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/delete_confirm.html:29
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/delete_confirm.html:29
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/delete_confirm.html:30
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/delete_confirm.html:30
+#, python-format
+msgid ""
+"Are you sure you want to delete \"%(escaped_object)s\"? All of the following "
+"items will be deleted:"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/delete_confirm.html:42
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/delete_confirm.html:42
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/delete_confirm.html:43
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/delete_confirm.html:43
+#, python-format
+msgid "... and %(escaped_object)s more Files."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/delete_confirm.html:48
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/upload.html:45
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/delete_confirm.html:48
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/upload.html:45
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/delete_confirm.html:50
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:51
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/delete_confirm.html:50
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:51
+msgid "Cancel"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/delete_confirm.html:49
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/delete_confirm.html:49
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/delete_confirm.html:51
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/delete_confirm.html:51
+#, fuzzy
+msgid "Yes, I'm sure"
+msgstr "Да, подтверждаю"
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:61
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:61
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:63
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:63
+msgid "Edit"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:74
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:74
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:78
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:78
+#, fuzzy
+msgid "Folder Information"
+msgstr "Информация"
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:76
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:105
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:28
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:29
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:76
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:105
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/tableheader.html:28
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/tableheader.html:29
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:81
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:116
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:28
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:29
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:81
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:116
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/tableheader.html:28
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/tableheader.html:29
+msgid "Date"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:87
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:87
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:93
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:93
+#, fuzzy
+msgid "File Information"
+msgstr "Информация"
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:97
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:97
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:106
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:106
+msgid "Filesize"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:114
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:25
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:26
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:114
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/tableheader.html:25
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/tableheader.html:26
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:127
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:25
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:26
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:127
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/tableheader.html:25
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/tableheader.html:26
+msgid "Size"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:126
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:126
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:140
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:140
+msgid "Image Versions"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:129
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:15
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:129
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/tableheader.html:15
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:144
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:15
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:144
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/tableheader.html:15
+msgid "Thumbnail"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:131
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:100
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:131
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filelisting.html:100
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:146
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:101
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:146
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filelisting.html:101
+#, fuzzy
+msgid "View Image"
+msgstr "Изображение"
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/detail.html:153
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/detail.html:153
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/detail.html:172
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/detail.html:172
+msgid "Save and continue editing"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/upload.html:46
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/upload.html:46
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:52
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:52
+msgid "Failed"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/upload.html:60
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/upload.html:60
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:66
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:66
+msgid "{file} has invalid extension. Only {extensions} are allowed."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/upload.html:61
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/upload.html:61
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:67
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:67
+msgid "{file} is too large, maximum file size is {sizeLimit}."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/upload.html:62
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/upload.html:62
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:68
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:68
+msgid "{file} is too small, minimum file size is {minSizeLimit}."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/upload.html:63
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/upload.html:63
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:69
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:69
+msgid "{file} is empty, please select files again without it."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/upload.html:64
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/upload.html:64
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:70
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:70
+msgid ""
+"The files are being uploaded, if you leave now the upload will be cancelled."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/upload.html:110
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/upload.html:110
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:115
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:115
+msgid "Please enable Javascript to upload files."
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/upload.html:115
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/upload.html:115
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:120
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:120
+msgid "Help"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/upload.html:119
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/upload.html:119
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:123
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:123
+msgid "Allowed"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/upload.html:125
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/upload.html:125
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:137
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:137
+msgid "Max. Filesize"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:18
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:44
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:69
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filelisting.html:18
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filelisting.html:44
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filelisting.html:69
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:19
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:45
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:70
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filelisting.html:19
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filelisting.html:45
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filelisting.html:70
+msgid "Select"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:22
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:48
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:73
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filelisting.html:22
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filelisting.html:48
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filelisting.html:73
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:23
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:49
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filelisting.html:74
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filelisting.html:23
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filelisting.html:49
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filelisting.html:74
+msgid "Versions"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filter.html:4
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filter.html:4
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filter.html:4
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filter.html:4
+msgid "Filter"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filter.html:7
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filter.html:7
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filter.html:7
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filter.html:7
+msgid "By Date"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filter.html:9
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filter.html:9
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filter.html:9
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filter.html:9
+msgid "Any Date"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filter.html:10
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filter.html:10
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filter.html:10
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filter.html:10
+msgid "Today"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filter.html:11
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filter.html:11
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filter.html:11
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filter.html:11
+msgid "Past 7 days"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filter.html:12
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filter.html:12
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filter.html:12
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filter.html:12
+msgid "This Month"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filter.html:13
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filter.html:13
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filter.html:13
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filter.html:13
+msgid "This year"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filter.html:17
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filter.html:17
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filter.html:17
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filter.html:17
+#, fuzzy
+msgid "By Type"
+msgstr "Тип"
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/filter.html:19
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/filter.html:19
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/filter.html:19
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/filter.html:19
+msgid "All"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/paginator.html:5
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/paginator.html:5
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/paginator.html:6
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/paginator.html:6
+msgid "result"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/paginator.html:5
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/paginator.html:5
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/paginator.html:6
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/paginator.html:6
+msgid "results"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:17
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:18
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/tableheader.html:17
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/tableheader.html:18
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:144
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:17
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/tableheader.html:18
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:144
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/tableheader.html:17
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/tableheader.html:18
+#, fuzzy
+msgid "Filename"
+msgstr "отчество"
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/toolbar.html:6
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/toolbar.html:6
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/toolbar.html:6
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/toolbar.html:6
+msgid "Results"
+msgstr ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/toolbar.html:8
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/toolbar.html:8
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/toolbar.html:8
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/toolbar.html:8
+#, python-format
+msgid "%(counter)s result"
+msgid_plural "%(counter)s results"
+msgstr[0] ""
+msgstr[1] ""
+
+#: working/django-filebrowser-3.4.3/build/lib/filebrowser/templates/filebrowser/include/toolbar.html:9
+#: working/django-filebrowser-3.4.3/filebrowser/templates/filebrowser/include/toolbar.html:9
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/include/toolbar.html:9
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/include/toolbar.html:9
+#, python-format
+msgid "%(full_result_count)s total"
+msgstr ""
+
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:42
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:42
+msgid "Drop files here to upload"
+msgstr ""
+
+#: working/django-filebrowser-3.5.1/build/lib/filebrowser/templates/filebrowser/upload.html:43
+#: working/django-filebrowser-3.5.1/filebrowser/templates/filebrowser/upload.html:43
+msgid "Upload a file"
+msgstr ""
+
+#~ msgid "Total"
+#~ msgstr "Итого"
+
+#~ msgctxt "is order paid"
+#~ msgid "is paid"
+#~ msgstr "оплачен"
+
+#~ msgid "declined"
+#~ msgstr "отменен"
+
+#, fuzzy
+#~ msgid "View on site"
+#~ msgstr "Просмотреть профиль"
+
+#~ msgid "Sender"
+#~ msgstr "Отправитель"
+
+#~ msgctxt "Auth"
+#~ msgid "app admin title"
+#~ msgstr "Пользователи"
+
+#~ msgctxt "Blog"
+#~ msgid "app admin title"
+#~ msgstr "Блоги"
+
+#~ msgctxt "Geo"
+#~ msgid "app admin title"
+#~ msgstr "Географические привязки"
+
+#~ msgctxt "Sites"
+#~ msgid "app admin title"
+#~ msgstr "Сайты"
+
+#~ msgid "You can not deliver in the past"
+#~ msgstr "Вы не можете заказывать в прошлое"
+
+#~ msgid "You have been invited to %s service"
+#~ msgstr "Вы были приглашены на сервис %s"
+
+#, fuzzy
+#~ msgid "You can not order stuff withanother services or providers"
+#~ msgstr ""
+#~ "Вы не можете осуществить заказ у других сервисов или поставщиков услуг"
+
+#~ msgid "not processed"
+#~ msgstr "не обработан"
+
+#~ msgid "Site address"
+#~ msgstr "Адрес сайта"
+
+#~ msgid "Your web site address"
+#~ msgstr "Адрес вашего веб-сайта"
+
+msgid "additional emails"
+msgstr "дополнительные e-mail адреса"
+
+msgid "with , as delimiter"
+msgstr "разделитель ,"
+
+msgid "promo code"
+msgstr "промо-код"

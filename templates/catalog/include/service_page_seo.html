@@ -1,0 +1,2 @@
+<meta name="description" content="Уже везу карточка {{ service.service_name }}" />
+<meta name="keywords" content="{{ service.service_name }}, {% for category in service.categories.all %}{{ category.title }}{% if not forloop.last %}, {% endif %}{% endfor %}"/>

@@ -1,0 +1,13 @@
+{% extends base %}
+{% block body-class %}text-pages about-page{% endblock %}
+{% block all_content %}
+<div class="contantpage">
+        <div class="b-inner">
+            <div id="side-basket"><div class="i">
+             </div></div><!-- /side-basket -->
+            <div class="content">
+                {{ page.text|safe }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

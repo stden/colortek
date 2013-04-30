@@ -1,0 +1,24 @@
+Django==1.4.3
+PIL==1.1.7
+South==0.7.6
+amqplib==1.0.2
+anyjson==0.3.3
+billiard==2.7.3.17
+celery==2.4.4
+django-celery==2.3.3
+django-filebrowser==3.5.1
+django-grappelli==2.4.3
+-e git+https://github.com/satels/django-ipgeobase@c66b1b51b1e2fb6b1dcfca2352039356fbae5e7f#egg=django_ipgeobase-dev
+django-picklefield==0.2.1
+django-sphinx==2.2.4
+grab==0.4.7
+ipdb==0.7
+ipython==0.13
+kombu==2.4.7
+psycopg2==2.4.5
+pycurl==7.19.0
+python-dateutil==1.5
+pytils==0.2.3
+simplejson==2.6.2
+sorl-thumbnail==11.12
+wsgiref==0.1.2

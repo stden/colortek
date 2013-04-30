@@ -1,0 +1,119 @@
+{% extends base %} {% load coretags blogtags thumbnail %}
+{% block title %}Уже везу, Блоги: {{ post.title }}{% endblock %}
+{% block body-class %}text-pages{% endblock %}
+{% block head %}
+{% include "blog/include/blog_seo.html" %}
+<!-- Put this script tag to the <head> of your page -->
+<script type="text/javascript" src="//vk.com/js/api/openapi.js?64"></script>
+<script type="text/javascript">
+VK.init({apiId: {{ gs.VK_API_KEY }}, onlyWidgets: true});
+</script>
+
+{% endblock %}
+{% block all_content %}
+    <div class="blogs">
+        <div class="b-inner">
+            <div class="content">
+                <div class="mainBlock1">
+                    <div class="item">
+                    <form class='' method='GET' action='{% url blog:search %}'>
+                        <span class="textfield">
+                            <input type="text" class="textfield1" placeholder='Введите запрос' 
+                                name='q' id='id_q'
+                                value="{{ G.q|default_if_none:"" }}" onfocus='this.placeholder=""'>
+                        </span>
+                        <!--<span class="textfield"><input type="text" class="textfield2" value="Введите запрос"></span> -->
+                        <span class="btn"><input type="submit" value="подобрать"></span>
+                    </form>
+                    </div>
+                    <div class="item">
+                    <!--
+                        <span class="chk"><input type="checkbox"></span> <span class="chkLabel">по дате</span>
+                        <span class="chk chkChecked"><input type="checkbox" checked=""></span> <span class="chkLabel">по количеству комментариев</span>
+                    -->
+                    </div>
+                </div>
+                <div class="mainBlock2">
+                    <div class="lCol">
+                        <h2>Категории:</h2>
+                        {% for serv in servs %}
+                            {% if serv.blog_types.count > 0 %}
+                            {% if services.count > 1 %}<h3>{{ serv.title }}</h3>{% endif %}
+                            <ul class='types'>
+                                {% blog_types serv post=post %}
+                            </ul>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="rCol">
+                        <div class="onePosts" id='post-content'>
+                            {% thumbnail post.image gs.ITEM_THUMBNAIL_SIZE as image %}
+                            <div class="Img"><img src="{{ image.url }}" alt="логотип">
+                                {#<span class="txt">{{ NOTHING }}</span>#}
+                            </div>
+                            {% endthumbnail %}
+                            <div class="date"><span>{{ post.created_on|date:"d E, Y" }}</span></div>
+                            <h1>{{ post.title }}</h1>
+                            {{ post.content|safe }}
+
+                            {% if post.service %}
+                            <div class='Img1' id='service-link'>
+                                {% if post.service.logo %}
+                                {% thumbnail post.service.logo gs.ITEM_THUMBNAIL_SIZE as logo %}
+                                <img src='{{ logo.url }}' alt='logo' class='Img1'>
+                                {% endthumbnail %}
+                                {% else %}
+                                <img src='{{ post.service.get_logo }}' alt='logo' width='190'>
+                                {% endif %}
+                                <div class='btn'>
+                                    <a href='{% if post.link %}{{ post.link }}{% else %}{% url catalog:service-page post.service.pk %}{% endif %}'>Перейти</a>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% comment %}
+                            <div class="gallery">
+                                <div class="caroufredsel_wrapper" style="display: block; text-align: left; float: none; position: relative; top: auto; right: auto; bottom: auto; left: auto; z-index: auto; width: 460px; height: 18px; margin: 0px; overflow: hidden;"><ul style="text-align: left; float: none; position: absolute; top: 0px; right: auto; bottom: auto; left: 0px; margin: 0px; width: 11500px; height: 18px; background-image: url(file:///home/lilfox/www/colortek/working/web/img/img7.jpg);">
+                                    <li><img src="img/img7.jpg" alt=""></li>
+                                    <li><img src="img/img7.jpg" alt=""></li>
+                                    <li><img src="img/img7.jpg" alt=""></li>
+                                    <li><img src="img/img7.jpg" alt=""></li>
+                                    <li><img src="img/img7.jpg" alt=""></li>
+                                    <li><img src="img/img7.jpg" alt=""></li>
+                                    <li><img src="img/img7.jpg" alt=""></li>
+                                    <li><img src="img/img7.jpg" alt=""></li>
+                                    <li><img src="img/img7.jpg" alt=""></li>
+                                    <li><img src="img/img7.jpg" alt=""></li>
+                                    <li><img src="img/img7.jpg" alt=""></li>
+                                    <li><img src="img/img7.jpg" alt=""></li>
+                                </ul></div>
+                                <div class="btns">
+                                    <span class="btnPrev disabled" style="display: inline-block;"></span>
+                                    <span class="cur">1</span> из <span class="all">12</span>
+                                    <span class="btnNext" style="display: inline-block;"></span>
+                                </div>
+                            </div>
+                            {% endcomment %}
+                            <div class="comments">
+                                <!-- comments are here -->
+                                <!-- Put this div tag to the place, where the Comments block will be -->
+                                <div id="vk_comments"></div>
+                                <script type="text/javascript">
+                                VK.Widgets.Comments("vk_comments", {limit: 10, width: "496", attach: false});
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type='text/javascript'>
+        blks = $('#post-content .main_text').find('br');
+        lnth = blks.length;
+        d = Math.round(lnth/2);
+        d = (d > 0) ? d - 1: d;
+        //console.log(d);
+        $("#service-link").insertBefore($(blks[1]));
+    </script>
+{% endblock %}

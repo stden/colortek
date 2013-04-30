@@ -1,0 +1,191 @@
+{% extends base %}
+{% block body-class %}{% endblock %}
+{% block all_content %}
+    <div class="partners">
+        <div class="menu">	
+            <div class="b-inner">
+                <div class="content">
+                    <ul>
+                        <li><a href="{% url accounts:profile-edit %}">мои настройки</a></li>
+                        <li><a href="{% url catalog:service-orders %}">Мои заказы</a></li>
+                        <li class="active">Мои товары</li>
+                        <li><a href="{% url catalog:service-partner-specials user.pk %}">Мои акции</a></li>
+                        <li><a href='{% url catalog:csv-import %}'>Импортирование базы</a></li>
+                    </ul>
+                    <div class="Clear"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="b-inner">
+            <div class="content">
+                <div class="header">
+                    <div class="rText">Здесь вы можете создавать категории и подкатегории товаров, а&nbsp;также добавлять информацию о самих товарах</div>
+                    <div class="Clear"></div>
+                </div>
+                <!-- categories -->
+                <div class="category_list">
+                    <div class="list">
+
+                        <div class='popup' id="add-category-popup">
+                        <div class="block fblink-content">
+							<form method='POST' action='{% url catalog:container-add %}' enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <a title="Закрыть" class="btnClose">&nbsp;</a>
+                                <span class="textfield1">
+                                <input name='title' id='id_title' type="text"
+                                    onfocus='this.placeholder=""'
+                                    placeholder='Введите название категории' value=""></span>
+                                <span class='textfield2'>
+                                    <input placeholder='Порядок' onfocus='this.placeholder=""'
+                                        onchange='this.placeholder="Порядок"'
+                                        name='weight' id='id_weight' value='0' />
+                                </span>
+
+                                <div class="info">
+                                    <div class="infoBlock">
+                                        <label for='id_container'>Категория</label>:
+                                        <select name='container' id='id_container'>
+                                            <option value>------</option>
+                                            {% for cont in containers %}
+                                            <option value='{{ cont.pk }}'>{{ cont.get_unicode_title }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <br />
+                                        <label for='id_category'>Категория (блюда, кухни, букеты)</label>:
+                                        <select name='category' id='id_category'>
+                                            {% for category in categories %}
+                                                <option value='{{ cetegory.pk }}'>{{ category.title }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <input type='hidden' name='next' value='{{ current_referer }}' id='id_next'>
+                                    </div>
+                                </div>
+								<span class="textfield1">
+                                <textarea id='id_description' name='description' placeholder='Описание категории' onfocus='this.placeholder=""'></textarea></span>
+								<br>
+                                {% comment %}
+								<p><strong>Добавление добавок</strong></p>
+								<br>
+								<div class="clone">
+									<span class="textfield1 sup-name">
+										<input name='' type="text" placeholder='Введите название' value="">
+									</span>
+									<span class="textfield1 sup-price">
+										<input name='' type="text" placeholder='Введите цену' value="">
+									</span>
+								</div>
+
+								<a class="add" href="#">Добавить</a>
+                                {% endcomment %}
+
+                                <div class="btns">
+                                    <!--<input type="button" class="btnClear" value="отменить изменения"> -->
+                                    <input type="submit" class="btnSave postAjax" value="сохранить">
+                                </div>
+							</form>
+                        </div>
+                        </div>
+
+                        <span class="item addCategory">
+							<!--
+                            <a href="{% url catalog:container-add %}" title="#" class='btnAdd'>
+							-->
+							<a href="#add-category-popup" class='fancybox.inline fblinkAddCategory'><span class="icoPlus">&nbsp;</span> <span class="txt">Добавить категорию</span></a>
+                        </span>
+                        {% comment %}
+                        <span class='item addCategory'><span class='icoPlus'></span> <span class='txt'>
+                            <a href='{% url catalog:csv-import %}'>Импортировать базу</a></span>
+                        </span>{% endcomment %}
+
+                        {% for container in containers %}
+                            <span class='item'>
+								<a href="{% url catalog:container-delete container.pk %}"
+                                    class="del-item"><img src="/media/img/icon/del.png" alt="Удалить" title="Удалить"></a>
+                                <h2><a href='{% url catalog:container container.pk%}'>{{ container.title|truncatechars:15 }} ({{ container.get_whole_items.count }})</a></h2>
+                                <ul class='sub'>
+                                    {% for child in container.children.all|slice:":4" %}
+                                    <li><span><a href='{% url catalog:container child.pk %}' title='{{ child.title }}'>{{ child.title }}</a></span><span class='rText'>{{ child.get_whole_items.count }}</span></li>
+                                    {% endfor %}
+                                    {% if container.children.count > 4 %}
+                                        <li><span><a href="{% url catalog:container container.pk %}">...</a></span></li>
+                                    {% endif %}
+                                </ul>
+                                <div class='btn'>
+									<a class='btnEdit' data-id='{{ container.pk }}' href='{% url catalog:container-edit container.pk %}'>Редактировать</a>
+                                </div>
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div></div><!-- /content-wrap -->
+{% include "jtmpl/containers.html" %}
+
+<script type='text/javascript'>
+    $('.product_list h2').click(function(e) {
+            $product_list = $('.product_list');
+            if($(this).parent().hasClass('active')){
+                $(this).parent().removeClass('active');
+            }
+            else{
+                $product_list.find('.active').removeClass('active');
+                $(this).parent().addClass('active');
+            }
+    });
+    $('.product_list .btnAdd').click(function(e) {
+            /*$popup = $(this).parent().parent().find('.popup');
+            if($popup.is(':visible')) $popup.hide();
+            else $popup.show();
+            return false;*/
+    });
+	$('.fblinkAddCategory').fancybox({
+		afterShow: function(){
+			/*var params = {
+				changedEl: ".fblink-content select",
+				visRows: 50,
+				scrollArrows: true
+			}
+			cuSel(params);*/
+			$('.fblink-content a.add').on('click', function(){
+				var clonedEL = $(this).prev('.clone'),
+					cloned = clonedEL.clone();
+					
+					$(cloned).insertBefore(clonedEL);
+				return false;
+			});
+		},
+		helpers: { overlay: { css: { 'background': 'rgba(0, 0, 0, 0.2)' } } }
+	});
+    $('.product_list .popup .btnClose').click(function(e) {
+            $(this).parent().parent().hide();
+            return false;
+    });
+	$('body').on('click', '.del-item', function(e){
+		$this = this;
+
+		var nt = noty({
+			text: "Вы действительно хотите удалить категорию со всеми товарами этой категории?",
+			buttons: [
+				{
+					addClass: 'btn btn-primary',
+					text: "Да",
+					onClick: function($noty){
+						document.location.href = $($this).attr('href');
+					}
+				},
+				{
+					addClass: 'btn btn-danager', text: 'Нет',
+					onClick: function($noty){
+						$noty.close();
+						noty({text: "Отменено", type: "information", timeout: 2000});
+					}
+				}
+			]
+		});
+		return false;
+	});//click del-item
+</script>
+{% endblock %}

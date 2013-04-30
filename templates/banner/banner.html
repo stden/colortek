@@ -1,0 +1,12 @@
+{% load thumbnail %}
+{% for banner in banners %}
+<div class="col">
+    {% if banner.image %}
+        {% thumbnail banner.image gs.BANNER_THUMBNAIL_SIZE as img %}
+            <a href='{{ banner.url }}'><img src='{{ img.url }}' alt='{{ banner.description|default_if_none:"" }}' /></a>
+        {% endthumbnail %}
+    {% else %}
+        <a href='{{ banner.url }}'><img src='/media/images/no-image.png' alt='{{ banner.description|default_if_none:"" }}' /></a>
+    {% endif %}
+</div>
+{% endfor %}

@@ -1,0 +1,17 @@
+{% extends base %}
+{% block title %}{{ page.title }}{% endblock %}
+{% block head %}
+    <meta name="description" content="{{ page.description }}." />
+    <meta name="keywords" content="{{ page.keywords }}"/>
+{% endblock %}
+{% block body-class %}inner-pages text-pages{% endblock %}
+{% block all_content %}
+<div class="contantpage">
+    <div class="b-inner">
+
+        <div class="content">
+            {{ page.text|safe }}
+        </div>
+    </div>
+</div>
+{% endblock %}

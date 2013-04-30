@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>{% load i18n %}
+{% block css %}
+<link rel='stylesheet' href='/media/css/bootstrap.min.css' media='screen'>
+<link rel='stylesheet' href='/media/css/chosen.css' media='screen'>
+<link rel='stylesheet' href='/media/css/main.css' media='screen'>
+{% endblock %}
+{% block js %}
+<script type='text/javascript' src='/media/js/jquery-1.7.2.min.js'></script>
+<script type='text/javascript' src='/media/js/jquery.tmpl.min.js'></script>
+<script type='text/javascript' src='/media/js/bootstrap-2.0.min.js'></script>
+<script type='text/javascript' src='/media/js/chosen.jquery.js'></script>
+<script type="text/javascript" src="/media/js/jScrollPane.js"></script>
+<script type="text/javascript" src="/media/js/cusel.min.js"></script>
+<script type="text/javascript" src="/media/js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="/media/js/jscroller-0.4.js"></script>
+
+<script type="text/javascript" src="/media/js/site.js"></script>
+{% endblock %}
+</head>
+<body class='{% block body-class %}{% endblock %}'>
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="{% url core:index %}">TEMPLATE</a>
+
+      {% if user.is_authenticated %}
+      <div class='pull-right nav-collapse'>
+        <ul class='nav'>
+            <li><a href='{% url catalog:cart %}'>{% trans "Cart" %}
+                <span class='items {{ cart_items|default_if_none:"hide" }}'>[{{ cart.get_total_items_count }} {% trans "items" %}]</span>
+            </a></li>
+        <ul>
+      </div>
+      <div class='btn-group pull-right'>
+          <a class='btn btn-black dropdown-toggle' data-toggle='dropdown' href='#'>
+          <i class='icon-user'></i>
+            {{ user.username }}
+          <i class='caret'></i></a>
+          <ul class='dropdown-menu'>
+                <li><a href='{% url accounts:profile %}'>{% trans "View profile" %}</a></li>
+                <li><a href='{% url accounts:invite %}'>{% trans "Invite friend" %}</a></li>
+                <li class='divider'>&nbsp;</li>
+                <li>
+                    {% if user.is_partner %}
+                        <a href='{% url catalog:orders-partner %}'>{% trans "View orders" %}</a>
+                    {% else %}
+                        <a href='{% url catalog:orders %}'>{% trans "View orders" %}</a>
+                    {% endif %}
+                </li>
+                <li class='divider'>&nbsp;</li>
+                <li><a href='{% url accounts:logout %}'>{% trans "Logout" %}</a></li>
+          </ul>
+      </div>
+
+      {% comment %}
+      {% if perms.alter_permissions %}
+      <div class='btn-group pull-right'>
+         <a class='btn btn-black dropdown-toggle' data-toggle='dropdown' href='#'>
+             &nbsp;{% trans "admin" %} <i class='caret'></i></a>
+         <ul class='dropdown-menu'>
+             <li><a href='#'>{% trans "User permissions" %}</a></li>
+         </ul>
+      </div>
+      {% endif %}
+      {% endcomment %}
+      {% else %}
+          <div class='nav-collapse pull-right'>
+                <ul class='nav'>
+                    <li><a href="{% url accounts:login %}">{% trans "Login" %}</a></li>
+                    <li><a href="{% url accounts:register-user %}">{% trans "Register" %}</a></li>
+                    <li><a href="{% url accounts:register-partner %}">{% trans "Register partner" %}</a></li>
+                </ul>
+          </div>
+      {% endif %} {# is auth #}
+
+     <div class="nav-collapse">
+        <ul class="nav">
+          {% if user.is_partner %}
+          <div class='btn-group pull-right'>
+          <a class='btn btn-info dropdown-toggle' data-toggle='dropdown' href='#'>
+            {% trans "Catalog" %}
+          <i class='caret'></i></a>
+          <ul class='dropdown-menu'>
+                <li><a href='{% url catalog:container-list %}'>
+                    <i class='icon-list'></i> {% trans "View containers" %}</a>
+                </li>
+                <li>
+                    <a href='{% url catalog:container-add %}'><i class='icon-plus-sign'></i> {% trans "Add container" %}</a>
+                </li>
+                <li>
+                    <a href='{% url catalog:item-add %}'>&nbsp;&nbsp;<i class='icon-plus-sign'></i> {% trans "Add item" %}</a>
+                </li>
+                <li>
+                    <a href='{% url catalog:addon-add %}'>&nbsp;&nbsp;&nbsp;<i class='icon-plus-sign'></i> {% trans "Add addon" %}</a>
+                </li>
+                <li class='divider'>&nbsp;</li>
+                <li><a href='#'>View drafts</a></li>
+          </ul>
+          </div>
+          {% else %}
+          <li><a href="{% url catalog:service-list %}">Catalog</a></li>
+          {% endif %}
+
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>
+<div class='top spacer'></div>
+
+<div class='container'>
+{% if messages %}{% include "core/messages.html" %}{% endif %}
+{% block content %}{% endblock %}
+</div>
+
+{% block endjs %}{% endblock %}
+<script type='text/javascript'>
+$(document).ready(function(){
+    $("[rel=tooltip]").tooltip({live: true});
+    $("select.chosen").chosen();
+{% block js_document_ready %}{% endblock %}
+});
+</script>
+</body></html>

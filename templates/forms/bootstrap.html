@@ -1,0 +1,50 @@
+{% load i18n %}
+{% if form.errors %}
+<div class='actions'>
+    <h3><strong>{% trans "Error!" %}</strong>
+        {% trans "Form was not filled correctly" %}
+    </h3>
+</div>
+<br>
+{% endif %}
+
+
+    {% for field in form.visible_fields %}
+	<div class="line" id="line_{{ field.name }}">
+		<div class='form field{{ field.errors|yesno:" control-group error,"}}'>
+		{% comment %}
+		<div class='form field{{ field.field.required|yesno:" required," }}{{ field.errors|yesno:" control-group error,"}}'>
+			<label for='id_{{ field.name }}'>{{ field.label }}:</label>
+		{% endcomment %}
+			<span class="name">
+				{{ field.label }}{% if field.field.required %}<span class="req">*</span>{% endif %}
+			</span>
+			{{ field }}<br>
+			<span class="note-text">{% if field.help_text %}</span>
+			<span class='help-text'>({{ field.help_text|safe }})</span>{% endif %}
+			{% if form.errors %}{% spaceless %}
+			<ul class='errorlist'>
+				{% for e in field.errors %}
+					<li class='form-errors'>{{ e }}</li>
+				{% endfor %}
+			</ul>
+			{% endspaceless %}{% endif %}
+		</div>
+	</div>
+    {% endfor %}
+    {% for field in form.hidden_fields %}
+        <div class='hide'>
+            {{ field.errors }} {{ field }}
+        </div>
+    {% endfor %}
+
+{% if form.media %} {{ form.media }} {% endif %}
+
+<script type='text/javascript'>
+$(document).ready(function(){
+    $.each($("[data-text]"), function(item, idx){
+        text = $("&nbsp;<span>" + '<a href="' + $(this).data('link') + '">' + $(this).data('text') + "</a></span>");
+        text.insertAfter($(this));
+    });
+});
+</script>

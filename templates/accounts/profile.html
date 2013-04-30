@@ -1,0 +1,8 @@
+{% extends base %}
+{% block content %}
+    {% if user.is_partner %}
+        {% include "accounts/include/partner_profile.html" %}
+    {% else %}
+        {% include "accounts/include/user_profile.html" %}
+    {% endif %}
+{% endblock %}

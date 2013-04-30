@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<p>
+Поступил новый заказ для компании "{{ object.get_service_name|default_if_none:object.get_service.username }}", вы можете увидеть его у себя в личном кабинете
+в категории "Мои заказы" или проследовав по следующей ссылке:
+</p>
+<a href="{{ site_url }}{{ link }}">{{ site_url }}{{ link }}</a>
+{% include 'catalog/include/order_detail_message.html' with order=object read_only=1 %}
+{% if mail_code %}
+<a href="{{ site_url }}{{ refuse_url }}?mail_code={{ mail_code }}">Отклонить</a>
+<a href="{{ site_url }}{{ accept_url }}?mail_code={{ mail_code }}">Принять</a>
+{% endif %}
+</body>
+</html>

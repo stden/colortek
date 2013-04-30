@@ -1,0 +1,132 @@
+{% extends base %}
+{% block css %}
+    {{ block.super }}
+    <link rel='stylesheet' href='/media/css/inner.css' type='text/css' >
+{% endblock %}
+{% block border %}
+    {% include "catalog/border_list.html" %}
+{% endblock %}
+{% block body-class %}inner-pages catalog-pages {% if cart.get_total_items_count %}basket-is-active{% endif %}{% endblock %}
+{% block content %} {% load thumbnail pytils_numeral catalogtags  corefilters %}
+<div class="top-service-info"> 
+	<div class="back-to-link"><a href="{% url catalog:catalog-list service.service.codename %}">ВЕРНУТЬСЯ К СПИСКУ</a></div>
+	{% if not service.is_published %}
+	<div class="left">
+		<h3 class="note-top">В настоящее время "{{ service.service_name|default_if_none:service.username }}" заказы не принимает.<br>Возможен только предварительный заказ</h3>
+	</div>
+	{% endif %}
+</div>
+<div class="b-item-list about detail-page">
+    <div class="item {% if service.get_specials or service.get_active_specials %}action{% endif %}">
+        <div class="preview">
+            {% include "catalog/include/service_logo.html" %}
+            {% include "catalog/include/service_rating.html" %}
+        </div>
+        <div class="preview-text">
+            <h3><a href="{% url catalog:service-page service.pk %}">{{ service.service_name }}</a></h3>
+            {% include "catalog/include/catalog_categories.html" %}
+            {% include "catalog/include/catalog_info_table.html" %}
+            {% include "catalog/include/catalog_note.html" %}
+        </div>
+    </div>
+</div>
+<!-- inner content for service -->
+<div class="content-menu-wrap">
+    <ul class="content-menu">
+        <li><a href="{% url catalog:service-page service.pk %}">
+        {% get_term service=service code='service-menu-link' default='Меню'%}
+        </a><span class="arr"></span></li>
+        <li class='active'><a>
+        {% get_term service=service code='service-about-link' default='О ресторане' %}
+        </a><span class="arr"></span></li>
+        {% if service.get_specials or service.get_active_specials %}
+        <li><a href="{% url catalog:service-specials service.pk %}">Акции ({{ service.get_specials.count|add:service.get_active_specials.count }})</a><span class="arr"></span></li>
+        {% endif %}
+        <li><a href='{% url catalog:service-rating service.pk %}'>Отзывы</a><span class="arr"></span></li>
+    </ul>
+</div>
+<div class="content-menu-cnt">
+    <div class="b-place-about">
+        <div class="b-place-about-content">
+            <div class="right-col">
+                {% if service.markers.all %}
+                <h4>Адреса филиалов:</h4>
+                <!-- google maps -->
+                <script type="text/javascript">
+
+                    function initialize() {
+                        var myLatlng = new google.maps.LatLng(59.9634508322, 30.2999921533);
+                        myLatlng = new google.maps.LatLng({{ service.markers.all.0.lat|safe }}, {{ service.markers.all.0.lng|safe }});
+                        var mapOptions = {
+                          zoom: 10,
+                          center: myLatlng,
+                          mapTypeId: google.maps.MapTypeId.ROADMAP
+                        }
+                        var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+
+                        var markers = [];
+
+                        {% for marker in service.markers.all %}
+                        _m = new google.maps.Marker({
+                            map: map,
+                            position: new google.maps.LatLng({{ marker.lat|safe }}, {{ marker.lng|safe }}),
+                            draggable: false,
+                            animation: google.maps.Animation.DROP,
+                            title: "{{ marker.description }}"
+                          });
+                        _m.id = 'marker-{{ marker.pk }}';
+                        markers.push(_m);
+                        {% endfor %}
+
+                    }
+
+                    $(document).ready(function(){
+                        initialize();
+                    });
+
+
+                </script>
+                <div id="map_canvas" style="width:100%;height:150px;"></div>
+                {% endif %}
+                <br>
+                <ul>
+                    {% for address in service.markers.all %}
+                    <li>{{ address.description }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="left-col">
+                <h4>Информация:</h4>
+                <p>
+                    <strong>Время работы:</strong>
+                    {% if service.schedule.days %}
+                    <ul class='schedule'>
+                        {% for day in service.schedule.days.all %}
+                            <li class='time day'>
+                                {% if day.since|time:"H:i" == "00:00" and day.until|time:"H:i" == "23:59" %}
+                                    {{ day.weekday|select_day:"f" }} кругосуточно
+                                {% else %}
+                                {{ day.weekday|select_day:"f" }} с {{ day.since|time:"H:i" }} до {{ day.until|time:"H:i" }}
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <br>
+                    <!-- <strong>Время приёма заказов:</strong> - текстовое поле добавить в админке -->
+                </p>
+                <h4>Условия доставки:</h4>
+                <p>
+                    Стоимость - {{ service.avarage_deliver_cost|floatformat:"-2" }} рублей.
+                    {% if service.avarage_cost %}
+                    <br>
+                    При заказе от {{ service.avarage_cost|floatformat:"-2" }} - бесплатно
+                    {% endif %}
+                </p>
+                <h4>О компании</h4>
+                {{ service.description|safe }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

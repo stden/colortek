@@ -1,0 +1,20 @@
+{% include "catalog/include/border_top.html" %}
+<ul class="menu">
+    {% for serv in servs %}
+    <li class='parent {% if serv == service.service %}active{% endif %}'>
+        <a href="{% url catalog:catalog-list serv.codename %}" class='header'>
+			{{ serv.title }} 
+			<span class="note">{{ serv.description }}</span>
+		</a>
+		<span class="arr-toggle"></span>
+        {% if serv == service.service %}
+            {% include "catalog/include/border_partner_categories.html" %}
+        {% endif %}
+    </a></li>
+    {% endfor %}
+</ul>
+<script type='text/javascript'>
+	$(document).ready(function(){
+		$("#main-filter .btm").addClass('n');
+	});
+</script>

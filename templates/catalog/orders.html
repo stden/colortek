@@ -1,0 +1,165 @@
+{% extends base %} {% load corefilters pytils_numeral i18n thumbnail %}
+{% block body-class %}text-pages{% endblock %}
+{% block all_content %}
+<div class="partners">
+    <div class="menu">
+        <div class="b-inner">
+            <div class="content">
+                <ul>
+                    <li><a href="{% url accounts:profile-edit %}">мои настройки</a></li>
+                    <li class='active'>Мои заказы</li>
+                    <li><a href='{% url accounts:profile-bonuses %}'>Мои бонусы</a></li>
+                </ul>
+                <div class="Clear"></div>
+            </div>
+        </div>
+    </div>
+    <div class="b-inner">
+        <div class="content">
+            <div class="header">
+                <div class="rText">Здесь вы можете просматривать список <br>ваших заказов</div>
+                <div class="Clear"></div>
+            </div>
+
+            <h1 class="dark">Все ваши заказы</h1>
+
+            <div class="b-orders-detail">
+                {% if orders %}
+                <table class='table striped orders'>
+                    <tr class='head'>
+                        <th>Код</th>
+                        <th>Дата заказа</th>
+                        <!--<th>{% trans "Updated on" %}</th> -->
+                        <th>Сумма (руб.)</th>
+                        <th>Внесено (баллы)</th>
+                        <!--<th>{% trans "Status" %}</th> -->
+                        <th>Товары</th>
+                        <th>Служба доставки</th>
+                        <th>&nbsp;</th>
+					</tr>
+					{% for order in orders %}
+                        <tr id='order-{{ order.pk }}'>
+                            <td>{{ order.pk }} {# {{ forloop.counter } #}</td>
+                            <td>{{ order.created_on|date:"d.m.y" }}</td>
+                            <!--td>{{ order.updated_on }}</td> -->
+                            <td>
+                                {{ order.cost|safe }}
+                                {% if order.status == 'finished' %}
+                                    <span class='order finished'></span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if order.get_order_discount_score %}
+                                    {{ order.get_order_discount_score.amount|multiply:-1|floatformat:"-2"|safe }}
+                                {% else %}
+                                0
+                                {% endif %}
+                                {#{{ order.discount|floatformat:"-2"|safe }}#}
+                            </td>
+                            {% comment %}
+                            <td>{% with status=ORDERS|oget:order.status %}
+                                <span class='status {{ order.status }}'>{% trans status %}</span>
+                                {% if order.is_paid %}<span class='status paid'>{% trans "paid" %}{% endif %}
+                                {% endwith %}
+                            </td>{% endcomment %}
+                            <td class='order list'>
+                            {% comment %}
+                            {%  for item in order.containers.all %}
+                                <li class='items'>{{ item.product.title }}
+                                ({{ item.get_quantity|safe }}x{{ item.product.cost|safe }} {{ currency }} = {{ item.total_price|safe }} {{ currency }})
+                                </li>
+                            {% endfor %}
+                            {% if order.addons.all %}
+                                <strong>{% trans "Addons" %}</strong>
+                                {% for item in order.addons.all %}
+                                    <li class='addons'>{{ item.title }} ({{ item.cost|safe }} {{ currency }})</li>
+                                {% endfor %}
+                            {% endif %}
+                                <!--<div class='total'>
+                                    <strong>{% trans "Total" %}</strong>:
+                                    {{ order.get_total_price|safe }} рублей
+                                </div> -->
+                                {% endcomment %}
+                                {{ order.get_item_title_list|join:", " }}
+                            </td>
+                            <td>{% with service=order.container.owner %}
+                            {% if service.logo %}
+                                {% thumbnail service.logo gs.ITEM_THUMBNAIL_SIZE_TOPBAR as logo %}
+                                <img src='{{ logo.url }}' alt='{{ service.service_name }}' />
+                                {% endthumbnail %}
+                            {% endif %}
+                            {{ order.container.owner.service_name }}
+                            {% endwith %}
+                            </td>
+                            <td>
+                                <a href='{% url catalog:order-repeat order.pk %}' class='repeat-order'><img src='/media/icon/reload-small.png' alt="Повторить заказ" title="Повторить заказ" class="tool"></a>
+                                {# i'm ugly and i know it #}
+                                {% if order.container.owner.has_online_payment %}
+                                    {% if not order.is_paid %}
+                                        {% if order.status != 'processed' %}
+                                        &nbsp;<a href='{{ order.get_online_payment_url }}'><img src="/media/img/icon/card.png" title="Оплата картой" class="tool"></a>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if order.status != 'processed' %}
+                                            <img src="/media/icon/success-p.png"
+                                                alt="Заказ оплачен" title="Заказ оплачен"
+                                                class="tool">
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if order.status == 'processed' %}
+                                        <img src="/media/icon/success.png"
+                                            alt="Заказ доставлен и оплачен"
+                                            title="Заказ доставлен и оплачен" class="tool">
+                                    {% endif %}
+                                {% else %}
+                                    {% if order.status == 'processed' %}
+                                        <img src="/media/icon/success.png"
+                                            alt="Заказ доставлен и оплачен"
+                                            title="Заказ доставлен и оплачен" class="tool">
+                                    {% endif %}
+                                {% endif %}
+
+                            </td>
+                        </tr>
+					{% endfor %}
+                </table>
+                {% else %}
+                <h3>Вы еще не сделали ни одного заказа</h3>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<script type='text/javascript'>
+$(document).ready(function(){
+    $(".repeat-order").click(function(e){
+        $this = this;
+        noty({
+            text: "Вы хотите повторить заказ?",
+            type: "text",
+            dismissQueue: true,
+            timeout: false,
+            buttons: [
+                {
+                    addClass: 'btn btn-primary',
+                    text: 'Да',
+                    onClick: function($noty){
+                        document.location.href = $($this).attr('href');
+                    }
+                },
+                {
+                    addClass: 'btn',
+                    text: 'Нет',
+                    onClick: function($noty){
+                        $noty.close();
+                    }
+                }
+            ]
+        });
+        return false;
+    }); // repeat order
+	 var tiptip_params = {edgeOffset: 15};
+		$('.tool').tipTip(tiptip_params);
+}); // document ready
+</script>
+{% endblock %}

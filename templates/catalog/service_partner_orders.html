@@ -1,0 +1,244 @@
+{% extends base %} {% load corefilters i18n %}
+{% block body-class %}{% endblock %}
+{% block all_content %}
+    <div class="partners">
+        <div class="menu">
+            <div class="b-inner">
+                <div class="content">
+                    <ul>
+                        <li><a href="{% url accounts:profile-edit %}">мои настройки</a></li>
+                        <li class="active">Мои заказы</li>
+                        <li><a href="{% url catalog:container-list %}">Мои товары</a></li>
+                        <li><a href="{% url catalog:service-partner-specials user.pk %}">Мои акции</a></li>
+                        <li><a href='{% url catalog:csv-import %}'>Импортирование базы</a></li>
+                    </ul>
+                    <div class="Clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="b-inner">
+            <div class="content">
+                <div class="header">
+                    <div class="rText">Здесь вы можете просматривать статистику<br>по заказам и выгружать ее в csv-файл</div>
+                    <div class="Clear"></div>
+                </div>
+
+                <div class="b-order-filter">
+                    <div class="actions">
+                        <a href="#" class='csvLoad'>Выгрузить результаты поиска в csv</a>
+                        <a href="{% url catalog:service-orders %}">Сбросить фильтры</a>
+                    </div>
+                    <h3>Поиск по заказам</h3>
+                    <form action="" method="GET" action='{% url catalog:service-orders %}'>
+                        <div class="contentform">
+                            {% csrf_token %}
+                            <div class="line">
+                                <div class="left">
+                                    <span class="name">Дата заказа</span>
+									{% comment %}
+                                    <input type="text" class="date hasDatepicker"
+                                        value="{{ G.date|default_if_none:"" }}" name='date' id='id_date'
+                                        id="dp1353255798439"><img class="ui-datepicker-trigger" src="/media/img/icon/calendar.png" alt="..." title="...">
+									{% endcomment %}
+									<input type="text" class="date" value="{{ G.date|default_if_none:"" }}" name='date' id='id_date'>
+                                    {% comment %}
+                                    <div class="cusel   cuselScrollArrows" id="cuselFrame-cuSel-0" style="width:57px" tabindex="0"><div class="cuselFrameRight"></div><div class="cuselText">08-00</div><div class="cusel-scroll-wrap"><div class="cusel-scroll-pane" id="cusel-scroll-cuSel-0">
+                                        <span val="08-00" class="cuselActive">08-00</span>
+                                        <span val="09-00">09-00</span>
+                                    </div></div><input type="hidden" id="cuSel-0" name="" value="08-00"></div>{% endcomment %}
+                                </div>
+                                <div class="right">
+                                    <span class="name">Товар</span>
+                                    <input type="text" value="{{ G.item|default_if_none:"" }}"
+                                        name='item' id='id_item'>
+                                </div>
+                            </div><!-- /line -->
+                            <div class="line">
+                                <div class="left">
+                                    <span class="name">сумма заказа</span>
+                                    <input type="text" class="price_from"
+                                        name='min_cost' id='id_min_cost' value="{{ G.min_cost|default_if_none:"" }}">
+                                    <span class="name">до</span>
+                                    <input type="text" class="price_to"
+                                        name='max_cost' id='id_max_cost' value="{{ G.max_cost|default_if_none:"" }}">
+                                </div>
+                                <div class="right">
+                                    <span class="name">пользователь</span>
+                                    <input type="text" value="{{ G.client|default_if_none:"" }}"
+                                        name='client' id='id_client'>
+                                </div>
+                            </div><!-- /line -->
+                            <div class='line'>
+                                <div class='group statuses'>
+                                    {% include "catalog/include/order_filters.html" %}
+                                    <input type="submit" value="сделать выборку">
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div><!-- /b-order-filter -->
+
+
+                <div class="b-content-filter">
+                    {% if has_status %}
+                    <a class="active"><span>Принятые заказы</span></a>
+                    <a href="{% url catalog:service-orders %}"><span>Непринятые заказы</span></a>
+                    {% else %}
+                    <a href='{% url catalog:service-orders-confirmed %}'><span>Принятые заказы</span></a>
+                    <a class='active'><span>Непринятые заказы</span></a>
+                    {% endif %}
+                </div>
+				
+				<div class="b-order-notification">
+					{% comment %}
+					{% if not has_status %}<h4>Необработанных заказов: {{ not_confirmed }}</h4>{% endif %}
+					{% endcomment %}
+					{% if not_confirmed > gs.NOT_CONFIRMED_ORDERS_COUNT %}
+						{% with order=orders_nc.0 %}
+							{% if order.pk %}
+							{% comment %}
+							<p><a href="{% url catalog:service-order-info order.pk %}" class="edit">Заказ {{ order.pk }}</a> ожидает более чем {{ order.created_on|timesince }}</p>
+							{% endcomment %}
+							{% endif %}
+						{% endwith %}
+						{% comment %}
+						json: {% url json:catalog:orders-not-confirmed %}
+						{% endcomment %}
+						<script type="text/javascript">
+							var refresh_time = 10000,
+								pause = false,
+								refresh_timer;
+						
+							$(document).ready(function(){
+							
+								$.getJSON('{% url json:catalog:orders-not-confirmed %}', function (items) {
+									var overdue_id = [],
+										order_id = [];
+										
+										$('table.orders tr').removeClass('overdue');
+										
+									$.each(items, function(index, item) {
+										$.each(item, function(i, elem) {
+											overdue_id.push(elem.id)
+										});
+									});
+									$('table.orders tr').each(function(i){
+										var self = $(this);
+										if (self.find('td').eq(0).text() != ''){
+											order_id[i] = parseInt(self.find('td').eq(0).text());
+											if (in_array(order_id[i], overdue_id)){
+												self.addClass('overdue');
+											}
+										}
+									});
+								});
+								
+								$('.fancybox-close').live('click', function(){
+									var link = window.location.href;
+									setTimeout(function(){
+										window.location.href = link;
+									}, 10000);
+								});
+								
+								$('table.orders a.edit, .b-order-notification a.edit').bind('click', function(){
+									pause = true;
+									clearTimeout(refresh_timer);
+								});											
+								refreshPage();
+							});
+							
+							function in_array(needle, haystack, strict) {
+								// Checks if a value exists in an array
+								// +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+								var found = false, key, strict = !!strict;
+								for (key in haystack) {
+									if ((strict && haystack[key] === needle) || (!strict && haystack[key] == needle)) {
+										found = true;
+										break;
+									}
+								}
+								return found;
+							}
+							function refreshPage(){
+								if (!pause){
+									var link = window.location.href;
+									refresh_timer = setTimeout(function(){
+										window.location.href = link;
+									}, refresh_time);
+								}
+							}
+							
+						</script>
+					{% endif %}
+				</div><!-- /b-order-notification -->
+
+
+                <table class="orders">
+                    <tbody><tr>
+                        <th>
+                            <a class='filter' href="#" data-selector='id'>код</a>
+                        </th>
+                        <th>
+                            <a class='filter' href="#" data-selector='created_on'>Время заказа</a>
+                        </th>
+                        <th>
+                            <a class='filter' href="#" data-selector='cost'>сумма (руб.)</a>
+                        </th>
+                        <th>
+                            <a class='filter' href='#' data-selector='deliver_cost'>доставка (руб.)</a>
+                        </th>
+                        <th>
+                            <a class='filter' href="#" data-selector='real_commission'>комиссия</a>
+                        </th>
+                        <th>
+                            <a class='filter' href="#" data-selector='status'>статус</a>
+                        </th>
+                        <th>
+                            <a class='filter' href="#" data-selector='staff'>позиции заказа</a>
+                        </th>
+                        <th>
+                            <a class='filter' href="#" data-selector='offline_client__name'>пользователь</a>
+                        </th>
+                        <th>
+                            <a class='filter' href="#" data-selector='promo-code'>промо-код</a>
+                        </th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.pk }}</td>
+                        <td>{{ order.created_on|date:"H:i d.m.y" }}</td>
+                        {# <td><a href="{{ order.get_service_url }}">{{ order.get_service_name }}</a></td> #}
+                        <td>{{ order.get_cost|floatformat:"-2" }}</td>
+                        <td>{{ order.deliver_cost|floatformat:"-2" }}</td>
+                        <td>{{ order.get_total_commission|floatformat:"-2" }}</td>
+                        <td>{% with status=ORDERS|oget:order.status %}
+                            <span class="status {{ order.status }}">{% trans status %}</span>
+                            {% if order.is_paid %}<span class='status paid'>{% trans "paid" %}{% endif %}
+                        {% endwith %}
+                        </td>
+                        <td>
+                            {% for container in order.containers.all %}
+                                {{ container.product.title }} {% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                        </td>
+                        <td><!--<a href="#">-->{{ order.get_client.get_real_name }}<!--</a>--></td>
+                        <td>{{ order.promo_code|default_if_none:"" }}</td>
+                        <td><a href="{% url catalog:service-order-info order.pk %}" class="edit">Редактировать</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody></table><!-- /orders -->
+
+                <p class="orders-total">
+                    <span>Итого заказов: <strong>{{ orders.count }}</strong></span>
+                    <span>На сумму: <strong>{{ total_price }} рублей</strong></span>
+                </p>
+
+
+            </div>
+        </div>
+    </div>
+
+{% include "jtmpl/service_orders.js" %}
+{% endblock %}

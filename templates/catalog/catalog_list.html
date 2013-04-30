@@ -1,0 +1,265 @@
+{% extends base %}{% load i18n thumbnail coretags corefilters %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel='stylesheet' href='/media/css/inner.css' type='text/css'>
+{% endblock %}
+
+{% block border %}
+    {% include "catalog/border_search.html" %} {# srv_border_inc #}
+{% endblock %}
+{% block body-class %}inner-pages catalog-pages {% if kart.products %}basket-is-active{% endif %}{% endblock %}
+
+{% block content %}
+    <form action="" id='top-action-form'>
+        <div class="form address-search">
+            <div class="place">
+                <div class="subway">
+                    <a href="#" class='subway-choose' {% spaceless %}
+                        {% if user.is_authenticated %}
+                        data-id='{{ session.city|default:user.city.pk|default_if_none:1 }}'
+                        {% else %}
+                        data-id='{{ session.city|default:1 }}'
+                        {% endif %}{% endspaceless %}>схема метро</a>
+                </div>
+                <div class="address">
+                    <input type="text" value="{{ G.address|default_if_none:"" }}" placeholder="Для подбора ближайших служб доставки к вашему дому укажите адрес или выберите станцию метро" name='address' id='id_address'>
+                </div>
+            </div>
+            <div class="options">
+                <div class="radiogroup item">
+                    <label><input type="radio" name="state" id='id_state_all' value="0"{% if G.state == '0' %} checked='checked'{% endif %}>все</label>
+                    <label><input type="radio" name="state" id='id_state_opened' value="1"{% if G.state != '0' %}checked='checked'{% endif %}>открытые</label>
+                </div>
+				<div class="item">
+					<label><input type="checkbox" name="cardpay" id="id_cardpay" value="1" {% if G.cardpay %}checked='checked'{% endif %}>оплата картой</label>
+				</div>
+                {% if search_type == '1' %}
+    				<div class="item last">
+                        <strong>сортировать по:</strong>
+                        <a id="sort_by_price" class="order_by_item {{ order_by_prefix_future }}cost{% if order_by == 'cost' %} active{% endif %}" href='#{{ order_by_prefix_future }}cost' data-order="{{ order_by_prefix_future }}cost">цене</a>
+                        {% comment %}
+                        <a id="sort_by_-container__mean_rating" class="order_by_item -container__mean_rating{% if order_by == 'container__mean_rating' %} active{% endif %}" href='{{ request.path_info }}?{{ request.META.QUERY_STRING }}&order_by=-container__mean_rating' data-order="-container__mean_rating">рейтингу</a>
+                        {% endcomment %}
+                        <label><input type="checkbox" name="by_rating" id="id_by_rating" value="1" {% if G.by_rating %}checked='checked'{% endif %}>рейтингу</label>
+                    </div>
+                {% endif %}
+				{# <input type="submit" value="Выбрать" class="btn"> #}
+				
+            </div>
+			{% if G.address %}
+				<div class='search in'></div>
+			{% endif %}
+			
+            {% comment %}
+			<div class="order_by {{ order_by_prefix }}{{ order_by }}">
+				<a class="order_by {{ order_by_prefix_future }}cost" href='{{ request.path_info }}?{{ request.META.QUERY_STRING }}&order_by={{ order_by_prefix_future }}cost'>По цене</a>
+			</div>
+            {% endcomment %}
+
+			
+        </div>
+    </form>
+    
+    <script type='text/javascript'>
+        $(document).ready(function(){
+			
+			var order_by_price_clicked = false;
+			
+            /* city set */
+            /* geting coordinates area */
+            {% if rgeoip.city %}
+            geo_ip_city = "{{ rgeoip.city }}";
+            {% else %}
+            geo_ip_city = '';
+            {% endif %}
+            {% if user.is_authenticated %}
+                local_city = "{{ session.city_title|default_if_none:user.city.title|default_if_none:'' }}";
+            {% else %}
+                local_city = "{{ session.city_title|default_if_none:'' }}";
+            {% endif %}
+            {% get_instances 'geo.city' as cities %}
+
+            default_city = '{{ cities.0.title }}';
+            _city = geo_ip_city || local_city || default_city ;
+
+            {% if G.address %}
+            _addr = "{{ G.address }}";
+            address = _city + "+" + _addr;
+            // update search in block
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({'address': address}, function(data, status){
+                if (status == 'OK'){
+                    addr = data[0].formatted_address;
+                    if (addr.split(',').length != 2){
+                        addr = addr.replace(_city, '');
+                        addr = addr.replace("Россия", '');
+                        addr = addr.replace('Санкт-Петербург', '').replace('Москва', ''); //additional battaries NOT INCLUDED
+                        addr = addr.replace(/\d\d\d\d\d\d/, '');
+                        addr = addr.replace(/\ ,/g, '')
+                        addr = addr.replace(/[,\ ]+$/gm, '');
+                        $('div.search.in').html("Подобраны службы в радиусе {{ gs.MAX_RADIUS_SEARCH|multiply:0.001|floatformat:"-2" }}км по запросу: " + addr);
+						$("#top-action-form").find('#id_address').val(addr);
+                    }
+                }
+            });
+            {% endif %}
+
+            $('.subway-choose').fancybox({
+                type: 'ajax',
+                href: "{% url geo:subway-widget 0 %}".replace(
+                    0, $('.subway-choose').data('id')),
+                padding: 40,
+                opacity: 0.5,
+                helpers: {
+                    overlay: {
+                        css: {
+                            'background': 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                },
+				afterShow: function(){
+					$('area').hover(function(e){
+						$('.metro').addClass('pointer');
+					}, function(e){
+						$('.metro').removeClass('pointer');
+					});
+					$('area').click(function(e){
+						$this = this;
+						noty({
+							dismissQueue: true,
+							text: "Вы выбрали метро " + $($this).data('title'),
+							type: "success",
+							timeout: 2000
+						});
+						blk = $("#top-action-form").find('#id_address');
+						if (blk.length){
+							blk.val('метро ' + $(this).data('title'));
+							$(".fancybox-opened").find('.fancybox-close').click();
+							$("#top-action-form").submit();
+						}
+					});
+				}
+            });
+
+            /* side-action-form submit override */
+            $("#side-action-form").submit(function(e){
+                data = $(this).serialize();
+                data += "&" + $("#top-action-form").serialize();
+				if ($('#sort_by_price').length > 0 && $.cookie('order_by_price')){
+					data += "&order_by=" + $.cookie('order_by_price');
+					console.log($.cookie('order_by_price'));
+				}
+                proto = document.location.protocol;
+                host = document.location.host;
+                path = document.location.pathname;
+                url = proto + "//" + host + path + "?" + data;
+                _addr = $("#top-action-form").find('#id_address').val();
+
+                address = _city + "+" + _addr;
+                var geocoder = new google.maps.Geocoder();
+                if (_addr){
+                geocoder.geocode({'address': address}, function(data, status){
+                    if (status == 'OK'){
+                        center = data[0].geometry.location;
+                        if (data[0].formatted_address.split(',').length == 2){
+                            //nothing found yeah
+                            coords = "&mlat&mlng&nlng&nlat";
+                            url += coords;
+                            console.log(url);
+                            document.location.href = url;
+                        }else {
+                            circle = new google.maps.Circle({center: center, radius: {{ gs.MAX_RADIUS_SEARCH }}});
+                            ne = circle.getBounds().getNorthEast();
+                            sw = circle.getBounds().getSouthWest();
+                            coords = "&mlat=" + ne.lat() + "&mlng=" + ne.lng()
+                                + "&nlat=" + sw.lat() + "&nlng=" + sw.lng();
+                            url += coords;
+                            //console.log(url);
+                            document.location.href = url;
+                        }
+                    } else {
+                        document.location.href = url;
+                    }
+                });
+                } else {
+                    document.location.href = url;
+                }
+				order_by_price_clicked = false;
+                return false;
+            });
+            $("#top-action-form").submit(function(e){
+                $("#side-action-form").submit();
+                return false;
+            });
+			
+			$('#id_state_opened').parents('label').click(function(){
+				$("#top-action-form").submit();
+			});
+			$('#id_state_all').parents('label').click(function(){
+				$("#top-action-form").submit();
+			});
+			$('#id_cardpay').parents('label').click(function(){
+				$("#top-action-form").submit();
+			});
+			$('#sort_by_rating').parents('label').click(function(){
+				$("#top-action-form").submit();
+			});
+			$('#sort_by_rating').parents('label').click(function(){
+				$("#top-action-form").submit();
+			});
+            $('#id_by_rating').parents('label').click(function(){
+				$("#top-action-form").submit();
+			});
+			$('#sort_by_price').click(function(){
+				$.cookie('order_by_price', $("#sort_by_price").attr('data-order'), {expires: 7});
+				$("#top-action-form").submit();
+				return false;
+			});
+			
+			
+			
+        });
+    </script>
+    {% if containers or items %}
+            <div class="b-item-list products">
+            {% if search_type == '1' %}
+                 {% for item in items %}
+                    {% include "catalog/include/user_dishes_container.html" %}
+                 {% endfor %}
+            {% else %}
+                {% for container in containers %}
+                    {% include "catalog/include/user_catalog_container.html" %}
+                {% endfor %}
+            {% endif %}
+            {% if not items and search_type == '1' %}
+                <h3>{% trans "No items" %}</h3>
+                <div style='height: 600px'>&nbsp;</div>
+            {% endif %}
+				<div class="items-loaded"></div>
+            </div>
+        {% if search_type == '1' %}
+            {% with page=items %}
+                {% include "pages_loader.html" %}
+            {% endwith %}
+        {% else %}
+            {% with page=containers %}
+                {% comment %}{% include "pages.html" %}{% endcomment %}
+				{% include "pages_loader.html" %}
+            {% endwith %}
+        {% endif %}
+    {% else %}
+        <h3>{% trans "You have no data to show" %}</h3>
+        <div style='height: 600px; display: block;'>&nbsp;</div>
+    {% endif %}
+<script type='text/javascript'>
+$('.plus, .mins').click(function(e){
+   p = $(this).parent();
+   quantity = p.find('#id_quantity');
+   threshold = parseInt($(this).data('threshold'));
+   result = parseInt(quantity.val()) + threshold;
+   quantity.val(result);
+});
+</script>
+{% include "jtmpl/service.js" %}
+{% endblock %}
