@@ -31,16 +31,16 @@ def accounts_step(Pi):
     U = User.objects.filter(date_joined__gte=zero, date_joined__lte=offset).count() + 7
     return U
 
-def accounts(Pi, count=0):
-    if Pi == 0:
-        return count
-    n = datetime.now()
-    # zero point of current day
-    zero = datetime(n.year, n.month, n.day)
-    offset = zero + timedelta(minutes=15*Pi)
-    U = User.objects.filter(date_joined__gte=zero, date_joined__lte=offset).count() + 7
-    count += U
-    return accounts(Pi-1, count)
+# def accounts(Pi, count=0):
+#     if Pi == 0:
+#         return count
+#     n = datetime.now()
+#     # zero point of current day
+#     zero = datetime(n.year, n.month, n.day)
+#     offset = zero + timedelta(minutes=15*Pi)
+#     U = User.objects.filter(date_joined__gte=zero, date_joined__lte=offset).count() + 7
+#     count += U
+#     return accounts(Pi-1, count)
 
 
 def stats(request):
