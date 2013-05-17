@@ -51,7 +51,8 @@ def phone_owner(field):
             return redirect('core:blockage')
         return wrapper
     return decorator
-    
+
+
 def email_owner(field):
     def decorator(func):
         def wrapper(request, *args, **kwargs):
@@ -70,6 +71,7 @@ def verified_required(func):
             return redirect('core:blockage')
         return func(request, *args, **kwargs)
     return wrapper
+
 
 def prevent_bruteforce(func):
     def wrapper(request, *args, **kwargs):

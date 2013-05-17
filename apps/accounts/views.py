@@ -64,7 +64,7 @@ def register_user(request):
         if form.is_valid():
             user = form.save(commit=False)
             sms = SMSLogger(provider='disms',
-                text=settings.USER_REGISTER_SMS % {
+                    text=settings.USER_REGISTER_SMS % {
                     'login': form.cleaned_data['email'],
                     'password': form.cleaned_data['password']
                 }, phone=form.cleaned_data['phone']

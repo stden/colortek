@@ -23,6 +23,7 @@ APP_TRANS = (
     _('sites'),
 )
 
+
 class Page(models.Model):
     title = models.CharField(_("Title"), max_length=256)
     text = models.TextField(_("Text"))
@@ -48,6 +49,7 @@ class Page(models.Model):
     class Meta:
         verbose_name = _("Page")
         verbose_name_plural = _("Pages")
+
 
 class TextBlock(models.Model):
     codename = models.CharField(_("Codename"), unique=True, max_length=256)
