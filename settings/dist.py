@@ -122,7 +122,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'timelog.middleware.TimeLogMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -166,7 +165,6 @@ INSTALLED_APPS = (
     'pytils',
     # Uncomment the next line to enable the admin:
     'django_ipgeobase',
-    'timelog',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -178,53 +176,30 @@ INSTALLED_APPS = (
 # more details on how to customize your logging configuration.
 TIMELOG_LOG = PROJECT_ROOT + '/timelog.log'
 
+
 LOGGING = {
-  'version': 1,
-  'formatters': {
-    'plain': {
-      'format': '%(asctime)s %(message)s'},
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
     },
-  'handlers': {
-    'timelog': {
-      'level': 'DEBUG',
-      'class': 'logging.handlers.RotatingFileHandler',
-      'filename': TIMELOG_LOG,
-      'maxBytes': 1024 * 1024 * 5,  # 5 MB
-      'backupCount': 5,
-      'formatter': 'plain',
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
     },
-  },
-  'loggers': {
-    'timelog.middleware': {
-      'handlers': ['timelog'],
-      'level': 'DEBUG',
-      'propogate': False,
-     }
-  }
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
 }
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'filters': {
-#         'require_debug_false': {
-#             '()': 'django.utils.log.RequireDebugFalse'
-#         }
-#     },
-#     'handlers': {
-#         'mail_admins': {
-#             'level': 'ERROR',
-#             'filters': ['require_debug_false'],
-#             'class': 'django.utils.log.AdminEmailHandler'
-#         }
-#     },
-#     'loggers': {
-#         'django.request': {
-#             'handlers': ['mail_admins'],
-#             'level': 'ERROR',
-#             'propagate': True,
-#         },
-#     }
-# }
 GEOIP_PATH = rel('media/geo')
 LOCALE_PATHS = (
     rel('conf/locale'),
@@ -323,7 +298,7 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.timer.TimerDebugPanel',
     'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
     'debug_toolbar.panels.headers.HeaderDebugPanel',
-    #'debug_toolbar.panels.profiling.ProfilingDebugPanel',
+    'debug_toolbar.panels.profiling.ProfilingDebugPanel',
     'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
     'debug_toolbar.panels.sql.SQLDebugPanel',
     'debug_toolbar.panels.template.TemplateDebugPanel',
