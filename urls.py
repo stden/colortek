@@ -43,3 +43,8 @@ if settings.DEBUG:
 urlpatterns += patterns('',
     url(r'^', include('apps.pages.urls')),
 )
+
+# django-dowser
+urlpatterns += patterns('',
+    (r'^dowser/', include('django_dowser.urls')),
+)
