@@ -106,7 +106,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
     'apps.core.context_processors.global_settings',
-    'apps.core.context_processors.global_referer',
+    'apps3.core.context_processors.global_referer',
     'apps.core.context_processors.template',
     'apps.catalog.context_processors.cart',
     'apps.catalog.context_processors.services',
@@ -122,7 +122,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'timelog.middleware.TimeLogMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -164,7 +165,8 @@ INSTALLED_APPS = (
     # 'djcelery',
     'pytils',
     # Uncomment the next line to enable the admin:
-    # 'django_ipgeobase',
+    'django_ipgeobase',
+    'timelog',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -174,29 +176,55 @@ INSTALLED_APPS = (
 # the site admins on every HTTP 500 error when DEBUG=False.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
+TIMELOG_LOG = PROJECT_ROOT + '/timelog.log'
+
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
+  'version': 1,
+  'formatters': {
+    'plain': {
+      'format': '%(asctime)s %(message)s'},
     },
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
+  'handlers': {
+    'timelog': {
+      'level': 'DEBUG',
+      'class': 'logging.handlers.RotatingFileHandler',
+      'filename': TIMELOG_LOG,
+      'maxBytes': 1024 * 1024 * 5,  # 5 MB
+      'backupCount': 5,
+      'formatter': 'plain',
     },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    }
+  },
+  'loggers': {
+    'timelog.middleware': {
+      'handlers': ['timelog'],
+      'level': 'DEBUG',
+      'propogate': False,
+     }
+  }
 }
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'filters': {
+#         'require_debug_false': {
+#             '()': 'django.utils.log.RequireDebugFalse'
+#         }
+#     },
+#     'handlers': {
+#         'mail_admins': {
+#             'level': 'ERROR',
+#             'filters': ['require_debug_false'],
+#             'class': 'django.utils.log.AdminEmailHandler'
+#         }
+#     },
+#     'loggers': {
+#         'django.request': {
+#             'handlers': ['mail_admins'],
+#             'level': 'ERROR',
+#             'propagate': True,
+#         },
+#     }
+# }
 GEOIP_PATH = rel('media/geo')
 LOCALE_PATHS = (
     rel('conf/locale'),
