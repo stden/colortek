@@ -106,7 +106,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
     'apps.core.context_processors.global_settings',
-    'apps3.core.context_processors.global_referer',
+    'apps.core.context_processors.global_referer',
     'apps.core.context_processors.template',
     'apps.catalog.context_processors.cart',
     'apps.catalog.context_processors.services',
