@@ -164,7 +164,7 @@ INSTALLED_APPS = (
     # 'djcelery',
     'pytils',
     # Uncomment the next line to enable the admin:
-    'django_ipgeobase',
+    # 'django_ipgeobase',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
