@@ -49,6 +49,7 @@ from cart import Cart, ItemAlreadyExists, ItemDoesNotExist
 
 from django.contrib.gis.utils import GeoIP
 
+import profiler
 
 @render_to('index.html')
 def index(request):
@@ -505,6 +506,7 @@ def service_about(request, pk):
 def service_specials(request, pk):
     return get_service_data(request, pk)
 
+@profiler.profile('catalog_list.prof')
 @render_to('catalog/catalog_list.html')
 def catalog_list(request, service_pk=0, codename='', is_special=False):
     service = (
