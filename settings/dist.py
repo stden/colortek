@@ -123,7 +123,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -291,7 +291,7 @@ SPHINX_API_VERSION = 0x116
 
 INTERNAL_IPS = ('127.0.0.1', '88.201.246.190', '95.161.250.160', )
 INSTALLED_APPS += (
-    # 'debug_toolbar',
+    'debug_toolbar',
 )
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.version.VersionDebugPanel',
@@ -320,3 +320,9 @@ CATALOG_ORDER_BY = ('cost', 'container__mean_rating',)
 
 PROFILE_LOG_BASE = PROJECT_ROOT + '/logs/profile/'
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/django_cache',
+    }
+}
