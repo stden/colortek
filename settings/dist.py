@@ -165,7 +165,6 @@ INSTALLED_APPS = (
     'pytils',
     # Uncomment the next line to enable the admin:
     'django_ipgeobase',
-    'django_dowser',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -175,7 +174,6 @@ INSTALLED_APPS = (
 # the site admins on every HTTP 500 error when DEBUG=False.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
-TIMELOG_LOG = PROJECT_ROOT + '/timelog.log'
 
 
 LOGGING = {
@@ -319,3 +317,6 @@ SERIALIZATION_MODULES = {
 }
 
 CATALOG_ORDER_BY = ('cost', 'container__mean_rating',)
+
+PROFILE_LOG_BASE = PROJECT_ROOT + '/logs/profile/'
+
