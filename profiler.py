@@ -105,8 +105,8 @@ class ProfilingPanel(DebugPanel):
         return template.render(context)
 
     def process_view(self, request, view_func, view_args, view_kwargs):
-        if request.path.startswith(settings.ADMIN_MEDIA_PREFIX) or request.path.startswith('/__debug__/'):
-            return None
+        # if request.path.startswith(settings.ADMIN_MEDIA_PREFIX) or request.path.startswith('/__debug__/'):
+        #     return None
 
         # Add a timestamp to the profile output when the callable is actually called.
         handle, filename = tempfile.mkstemp(prefix='profiling')
