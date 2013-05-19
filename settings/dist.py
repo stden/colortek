@@ -146,6 +146,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admin',
     'apps.usr',
     'apps.core',
     'apps.accounts',
@@ -163,7 +164,6 @@ INSTALLED_APPS = (
     # 'djcelery',
     'pytils',
     # Uncomment the next line to enable the admin:
-    'django.contrib.admin',
     'django_ipgeobase',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
