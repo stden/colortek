@@ -6,8 +6,7 @@ from filebrowser.sites import site
 from django.contrib import admin
 from apps.core.shortcuts import direct_to_template
 
-if settings.ENABLE_ADMIN:
-     admin.autodiscover()
+admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
