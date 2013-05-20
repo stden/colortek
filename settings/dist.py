@@ -10,6 +10,8 @@ def rel(path):
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+ENABLE_ADMIN = False
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
