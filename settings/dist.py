@@ -290,9 +290,9 @@ SPHINX_API_VERSION = 0x116
 #Django Debug Toolbar
 
 INTERNAL_IPS = ('127.0.0.1', '88.201.246.190', '95.161.250.160', '194.85.174.25')
-INSTALLED_APPS += (
-    'debug_toolbar',
-)
+# INSTALLED_APPS += (
+#     'debug_toolbar',
+# )
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.version.VersionDebugPanel',
     'debug_toolbar.panels.timer.TimerDebugPanel',
