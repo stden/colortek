@@ -320,14 +320,12 @@ SERIALIZATION_MODULES = {
 
 CATALOG_ORDER_BY = ('cost', 'container__mean_rating',)
 
-CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+PROFILE_LOG_BASE = PROJECT_ROOT + '/logs/profile/'
 
 CACHES = {
     'default': {
-        'BACKEND': 'caching.backends.memcached.MemcachedCache',
-        'LOCATION': [
-            'server-1:11211',
-        ],
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
     },
 }
 
