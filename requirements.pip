@@ -24,4 +24,5 @@ sorl-thumbnail==11.12
 wsgiref==0.1.2
 DjangoSEO
 django-debug-toolbar
-
+django-cache-machine
+django-seo
