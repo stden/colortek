@@ -337,7 +337,7 @@
                                 {% endif %}
                             </a>
                         </div>
-                        {% include "catalog/include/service_rating.html" with service=container.owner %}
+{#                        {% include "catalog/include/service_rating.html" with service=container.owner %}#}
                     </div>
                     <div class="preview-text">
                         <h3><a href="{% url catalog:service-page container.owner.pk %}">{{ container.owner.service_name|default_if_none:container.owner.username }}</a></h3>
@@ -390,17 +390,17 @@
                                 </tr>
                             </tbody>
                         </table>
-                        {% include "catalog/include/catalog_info_table.html" with service=container.owner %}
+{#                        {% include "catalog/include/catalog_info_table.html" with service=container.owner %}#}
                         {% if service.additional %}
                             <div class="note">
                                 {{ service.additional|safe }}
                             </div>
                         {% endif %}
-                        {% include "catalog/include/catalog_note.html" with service=container.owner %}
+{#                        {% include "catalog/include/catalog_note.html" with service=container.owner %}#}
                     {% endwith %}
                     </div>
                 </div>
-                    {% include "catalog/include/user_catalog_container.html" %}
+{#                    {% include "catalog/include/user_catalog_container.html" %}#}
                 {% endfor %}
             {% endif %}
             {% if not items and search_type == '1' %}
