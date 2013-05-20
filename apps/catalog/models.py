@@ -158,7 +158,7 @@ class AtomMeanRating(models.Model):
         verbose_name_plural = _("Atom ratings")
 
 
-class Category(models.Model):
+class Category(caching.base.CachingMixin, models.Model):
     service = models.ForeignKey(
         Service,
         related_name='category_service_set',
@@ -188,6 +188,8 @@ class Category(models.Model):
         null=True, blank=True
     )
     """
+
+    objects = caching.base.CachingManager()
 
     @property
     def containers(self):
