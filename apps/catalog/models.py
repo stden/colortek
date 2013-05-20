@@ -419,7 +419,7 @@ class AddonCategory(AbstractCategory):
         verbose_name = _("Addon category")
         verbose_name_plural = _("Addon categories")
 
-class Item(models.Model):
+class Item(caching.base.CachingMixin ,models.Model):
     """ Item provides different goods """
     title = models.CharField(_("title"), max_length=128)
     description = models.CharField(
@@ -484,7 +484,7 @@ class Item(models.Model):
         default=False
     )
     # managers
-    objects = ItemManager()
+    objects = caching.base.CachingManager()
     whole_objects = Manager()
 
     def __unicode__(self):
