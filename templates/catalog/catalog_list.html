@@ -225,8 +225,102 @@
             <div class="b-item-list products">
             {% if search_type == '1' %}
                  {% for item in items %}
-            {#                    {% include "catalog/include/user_dishes_container.html" %}#}
+                {#                    {% include "catalog/include/user_dishes_container.html" %}#}
 
+                    <div class="item{% if container.owner.get_specials or container.owner.get_active_specials %} action{% endif %}">
+                        <div class="preview">
+                            <div class="image">
+                                <a href="{% url catalog:service-page container.owner.pk %}">
+                                    {% if container.owner.logo %}
+                                        {% thumbnail container.owner.logo gs.SERVICE_THUMBNAIL_LOGO_SIZE as logo %}
+                                        <img src='{{ logo.url }}' alt='{{ container.title }} от {{ container.owner.service_name|default_if_none:container.owner.username }}'>
+                                        {% endthumbnail %}
+                                    {% else %}
+                                        {% comment %}
+                                        <img src="/media/img/no-service-logo.jpg" alt="{{ container.title }} от {{ container.owner.service_name|default_if_none:container.owner.username }}">
+                                        {% endcomment %}
+                                        <img src="/media/img/no-logo.png" alt="{{ container.owner.service_name|default_if_none:container.owner.username }}">
+                                    {% endif %}
+                                </a>
+                            </div>
+                        <div class="rating">
+                        {% with service=container.owner %}
+                        {% if service.get_avarage_rating %}
+
+                            <p class="value">{{ service.get_avarage_rating }} {{ service.get_avarage_rating|choose_plural:"балл, балла, баллов" }} из {{ service.get_max_rates }}</p>
+                            {% if service.get_votes_count > 0 %}
+                            <p class="comment">(<a href="{% url catalog:service-rating service.pk %}">{{ service.get_votes_count }} {{ service.get_votes_count|choose_plural:"оценка, оценки, оценок" }}</a>)</p>
+                            {% endif %}
+                        {% else %}
+                            <p class='value'>Рейтинг: нет</p>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+    {#                        {% include "catalog/include/service_rating.html" with service=container.owner %}#}
+                        </div>
+                        <div class="preview-text">
+                            <h3><a href="{% url catalog:service-page container.owner.pk %}">{{ container.owner.service_name|default_if_none:container.owner.username }}</a></h3>
+                            <p class="tag">
+                                Категория:
+                                {% for category in container.owner.categories.all %}
+                                    {{ category.title }}{% if not forloop.last %},{% endif %}
+                                {% endfor %}
+                                {% comment %}
+                                {% if container.container %}
+                                <a href='#'>{{ container.container.title }}</a>,{% endif %}
+                                <a href='#'>{{ container.title }}</a>
+                                {% endcomment %}
+                                {% if container.owner.has_online_payment %}
+                                <img src="/media/img/icon/card.png" alt="" title="Оплата картой" class="tool">
+                                {% endif %}
+                            </p>
+{#                            {% include "catalog/include/catalog_info_table.html" with service=container.owner %}#}
+                                <table class="price">
+                                    <tbody><tr>
+                                        {% comment %}
+                                        {% if service.avarage_cost %}
+                                        <td><em>Сумма заказа:</em> <strong>{{ service.avarage_cost|default_if_none:0 }} <span class="rub">р.</span></strong></td>
+                                        {% endif %}
+                                        {% endcomment %}
+                                        {% if service.minimal_cost %}
+                                        <td><em>Мин. сумма заказа:</em> <strong>{{ service.minimal_cost|default_if_none:0|floatformat:"-2" }} <span class="rub">р.</span></strong></td>
+                                        {% endif %}
+                                        {% if service.avarage_deliver_time %}
+                                        <td><em>Среднее время доставки:</em> <strong>
+                                            {% with dt=service.get_deliver_time %}
+                                                {% if dt.days %}{{ dt.days }} {{ dt.days|choose_plural:"день, дня, дней" }}{% endif %}
+                                                {% if dt.hours %}{{ dt.hours }} {{ dt.hours|choose_plural:"час, часа, часов" }}{% endif %}
+                                                {% if dt.minutes %}{{ dt.minutes }} {{ dt.minutes|choose_plural:"минуты, минуту, минут" }}{% endif %}
+                                            {% endwith %}
+                                            </strong></td>
+                                        {% endif %}
+                                        </tr>
+                                        <tr>
+                                            {% if service.avarage_deliver_cost %}
+                                            <td colspan="2">
+                                                <em>Стоимость доставки:</em>
+                                                <strong>{{ service.avarage_deliver_cost|default_if_none:0|floatformat:"-2" }} <span class="rub">р.</span></strong>
+                                                {% if service.avarage_cost %}
+                                                Бесплатная доставка при заказе от <strong>{{ service.avarage_cost|floatformat:"-2" }}</strong> <span class='rub'>р.</span>
+                                                {% endif %}
+                                            </td>
+                                            {% endif %}
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                        {% if service.additional %}
+                            <div class="note">
+                                {{ service.additional|safe }}
+                            </div>
+                        {% endif %}
+{#                            {% include "catalog/include/catalog_note.html" with service=container.owner %}#}
+
+                        </div>
+                    </div>
+                 {% endfor %}
+            {% else %}
+                {% for container in containers %}
                 <div class="item{% if container.owner.get_specials or container.owner.get_active_specials %} action{% endif %}">
                     <div class="preview">
                         <div class="image">
@@ -243,21 +337,7 @@
                                 {% endif %}
                             </a>
                         </div>
-                    <div class="rating">
-                    {% with service=container.owner %}
-                    {% if service.get_avarage_rating %}
-
-                        <p class="value">{{ service.get_avarage_rating }} {{ service.get_avarage_rating|choose_plural:"балл, балла, баллов" }} из {{ service.get_max_rates }}</p>
-                        {% if service.get_votes_count > 0 %}
-                        <p class="comment">(<a href="{% url catalog:service-rating service.pk %}">{{ service.get_votes_count }} {{ service.get_votes_count|choose_plural:"оценка, оценки, оценок" }}</a>)</p>
-                        {% endif %}
-                    {% else %}
-                        <p class='value'>Рейтинг: нет</p>
-                    {% endif %}
-                    {% endwith %}
-                </div>
-
-{#                        {% include "catalog/include/service_rating.html" with service=container.owner %}#}
+                        {% include "catalog/include/service_rating.html" with service=container.owner %}
                     </div>
                     <div class="preview-text">
                         <h3><a href="{% url catalog:service-page container.owner.pk %}">{{ container.owner.service_name|default_if_none:container.owner.username }}</a></h3>
@@ -279,11 +359,7 @@
                         {% include "catalog/include/catalog_note.html" with service=container.owner %}
                     </div>
                 </div>
-
-                 {% endfor %}
-            {% else %}
-                {% for container in containers %}
-                    {% include "catalog/include/user_catalog_container.html" %}
+{#                    {% include "catalog/include/user_catalog_container.html" %}#}
                 {% endfor %}
             {% endif %}
             {% if not items and search_type == '1' %}
