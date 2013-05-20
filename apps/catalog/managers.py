@@ -5,6 +5,7 @@ from django.conf import settings
 from apps.core.managers import AbstractManager
 
 
+
 class ItemManager(AbstractManager):
     pass
 

@@ -6,8 +6,10 @@ from apps.core.helpers import get_object_or_None
 from django.contrib.auth.models import User
 from uuid import uuid1
 
+import caching.base
 
-class AbstractManager(models.Manager):
+
+class AbstractManager(caching.base.CachingManager):
     """ marks all is_deleted=True objects as 'non existant' """
     def get_query_set(self):
         return super(AbstractManager, self).get_query_set().filter(is_deleted=False)
