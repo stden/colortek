@@ -311,6 +311,7 @@ DEBUG_TOOLBAR_PANELS = (
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
+
 # import djcelery
 # djcelery.setup_loader()
 
@@ -322,13 +323,13 @@ CATALOG_ORDER_BY = ('cost', 'container__mean_rating',)
 
 PROFILE_LOG_BASE = PROJECT_ROOT + '/logs/profile/'
 
-
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211',
     },
 }
+
 
 #Django Cache-Machine settings
 
