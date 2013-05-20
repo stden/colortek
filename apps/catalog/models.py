@@ -17,6 +17,7 @@ from django.conf import settings
 
 from uuid import uuid1, uuid4
 from decimal import Decimal
+import caching.base
 
 # Create your models here.
 from cart import Cart
@@ -214,7 +215,7 @@ class Category(models.Model):
         ordering = ('weight',)
 
 
-class Container(models.Model):
+class Container(caching.base.CachingMixin, models.Model):
     """ Container provides the list of catalogue for each service """
     owner = models.ForeignKey(
         User, verbose_name=_("container owner"), null=True,
@@ -252,6 +253,8 @@ class Container(models.Model):
     #    help_text=_("for internal purporses use, must be unique"),
     #    unique=True, max_length=32)
 
+    objects = caching.base.CachingManager()
+    
     def get_title(self):
         return self.__unicode__()
     get_title.short_description = _("title")

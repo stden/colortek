@@ -329,3 +329,7 @@ CACHES = {
     },
 }
 
+
+#Django Cache-Machine settings
+
+CACHE_COUNT_TIMEOUT = 60
