@@ -9,6 +9,9 @@ from django.contrib.auth.models import User
 
 from apps.accounts.managers import VerificationManager
 
+import caching.base
+
+
 
 WEEKDAY_CHOICES = (
     (1, _("Mon")),
@@ -83,7 +86,7 @@ class Schedule(models.Model):
         verbose_name_plural = _("Schedules")
 
 
-class TimeNDay(models.Model):
+class TimeNDay(caching.base.CachingMixin, models.Model):
     """ describes working time for given day """
     weekday = models.IntegerField(
         _("week day"),
@@ -103,6 +106,8 @@ class TimeNDay(models.Model):
         help_text=_("marks if this schedule point is active"),
         default=True
     )
+
+    objects = caching.base.CachingMixin()
 
     def __unicode__(self):
         return ("[{user}] {weekday}, {since} - {until}").format(
