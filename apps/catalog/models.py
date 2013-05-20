@@ -254,7 +254,7 @@ class Container(caching.base.CachingMixin, models.Model):
     #    unique=True, max_length=32)
 
     objects = caching.base.CachingManager()
-    
+
     def get_title(self):
         return self.__unicode__()
     get_title.short_description = _("title")
