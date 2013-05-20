@@ -547,7 +547,7 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
 
     state = int(state) if isinstance(state, basestring) else 1
     if state:
-        now = datetime.now()
+        now = datetime.now().replace(second=0, microsecond=0)
         week_day = now.isoweekday()
         prev_week_day = week_day - 1 if week_day > 1 else 7
         qset = (
