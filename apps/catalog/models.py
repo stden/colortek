@@ -17,6 +17,7 @@ from django.conf import settings
 
 from uuid import uuid1, uuid4
 from decimal import Decimal
+
 import caching.base
 
 # Create your models here.
