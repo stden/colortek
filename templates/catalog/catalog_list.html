@@ -403,7 +403,7 @@
 {#                    {% include "catalog/include/user_catalog_container.html" %}#}
                 {% endfor %}
             {% endif %}
-            {% if not items and search_type == '1' %}
+            {% if not items.count and search_type == '1' %}
                 <h3>{% trans "No items" %}</h3>
                 <div style='height: 600px'>&nbsp;</div>
             {% endif %}
