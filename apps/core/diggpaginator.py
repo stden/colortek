@@ -45,7 +45,7 @@ class CachedPaginator(Paginator):
         return "%s:%s:%s" % (self.cache_key, self.per_page, page_number)
 
 
-class ExPaginator(CachedPaginator):
+class ExPaginator(Paginator):
     """Adds a ``softlimit`` option to ``page()``. If True, querying a
     page number larger than max. will not fail, but instead return the
     last available page.
