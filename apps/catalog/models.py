@@ -18,7 +18,7 @@ from django.conf import settings
 
 from uuid import uuid1, uuid4
 from decimal import Decimal
-
+import caching.base
 
 
 # Create your models here.
@@ -419,7 +419,7 @@ class AddonCategory(AbstractCategory):
         verbose_name = _("Addon category")
         verbose_name_plural = _("Addon categories")
 
-class Item(models.Model):
+class Item(caching.base.CachingMixin, models.Model):
     """ Item provides different goods """
     title = models.CharField(_("title"), max_length=128)
     description = models.CharField(
@@ -576,7 +576,7 @@ class Addon(models.Model):
         verbose_name_plural = _("Addons")
 
 
-class Special(models.Model):
+class Special(caching.base.CachingMixin, models.Model):
     expires = models.DateTimeField(
         _("expires"), help_text=_("date and time when special expires"),
     )
@@ -598,6 +598,8 @@ class Special(models.Model):
         User, related_name='special_owner_set',
         verbose_name=_("owner")
     )
+
+    objects = caching.base.CachingMixin()
 
     @property
     def container(self):

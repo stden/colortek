@@ -542,8 +542,8 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
         (geoip.city(ip) or {}).get('city', None)
     )
 
-    containers = Container.objects.select_related().filter(
-        service=service, owner__is_published=True).order_by('owner') #@TODO: сделать select_related
+    containers = Container.objects.filter(
+        service=service, owner__is_published=True).order_by('owner') #@TODO: select_related
 
     state = int(state) if isinstance(state, basestring) else 1
     if state:

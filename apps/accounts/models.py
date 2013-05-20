@@ -68,13 +68,11 @@ class ContactEmail(models.Model):
         verbose_name_plural = _("Contact emails")
 
 
-class Schedule(caching.base.CachingMixin, models.Model):
+class Schedule(models.Model):
     """ partner working schedule,
     contains working days with its time ranges
     """
     user = models.ForeignKey('auth.User', related_name='schedule_user_set')
-
-    objects = caching.base.CachingManager()
 
     @property
     def days(self):
