@@ -1031,7 +1031,7 @@ class VoteItem(models.Model):
         verbose_name_plural = _("Vote items")
 
 
-class Vote(models.Model):
+class Vote(caching.base.CachingMixin, models.Model):
     # user votes for their orders
     sid = models.CharField(
         _('sid'), help_text=_("secret id"), max_length=128
@@ -1078,6 +1078,8 @@ class Vote(models.Model):
         _('updated on'), auto_now_add=True,
         default=datetime.now
     )
+
+    objects = caching.base.CachingManager()
 
     def get_avarage(self):
         if self.item:
