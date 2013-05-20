@@ -3,9 +3,10 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from apps.core.helpers import get_object_or_None
 # Create your models here.
+import caching.base
 
 
-class City(models.Model):
+class City(caching.base.CachingMixin, models.Model):
     title = models.CharField(
         _('city'), max_length=128,
         help_text=_('City or other settlement type'))
@@ -24,6 +25,8 @@ class City(models.Model):
         help_text=_("iso name for city"), blank=True, null=True
     )
 
+    objects = caching.base.CachingManager()
+
     @property
     def subways(self):
         return self.subway_city_set
@@ -41,13 +44,15 @@ class City(models.Model):
         return self.title
 
 
-class Subway(models.Model):
+class Subway(caching.base.CachingMixin, models.Model):
     title = models.CharField(
         _('subway'), max_length=256,
         help_text=_('Subway title'))
     city = models.ForeignKey(
         City, verbose_name=_("city"), related_name='subway_city_set'
     )
+
+    objects = caching.base.CachingManager()
 
     def __unicode__(self):
         return "[%s] %s" % ( self.city.title, self.title)
