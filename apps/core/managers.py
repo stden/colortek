@@ -10,8 +10,7 @@ from uuid import uuid1
 class AbstractManager(models.Manager):
     """ marks all is_deleted=True objects as 'non existant' """
     def get_query_set(self):
-        super_class = super(AbstractManager, self)
-        return super_class.get_query_set().filter(is_deleted=False)
+        return super(AbstractManager, self).get_query_set().filter(is_deleted=False)
 
 
 class UserSIDManager(models.Manager):
