@@ -94,7 +94,7 @@ class Service(models.Model):
         ordering = ['weight', ]
 
 
-class ServiceTerm(models.Model):
+class ServiceTerm(caching.base.CachingMixin, models.Model):
     service = models.ForeignKey(
         Service, related_name='service_term_set',
         verbose_name=_("service")
@@ -107,6 +107,8 @@ class ServiceTerm(models.Model):
         _('term'), help_text=_("term"),
         max_length=4096
     )
+
+    objects = caching.base.CachingManager()
 
     def __unicode__(self):
         return '[%(service)s] %(code)s - %(term)s' % {
