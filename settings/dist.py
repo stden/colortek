@@ -322,10 +322,13 @@ CATALOG_ORDER_BY = ('cost', 'container__mean_rating',)
 PROFILE_LOG_BASE = PROJECT_ROOT + '/logs/profile/'
 
 
-
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211',
     },
 }
+
+#Django Cache-Machine settings
+
+CACHE_COUNT_TIMEOUT = 60
