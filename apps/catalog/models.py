@@ -1,4 +1,5 @@
 # coding: utf-8
+import caching.base
 from datetime import datetime, timedelta
 
 from apps.geo.models import City
@@ -18,7 +19,7 @@ from django.conf import settings
 from uuid import uuid1, uuid4
 from decimal import Decimal
 
-import caching.base
+
 
 # Create your models here.
 from cart import Cart
