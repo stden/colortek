@@ -322,3 +322,12 @@ CATALOG_ORDER_BY = ('cost', 'container__mean_rating',)
 
 CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 
+CACHES = {
+    'default': {
+        'BACKEND': 'caching.backends.memcached.MemcachedCache',
+        'LOCATION': [
+            'server-1:11211',
+        ],
+    },
+}
+
