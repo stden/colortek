@@ -5,7 +5,9 @@ from filebrowser.sites import site
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from apps.core.shortcuts import direct_to_template
-admin.autodiscover()
+
+if not settings.ENABLE_ADMIN:
+    admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
