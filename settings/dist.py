@@ -13,6 +13,7 @@ TEMPLATE_DEBUG = DEBUG
 ENABLE_ADMIN = False
 
 ADMINS = (
+    ('Dan', 'dangusev92@gmail.com'),
     # ('Your Name', 'your_email@example.com'),
 )
 
