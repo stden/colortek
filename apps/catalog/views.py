@@ -215,14 +215,11 @@ def service_orders(request):
     date = request.GET.get('date', None)
     _format = request.GET.get('format', None)
 
-    # excludes = ['not_confirmed',
-    #     'approved',
-    #     'checking'
-    # ]
-
-    excludes = []
+    excludes = ['not_confirmed',
+        'approved',
+        'checking'
+    ]
     statuses = [
-        'not_confirmed',
         'approved',
         'finished',
         'rejected',
