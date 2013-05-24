@@ -1172,6 +1172,10 @@ class PaymentTransaction(models.Model):
     def __unicode__(self):
         return '[%s] %s, %s' % (self.order.pk, self.client, self.partner.service_name)
 
+    def complete(self):
+        self.is_processed = True
+        self.save()
+
     class Meta:
         verbose_name = _("Payment transaction")
         verbose_name_plural = _("Payment transactions")

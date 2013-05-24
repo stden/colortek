@@ -215,11 +215,14 @@ def service_orders(request):
     date = request.GET.get('date', None)
     _format = request.GET.get('format', None)
 
-    excludes = ['not_confirmed',
-        'approved',
-        'checking'
-    ]
+    # excludes = ['not_confirmed',
+    #     'approved',
+    #     'checking'
+    # ]
+
+    excludes = []
     statuses = [
+        'not_confirmed',
         'approved',
         'finished',
         'rejected',
@@ -1448,7 +1451,6 @@ def order_payment_notification(request):
             payment = PaymentTransaction.objects.filter(**kw)
             if not payment:
                 PaymentTransaction.objects.create(**kw)
-
     return response
 
 
