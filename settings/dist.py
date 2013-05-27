@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import os
+from django.conf import global_settings
+
+
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))
 
 def rel(path):
@@ -104,14 +107,17 @@ TEMPLATE_LOADERS = (
         'django.template.loaders.app_directories.Loader',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    'django.contrib.messages.context_processors.messages',
-    'apps.core.context_processors.template',
+# TEMPLATE_CONTEXT_PROCESSORS = (
+#     'django.contrib.auth.context_processors.auth',
+#     "django.core.context_processors.debug",
+#     "django.core.context_processors.i18n",
+#     "django.core.context_processors.media",
+#     "django.core.context_processors.static",
+#     'django.contrib.messages.context_processors.messages',
+#
+# )
+
+TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'apps.core.context_processors.global_settings',
     'apps.core.context_processors.global_referer',
     'apps.catalog.context_processors.cart',
@@ -120,8 +126,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'apps.catalog.context_processors.votes',
     # 'apps.accounts.context_processors.stats',
     'apps.geo.context_processors.geoip',
-)
+    'apps.core.context_processors.template',
 
+)
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
