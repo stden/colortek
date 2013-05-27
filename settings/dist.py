@@ -118,7 +118,6 @@ TEMPLATE_LOADERS = (
 # )
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-    'django.core.context_processors.request',
     'apps.core.context_processors.global_settings',
     'apps.core.context_processors.global_referer',
     'apps.catalog.context_processors.cart',
@@ -128,6 +127,8 @@ TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     # 'apps.accounts.context_processors.stats',
     'apps.geo.context_processors.geoip',
     'apps.core.context_processors.template',
+    'django.core.context_processors.request',
+
 
 )
 MIDDLEWARE_CLASSES = (
