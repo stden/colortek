@@ -118,6 +118,7 @@ TEMPLATE_LOADERS = (
 # )
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+    'django.core.context_processors.request',
     'apps.core.context_processors.global_settings',
     'apps.core.context_processors.global_referer',
     'apps.catalog.context_processors.cart',
