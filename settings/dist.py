@@ -173,7 +173,7 @@ INSTALLED_APPS = (
     'apps.blog',
     'apps.pages',
     'apps.banner',
-    'south',
+    # 'south',
     'grappelli',
     'filebrowser',
     'sorl.thumbnail',
@@ -305,7 +305,7 @@ SPHINX_CONFIG_TEMPLATE = 'sphinx/sphinx.conf'
 SPHINX_API_VERSION = 0x116
 
 SEO_FOR_MODELS = [
-    'django.contrib.auth.user',
+    'django.contrib.auth.models.User',
 ]
 #Django Debug Toolbar
 
