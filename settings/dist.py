@@ -182,7 +182,7 @@ INSTALLED_APPS = (
     'pytils',
     # Uncomment the next line to enable the admin:
     'django_ipgeobase',
-    # 'seo',
+    'seo',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -304,6 +304,9 @@ SPHINX_ROOT = rel('conf/sphinx')
 SPHINX_CONFIG_TEMPLATE = 'sphinx/sphinx.conf'
 SPHINX_API_VERSION = 0x116
 
+SEO_FOR_MODELS = [
+    'django.contrib.auth.user',
+]
 #Django Debug Toolbar
 
 INTERNAL_IPS = ('127.0.0.1', '88.201.246.190', '95.161.250.160', '194.85.174.25')
@@ -345,7 +348,6 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     },
 }
-
 
 #Django Cache-Machine settings
 
