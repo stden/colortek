@@ -1,4 +1,4 @@
-{% extends base %} {% load i18n thumbnail %}
+{% extends "base_web.html" %} {% load i18n thumbnail %}
 {% block content %}
     <div class="col-{{ services.count }}">
         {% for service in services %}
