@@ -289,7 +289,6 @@ def render_to_json(content_type='application/json'):
 
 def render_to(template, allow_xhr=False, content_type='text/html'):
     _content_type = content_type
-    print 'TEMPLATE', template
     def decorator(func):
         def wrapper(request, *args, **kwargs):
             response = make_http_response(content_type='application/json')
@@ -340,6 +339,7 @@ def render_to(template, allow_xhr=False, content_type='text/html'):
                 return render_to_response(
                     tmpl,
                     dt, context_instance=RequestContext(request))
+        print 'TEMPLATE', template
         return wrapper
     return decorator
 
