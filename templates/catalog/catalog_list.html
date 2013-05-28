@@ -232,7 +232,7 @@
                     <div class="item{% if container.owner.get_specials or container.owner.get_active_specials %} action{% endif %}">
                         <div class="preview">
                             <div class="image">
-                                <a href="{% url catalog:service-page container.owner.pk %}">
+                                <a href="{% url 'service-page' container.owner.pk %}">
                                     {% if container.owner.logo %}
                                         {% thumbnail container.owner.logo gs.SERVICE_THUMBNAIL_LOGO_SIZE as logo %}
                                         <img src='{{ logo.url }}' alt='{{ container.title }} от {{ container.owner.service_name|default_if_none:container.owner.username }}'>
