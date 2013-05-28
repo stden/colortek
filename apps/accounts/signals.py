@@ -76,4 +76,4 @@ def user_post_save(instance, **kwargs):
 
 def setup_signals():
     pre_save.connect(user_pre_save, sender=User)
-    # post_save.connect(user_post_save, sender=User)
+    post_save.connect(user_post_save, sender=User)
