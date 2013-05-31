@@ -90,7 +90,9 @@ def register_user(request):
                 invite.is_verified = True
                 invite.receiver = user
                 invite.save()
-            return {'redirect': 'accounts:register-success', 'user': user}
+                return {'redirect': 'accounts:register-success', 'user': user}
+            else:
+                return {'redirect': 'catalog:index'}
     days = xrange(1, 32)
     months = xrange(1, 13)
     years = xrange(1930, 2012)
