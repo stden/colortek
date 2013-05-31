@@ -342,7 +342,7 @@ class UserExtenssion(object):
 
     def get_specials(self):
         from apps.catalog.models import Item
-        now = datetime.now().replace(seconds=0, microseconds=0)
+        now = datetime.now().replace(second=0, microsecond=0)
         items = Item.objects.filter(
             container__in=self.containers.all(),
             is_special_active=True,
