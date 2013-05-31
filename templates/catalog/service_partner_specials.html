@@ -30,32 +30,32 @@
                     </div>
                     {% if items or user.get_active_specials %}
                     <div class="line">
-                        {% for item in items %}
-                        <div class="item"><div class="col">
-                            <div class="i">
-                                {% if item.image %}
-                                {% thumbnail item.image gs.ITEM_THUMBNAIL_SIZE as image %}
-                                <div class="image">
-                                    <img src="{{ image.url }}" alt="{{ item.title }}">
-                                </div>{% endthumbnail %}
-                                {% else %}
-                                <div class='image'>
-                                    <img src='/media/img/no-content-{{ item.container.owner.service.codename }}.jpg'
-                                        alt='{{ item.title }}'>
-                                </div>
-                                {% endif %}
-                            <!--<a href="#" class="button">редактировать</a> -->
-                            <span class="title">{{ item.title }}</span>
-							<span class="description">
-								<span class="price">
-									цена по акции: <span><s>{{ item.cost|floatformat:"-2" }}</s> {{ item.get_generic_cost|floatformat:"-2" }}<span class="ruble">n</span></span>
-								</span>
-							</span>
-                            <a href="{% url catalog:special-off item.pk %}" class="del-item"><img src="/media/img/icon/del.png" alt="del"></a>
-
-                            </div>
-                        </div></div>
-                        {% endfor %}
+{#                        {% for item in items %}#}
+{#                        <div class="item"><div class="col">#}
+{#                            <div class="i">#}
+{#                                {% if item.image %}#}
+{#                                {% thumbnail item.image gs.ITEM_THUMBNAIL_SIZE as image %}#}
+{#                                <div class="image">#}
+{#                                    <img src="{{ image.url }}" alt="{{ item.title }}">#}
+{#                                </div>{% endthumbnail %}#}
+{#                                {% else %}#}
+{#                                <div class='image'>#}
+{#                                    <img src='/media/img/no-content-{{ item.container.owner.service.codename }}.jpg'#}
+{#                                        alt='{{ item.title }}'>#}
+{#                                </div>#}
+{#                                {% endif %}#}
+{#                            <!--<a href="#" class="button">редактировать</a> -->#}
+{#                            <span class="title">{{ item.title }}</span>#}
+{#							<span class="description">#}
+{#								<span class="price">#}
+{#									цена по акции: <span><s>{{ item.cost|floatformat:"-2" }}</s> {{ item.get_generic_cost|floatformat:"-2" }}<span class="ruble">n</span></span>#}
+{#								</span>#}
+{#							</span>#}
+{#                            <a href="{% url catalog:special-off item.pk %}" class="del-item"><img src="/media/img/icon/del.png" alt="del"></a>#}
+{##}
+{#                            </div>#}
+{#                        </div></div>#}
+{#                        {% endfor %}#}
                         {% for special in user.specials.all %}
                             <div class="item"><div class="col">
                                 <div class="i">
