@@ -298,7 +298,6 @@ def render_to(template, allow_xhr=False, content_type='text/html'):
             # overrides
             tmpl = dt.get('_template', template)
             content_type = dt.get('_content_type', _content_type)
-            print 'TEMPLATE', template
             force_ajax = request.META.get('HTTP_X_FORCE_XHTTPRESPONSE', None)
             if 'redirect' in dt:
                 if force_ajax:
