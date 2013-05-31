@@ -74,8 +74,10 @@ def register_user(request):
             user.is_active = True
             user.is_verified = True
             user.save()
-            auth.login(request, user)
-        #    auth_user = auth.authenticate(email=user.email, password = form.cleaned_data['password'])
+            auth_user = auth.authenticate(email=user.email, password = form.cleaned_data['password'])
+            print auth_user
+            auth.login(request, auth_user)
+
         #    auth.login(request, auth_user)
 
             # process invite
