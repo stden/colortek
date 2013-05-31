@@ -872,6 +872,8 @@ class Order(models.Model):
 
 
     def get_item_title_list(self):
+        for product in self.containers.all():
+            print product
         return [i.product.title for i in self.containers.all()]
 
     def get_item_titles(self):
