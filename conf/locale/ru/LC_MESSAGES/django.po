@@ -2310,7 +2310,7 @@ msgstr "У вас нет ни одной категории(контейнера
 #: templates/catalog/empty_cart.html:3
 msgid "Sorry, but your cart is empty, please add something to proceed"
 msgstr ""
-"Приносим свои извенения, но ваша корзина пуста, пожалуйста добавьте туда что-"
+"Приносим свои извинения, но ваша корзина пуста, пожалуйста добавьте туда что-"
 "нибудь"
 
 #: templates/catalog/order.html:5
