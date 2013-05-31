@@ -29,7 +29,7 @@ class GeoIPLookupDict(object):
 def geoip(request):
     ip = request.META.get('REMOTE_ADDR', None)
     geop = IPGeoBase.objects.by_ip(ip)
-    print ip
+    print IPGeoBase.objects.get(ip=ip)
     if geop.exists():
         geop = geop[0]
     city_id = request.session.get('city', None)
