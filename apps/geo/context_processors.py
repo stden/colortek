@@ -29,7 +29,6 @@ class GeoIPLookupDict(object):
 def geoip(request):
     ip = request.META.get('REMOTE_ADDR', None)
     geop = IPGeoBase.objects.by_ip(ip)
-    print IPGeoBase.objects.get(ip=ip)
     if geop.exists():
         geop = geop[0]
     city_id = request.session.get('city', None)
@@ -39,7 +38,7 @@ def geoip(request):
             city_id = request.user.city.id
         except AttributeError:
             city_id = None
-    if not city_id and geop.city:
+    if geop and not city_id and geop.city:
         try:
             city = City.objects.get(title=geop.city)
         except City.DoesNotExist:
