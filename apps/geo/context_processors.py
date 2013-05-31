@@ -38,7 +38,7 @@ def geoip(request):
             city_id = request.user.city.id
         except AttributeError:
             city_id = None
-    if not city_id and geop and geop.city:
+    if not city_id and geop.city:
         try:
             city = City.objects.get(title=geop.city)
         except City.DoesNotExist:
