@@ -370,6 +370,7 @@ def get_service_data(request, pk, title='', category_pk=None):
     addon_lists = AddonList.objects.filter(container__in=containers)
     addons = Addon.objects.filter(list__in=addon_lists)
 
+    print 'COUNT', items.count()
     return {
         'service': service,
         'votes': votes,
