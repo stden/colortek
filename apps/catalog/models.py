@@ -872,10 +872,12 @@ class Order(models.Model):
 
 
     def get_item_title_list(self):
+        lst = []
         for product in self.containers.all():
-            if product.product is None:
-                print product.id, product.__class__
-        return [i.product.title for i in self.containers.all()]
+            if product.product:
+                lst.append(product.product.title)
+        print lst
+        return lst
 
     def get_item_titles(self):
         return ", ".join(self.get_item_title_list())
