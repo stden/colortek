@@ -129,9 +129,9 @@ TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'apps.catalog.context_processors.votes',
     'apps.accounts.context_processors.stats',
     'apps.geo.context_processors.geoip',
-
-
 )
+
+
 MIDDLEWARE_CLASSES = (
     'apps.core.middleware.__init__.ExceptionMiddleware', # Нужно для получения трейсов при DEBUG=False
     'django.middleware.common.CommonMiddleware',
@@ -164,6 +164,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'grappelli',
     'django.contrib.admin',
     'apps.usr',
     'apps.core',
@@ -175,7 +176,6 @@ INSTALLED_APPS = (
     'apps.pages',
     'apps.banner',
     # 'south',
-    'grappelli',
     'filebrowser',
     'sorl.thumbnail',
     'cart',
