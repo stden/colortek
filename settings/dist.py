@@ -127,7 +127,7 @@ TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'apps.catalog.context_processors.services',
     'apps.catalog.context_processors.stats',
     'apps.catalog.context_processors.votes',
-    # 'apps.accounts.context_processors.stats',
+    'apps.accounts.context_processors.stats',
     'apps.geo.context_processors.geoip',
 
 
