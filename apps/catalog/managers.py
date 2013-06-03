@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import caching.base
 from django.db import models
 from django.db.models import Q
 from django.conf import settings
@@ -12,7 +13,6 @@ class ItemManager(AbstractManager):
 
 class AddonManager(AbstractManager):
     pass
-
 
 class OrderManager(models.Manager):
     def get_query_set(self):
