@@ -46,6 +46,7 @@ def accounts(Pi, count=0):
 def stats(request):
     # YOU BETTER do not know what is going on here
     # I don't know either, not my idea
+    # +1
     participant_user_count = User.objects.filter(is_partner=False).count()
     total_user_count = User.objects.count()
     partners_count = User.objects.filter(is_partner=False).count()

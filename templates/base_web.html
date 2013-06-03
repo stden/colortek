@@ -71,9 +71,9 @@
                                 {% comment %}
                                 <span>2</span><span>3</span><span>3</span><span>3</span><span>3</span>&nbsp;&nbsp;
                                 {% endcomment %}
-                                {% for num in online_users|make_list %}
-                                <span>{{ num }}</span>
-                                {% endfor %}
+{#                                {% for num in online_users|make_list %}#}
+                                <span>{{ online_users }}</span>
+{#                                {% endfor %}#}
                                 {#{ present_user_count }#}{{ online_users|choose_plural:"человек,человека,человек" }}
                             </div>
                         </div></div>
