@@ -541,7 +541,7 @@ class AddonList(models.Model):
         verbose_name_plural = _("Addon Lists")
 
 
-class Addon(caching.base.CachingMixin, models.Model):
+class Addon(models.Model):
     """ Provides single addon, for example chilly pepper """
     title = models.CharField(_("title"), max_length=128)
     description = models.CharField(_("description"), max_length=1024)
