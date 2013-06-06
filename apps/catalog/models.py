@@ -531,7 +531,7 @@ class Item(caching.base.CachingMixin, models.Model):
         ordering = ['weight', ]
 
 
-class AddonList(models.Model):
+class AddonList(caching.base.CachingMixin, models.Model):
     """ Provides addons for Items via its Container """
     title = models.CharField(_("title"), max_length=128)
     description = models.CharField(_("description"), max_length=1024)
@@ -539,6 +539,8 @@ class AddonList(models.Model):
         Container, related_name='addon_list_container_set', default=1,
         verbose_name=_("container")
     )
+
+    objects = caching.base.CachingManager()
 
     def __unicode__(self):
         return self.title
