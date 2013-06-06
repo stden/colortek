@@ -209,7 +209,6 @@ User.add_to_class(
     )
 )
 
-User.objects = UserCacheManager()
 
 User._meta.get_field_by_name('email')[0].formfield = forms.EmailField
 PartnerBooleanField = partial(forms.BooleanField, required=False,
@@ -224,6 +223,8 @@ TextField = partial(
 
 User._meta.get_field_by_name('is_partner')[0].formfield = PartnerBooleanField
 User._meta.get_field_by_name('is_operator')[0].formfield = OperatorBooleanField
+
+User.objects = UserCacheManager()
 
 
 def export_as_csv(modeladmin, request, queryset):
