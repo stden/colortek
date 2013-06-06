@@ -13,7 +13,7 @@ from django.conf import settings
 from django import forms
 from django.core.urlresolvers import reverse
 from apps.core.helpers import get_object_or_None
-
+import caching.base
 
 User.add_to_class(
     'invites', models.PositiveSmallIntegerField(
@@ -201,6 +201,8 @@ User.add_to_class(
         null=True, blank=True
     )
 )
+
+User.objects = caching.base.CachingManager()
 
 User._meta.get_field_by_name('email')[0].formfield = forms.EmailField
 PartnerBooleanField = partial(forms.BooleanField, required=False,
@@ -463,7 +465,7 @@ class UserExtenssion(object):
             )
         }
 
-User.__bases__ = (UserExtenssion,) + User.__bases__
+User.__bases__ = (caching.base.CachingMixin, UserExtenssion,) + User.__bases__
 
 
 # Create your models here.

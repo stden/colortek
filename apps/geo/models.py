@@ -1,9 +1,30 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from apps.core.helpers import get_object_or_None
 # Create your models here.
+from django_ipgeobase.models import IPGeoBase
 import caching.base
+import socket
+import struct
+
+#
+#
+# class CacheIPGeoBaseManager(caching.base.CachingManager):
+#     """Override for IPGeoBaseManager in django_ipgeobase"""
+#     def by_ip(self, ip):
+#         """Отдает объекты для найденных соответствий по ip.
+#         Причем, наиболее точное совпадение в начале списка"""
+#         number = struct.unpack('!L', socket.inet_aton(ip))[0]
+#         return super(CacheIPGeoBaseManager, self).get_query_set().filter(start_ip__lte=number, end_ip__gte=number).order_by('end_ip', '-start_ip')
+#
+#
+# class CacheIPGeoBase(caching.base.CachingMixin, IPGeoBase):
+#     """Override for IPGeoBase in django_ipgeobase"""
+#
+#     objects = CacheIPGeoBaseManager()
 
 
 class City(caching.base.CachingMixin, models.Model):
