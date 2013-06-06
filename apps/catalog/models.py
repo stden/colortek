@@ -709,7 +709,7 @@ class OfflineClient(models.Model):
         verbose_name_plural = _("Offline clients")
 
 
-class Order(models.Model):
+class Order(caching.base.CachingMixin, models.Model):
     # items = models.ManyToManyField(Item, verbose_name=_("Items"))
     # addons = models.ManyToManyField(Addon, verbose_name=_("Addons"))
     client = models.ForeignKey(
@@ -783,7 +783,7 @@ class Order(models.Model):
     )
 
     # managers
-    # objects = OrderManager()
+    objects = caching.base.CachingManager()
 
     def __unicode__(self):
         if self.client:
