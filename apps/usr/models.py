@@ -7,13 +7,20 @@ from django.core.serializers import serialize
 from django.db import models
 from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, UserManager
 from django.contrib.auth.admin import UserAdmin
 from django.conf import settings
 from django import forms
 from django.core.urlresolvers import reverse
 from apps.core.helpers import get_object_or_None
 import caching.base
+
+
+
+
+class UserCacheManager(caching.base.CachingManager, UserManager):
+    pass
+
 
 User.add_to_class(
     'invites', models.PositiveSmallIntegerField(
@@ -202,7 +209,7 @@ User.add_to_class(
     )
 )
 
-User.objects = caching.base.CachingManager()
+User.objects = UserCacheManager()
 
 User._meta.get_field_by_name('email')[0].formfield = forms.EmailField
 PartnerBooleanField = partial(forms.BooleanField, required=False,
