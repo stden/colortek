@@ -373,7 +373,7 @@ class Container(caching.base.CachingMixin, models.Model):
         return bool(self.container)
 
 
-class AbstractCategory(models.Model):
+class AbstractCategory(caching.base.CachingMixin, models.Model):
     """ Item's category, represents item as instance of different stuff
         for example: soda or just pizza, water-based items measure with litres
         pizza measure with counts and cocain mesures with gramms or killograms
@@ -414,12 +414,19 @@ class AbstractCategory(models.Model):
 
 
 class ItemCategory(AbstractCategory):
+
+    objects = caching.base.CachingManager()
+
     class Meta:
         verbose_name = _("Item category")
         verbose_name_plural = _("Item categories")
 
 
 class AddonCategory(AbstractCategory):
+
+    objects = caching.base.CachingManager()
+
+
     class Meta:
         verbose_name = _("Addon category")
         verbose_name_plural = _("Addon categories")
