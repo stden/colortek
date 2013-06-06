@@ -220,8 +220,6 @@ TextField = partial(
 User._meta.get_field_by_name('is_partner')[0].formfield = PartnerBooleanField
 User._meta.get_field_by_name('is_operator')[0].formfield = OperatorBooleanField
 
-User.objects = UserCacheManager()
-
 
 def export_as_csv(modeladmin, request, queryset):
     response = HttpResponse(content_type="text/csv")
