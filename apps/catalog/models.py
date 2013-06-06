@@ -1,4 +1,4 @@
-# coding: utf-8AddonsMan
+# -*- coding: utf-8 -*-
 import caching.base
 from datetime import datetime, timedelta
 
