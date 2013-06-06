@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-import caching.base
 from django.db import models
-from django.db.models import Q
-from django.conf import settings
 from apps.core.managers import AbstractManager
 
 

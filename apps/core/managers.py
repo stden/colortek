@@ -15,6 +15,10 @@ class AbstractManager(caching.base.CachingManager):
         return super(AbstractManager, self).get_query_set().filter(is_deleted=False)
 
 
+class AddonsManager(models.Manager):
+    def get_query_set(self):
+        return super(AddonsManager, self).get_query_set().filter(is_deleted=False)
+
 class UserSIDManager(models.Manager):
     def create(self, user):
         sid = uuid1().hex

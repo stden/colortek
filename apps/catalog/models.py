@@ -1,10 +1,11 @@
-# coding: utf-8
+# coding: utf-8AddonsMan
 import caching.base
 from datetime import datetime, timedelta
 
 from apps.geo.models import City
 from apps.core.helpers import get_object_or_None
 from apps.catalog.managers import ItemManager, AddonManager, OrderManager
+from apps.core.managers import AddonsManager
 
 from django.db import models
 from django.db.models import Manager
@@ -562,7 +563,7 @@ class Addon(caching.base.CachingMixin, models.Model):
     )
 
 
-    objects = AddonManager()
+    objects = AddonsManager()
     whole_objects = Manager()
 
     def __unicode__(self):
