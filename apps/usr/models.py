@@ -15,12 +15,8 @@ from django.core.urlresolvers import reverse
 from apps.core.helpers import get_object_or_None
 import caching.base
 
-
-
-
-class UserCacheManager(caching.base.CachingManager, UserManager):
-    pass
-
+User.__bases__ = (caching.base.CachingMixin, models.Model)
+UserManager.__bases__ = (caching.base.CachingManager, models.Manager)
 
 User.add_to_class(
     'invites', models.PositiveSmallIntegerField(
@@ -473,7 +469,7 @@ class UserExtenssion(object):
             )
         }
 
-User.__bases__ = (caching.base.CachingMixin, UserExtenssion,) + User.__bases__
+User.__bases__ = (UserExtenssion,) + User.__bases__
 
 
 # Create your models here.
