@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from rollyourown import seo
 
-class MyMetadata(seo.Metadata):
+class Metadata(seo.Metadata):
     title       = seo.Tag(head=True, max_length=68)
     description = seo.MetaTag(max_length=155)
     keywords    = seo.KeywordTag()
