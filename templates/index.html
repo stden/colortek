@@ -1,9 +1,6 @@
 {% extends "base_web.html" %}
-{% load i18n thumbnail seo_tags %}
+{% load i18n thumbnail %}
 
-{% block title %}{% seo title %}{% endblock %}
-{% block description %}{% seo description %}{% endblock %}
-{% block keywords %}{% seo keywords %}{% endblock %}
 
 {% block content %}
     <div class="col-{{ services.count }}">
