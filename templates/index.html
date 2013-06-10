@@ -2,7 +2,8 @@
 {% load i18n thumbnail %}
 {% load seo_tags %}
 {% block head %}
-    {% show_seo title %}
+    {% seo title %}
+    {% seo description %}
 {% endblock %}
 {% block content %}
     <div class="col-{{ services.count }}">
