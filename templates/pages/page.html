@@ -1,4 +1,6 @@
 {% extends base %}
+{% load seo_tags %}
+{% seo title %}
 {% block title %}{{ page.title }}{% endblock %}
 {% block head %}
     <meta name="description" content="{{ page.description }}." />
