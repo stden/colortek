@@ -2,7 +2,7 @@
 {% load i18n thumbnail seo %}
 {% get_metadata as metadata %}
 
-{% block head %}{{ metadata }}{% endblock %}
+{{ metadata }}
 
 {% block content %}
     <div class="col-{{ services.count }}">
