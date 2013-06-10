@@ -10,7 +10,8 @@
 {% block body-class %}inner-pages catalog-pages {% if kart.products %}basket-is-active{% endif %}{% endblock %}
 
 {% block content %}
-    {% seo %}
+    {% seo description %}
+    {% seo title %}
     <form action="" id='top-action-form'>
         <div class="form address-search">
             <div class="place">
