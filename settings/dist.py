@@ -165,7 +165,7 @@ INSTALLED_APPS = (
     'apps.blog',
     'apps.pages',
     'apps.banner',
-    'south',
+    # 'south',
     'filebrowser',
     'sorl.thumbnail',
     'cart',
