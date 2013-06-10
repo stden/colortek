@@ -10,7 +10,7 @@ from rollyourown.seo.admin import register_seo_admin
 
 admin.autodiscover()
 
-register_seo_admin(admin.site, MyMetadata)
+register_seo_admin(admin.site, Metadata)
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'template.views.home', name='home'),
