@@ -3,10 +3,10 @@ from django.conf import settings
 from filebrowser.sites import site
 
 # Uncomment the next two lines to enable the admin:
-from rollyourown.seo.admin import register_seo_admin
 from django.contrib import admin
 from apps.core.shortcuts import direct_to_template
 from seo import MyMetadata
+from rollyourown.seo.admin import register_seo_admin
 
 admin.autodiscover()
 
