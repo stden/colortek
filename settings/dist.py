@@ -107,16 +107,6 @@ TEMPLATE_LOADERS = (
         'django.template.loaders.app_directories.Loader',
 )
 
-# TEMPLATE_CONTEXT_PROCESSORS = (
-#     'django.contrib.auth.context_processors.auth',
-#     "django.core.context_processors.debug",
-#     "django.core.context_processors.i18n",
-#     "django.core.context_processors.media",
-#     "django.core.context_processors.static",
-#     'django.contrib.messages.context_processors.messages',
-#
-# )
-
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     # 'django.core.context_processors.request',
@@ -320,7 +310,7 @@ DEBUG_TOOLBAR_PANELS = (
     # 'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
     'debug_toolbar.panels.headers.HeaderDebugPanel',
     # 'debug_toolbar.panels.profiling.ProfilingPanel',
-    # 'profiler.ProfilingPanel',
+    'profiler.ProfilingPanel',
     # 'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
     'debug_toolbar.panels.sql.SQLDebugPanel',
     'debug_toolbar.panels.template.TemplateDebugPanel',

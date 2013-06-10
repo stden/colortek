@@ -47,8 +47,8 @@ def stats(request):
     # YOU BETTER do not know what is going on here
     # I don't know either, not my idea
     # +1
-    participant_user_count = User.objects.filter(is_partner=False).count()
-    total_user_count = User.objects.count()
+    participant_user_count = User.objects.filter(is_partner=False).values('id').count()
+    total_user_count = User.objects.values('id').count()
     partners_count = User.objects.filter(is_partner=False).count()
     online_users = randint(total_user_count / 3, 200)
     if (total_user_count / 3 > 199):
