@@ -1,4 +1,5 @@
-{% extends "base_web.html" %}{% load i18n thumbnail coretags corefilters %}
+{% extends "base_web.html" %}{% load i18n thumbnail coretags corefilters seo %}
+{% block head %}{{ block.super }}{% get_metadata as metadata %}{{ metadata }}{% endblock %}
 
 
 {% block css %}
