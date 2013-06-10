@@ -1,4 +1,10 @@
 {% extends base %}
+{% load seo_tags %}
+
+{% block title %}{% seo title %}{% endblock %}
+{% block description %}{% seo description %}{% endblock %}
+{% block keywords %}{% seo keywords %}{% endblock %}
+
 {% block body-class %}text-pages about-page{% endblock %}
 {% block all_content %}
 <div class="contantpage">
