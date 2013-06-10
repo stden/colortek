@@ -1,8 +1,8 @@
 {% extends "base_web.html" %}
 {% load i18n thumbnail seo %}
+{% get_metadata as metadata %}
 
-{% block head %}{{ block.super }}{% get_metadata as metadata %}{{ metadata }}{% endblock %}
-
+{% block title %}{{ metadata.title }}{% endblock %}
 
 {% block content %}
     <div class="col-{{ services.count }}">
