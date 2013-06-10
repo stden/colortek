@@ -1,6 +1,5 @@
 {% extends "base_web.html" %}{% load i18n thumbnail coretags corefilters seo_tags %}
 
-<h2>SEO TITLE {% seo title %}</h2>
 {% block title %}{% seo title %}{% endblock %}
 {% block description %}{% seo description %}{% endblock %}
 {% block keywords %}{% seo keywords %}{% endblock %}
@@ -17,6 +16,7 @@
 {% block body-class %}inner-pages catalog-pages {% if kart.products %}basket-is-active{% endif %}{% endblock %}
 
 {% block content %}
+<h2>SEO TITLE {% seo title %}</h2>
 
     <form action="" id='top-action-form'>
         <div class="form address-search">
