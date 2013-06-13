@@ -167,7 +167,7 @@ INSTALLED_APPS = (
     'apps.banner',
     # 'south',
     'filebrowser',
-    'sorl.thumbnail',
+    # 'sorl.thumbnail',
     'cart',
     # 'djcelery',
     'pytils',
