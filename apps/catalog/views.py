@@ -391,7 +391,6 @@ def all_specials(request, service_name):
     city_id = request.session.get('city', None)
     if not city_id:
         try:
-
             city_id = request.user.city.id
         except AttributeError:
             return dict(redirect=reverse('index'))
@@ -970,6 +969,7 @@ def cart_item_add(request):
             )
         else:
             return {'form': form}
+        request.META.get('HTTP_REFERER', '/')
     return {'redirect': request.META.get('HTTP_REFERER', '/')}
 
 
