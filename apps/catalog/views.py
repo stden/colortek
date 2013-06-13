@@ -961,6 +961,7 @@ def addon_delete(request, pk=None):
 def cart_item_add(request):
     form = CartItemAddForm(request.POST or None, request=request)
     if request.method == "POST":
+        print request.META.get('HTTP_REFERER', '/')
         if form.is_valid():
             add_item_to_cart(
                 request,
@@ -969,7 +970,6 @@ def cart_item_add(request):
             )
         else:
             return {'form': form}
-        request.META.get('HTTP_REFERER', '/')
     return {'redirect': request.META.get('HTTP_REFERER', '/')}
 
 
