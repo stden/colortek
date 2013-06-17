@@ -1202,15 +1202,14 @@ def order(request):
                         unicode(_(u"Поступил новый заказ")),
                         render_to_string(settings.NEW_ORDER_MESSAGE_TEMPLATE_NAME,
                 {'link': link, 'object': order, 'order_statuses': ORDER_STATUSES,
-                'site_url': settings. SITE_URL,
+                'site_url': settings.SITE_URL,
                  }),
                         settings.EMAIL_FROM,
                         emails,
                     )
                     message.content_subtype = 'html'
-                    print 'DEBUG BLEAT!!!!'
-                    message.send(fail_silently=False)
-
+                    message.send(fail_silently=True)
+            print 'DEBUG BLEAT!!!!11111'
             if form.cleaned_data['payment_redirect'] == 'online':
                 order = form.instance
                 url = order.get_online_payment_url()
