@@ -1135,6 +1135,7 @@ def order(request):
             order.offline_client = form.save_offline_client()
             order.commission = container.owner.commission
             order.save()
+            print 'DEBUG BLEAT!!!!'
             # generating discount
             discount = form.cleaned_data['discount'] or 0
             if discount:
