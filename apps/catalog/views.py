@@ -1208,8 +1208,8 @@ def order(request):
                         emails,
                     )
                     message.content_subtype = 'html'
+                    print 'DEBUG BLEAT!!!!'
                     message.send(fail_silently=True)
-            print 'DEBUG BLEAT!!!!'
 
             if form.cleaned_data['payment_redirect'] == 'online':
                 order = form.instance
