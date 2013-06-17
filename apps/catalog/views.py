@@ -1170,7 +1170,6 @@ def order(request):
             #        object_id=addon.product.pk,
             #        total_price=addon.total_price,
             #        order=order)
-            print 'DEBUG BLEAT!!!!'
 
             for item in cart:
                 if isinstance(item.product, Item):
@@ -1193,6 +1192,8 @@ def order(request):
                     pass
 
             cart.delete_items()
+            print 'DEBUG BLEAT!!!!'
+
             if order.status == 'not_confirmed':
                 for i in User.objects.filter(is_operator=True):    
                     emails = i.get_emails()
