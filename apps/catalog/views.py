@@ -1209,7 +1209,7 @@ def order(request):
                     )
                     message.content_subtype = 'html'
                     print 'DEBUG BLEAT!!!!'
-                    message.send(fail_silently=True)
+                    message.send(fail_silently=False)
 
             if form.cleaned_data['payment_redirect'] == 'online':
                 order = form.instance
