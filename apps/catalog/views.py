@@ -1192,7 +1192,6 @@ def order(request):
                     pass
 
             cart.delete_items()
-            print 'DEBUG BLEAT!!!!'
 
             if order.status == 'not_confirmed':
                 for i in User.objects.filter(is_operator=True):    
@@ -1209,7 +1208,9 @@ def order(request):
                         emails,
                     )
                     message.content_subtype = 'html'
-                    message.send(fail_silently=True)                      
+                    message.send(fail_silently=True)
+            print 'DEBUG BLEAT!!!!'
+
             if form.cleaned_data['payment_redirect'] == 'online':
                 order = form.instance
                 url = order.get_online_payment_url()
