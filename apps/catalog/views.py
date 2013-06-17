@@ -1135,7 +1135,6 @@ def order(request):
             order.offline_client = form.save_offline_client()
             order.commission = container.owner.commission
             order.save()
-            print 'DEBUG BLEAT!!!!'
             # generating discount
             discount = form.cleaned_data['discount'] or 0
             if discount:
@@ -1171,6 +1170,8 @@ def order(request):
             #        object_id=addon.product.pk,
             #        total_price=addon.total_price,
             #        order=order)
+            print 'DEBUG BLEAT!!!!'
+
             for item in cart:
                 if isinstance(item.product, Item):
                     order_container = OrderContainer.objects.create(
