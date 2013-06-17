@@ -1208,8 +1208,8 @@ def order(request):
                         emails,
                     )
                     message.content_subtype = 'html'
+                    print 'DEBUG BLEAT!!!!11111'
                     message.send(fail_silently=True)
-            print 'DEBUG BLEAT!!!!11111'
             if form.cleaned_data['payment_redirect'] == 'online':
                 order = form.instance
                 url = order.get_online_payment_url()
