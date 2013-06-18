@@ -1199,7 +1199,7 @@ def order(request):
                 emails = []
                 for i in User.objects.filter(is_operator=True):    
                     emails = i.get_emails()
-                all_emails.extend(emails)
+                    all_emails.extend(emails)
                 phone = order.container.owner.phone
                 link = reverse('catalog:service-orders')
                 msg = EmailMultiAlternatives(
