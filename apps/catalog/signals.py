@@ -17,6 +17,8 @@ from django.template.loader import render_to_string
 
 from models import ORDER_STATUSES
 
+from apps.core.async_send_mail import send_mail as async_send_mail
+
 
 def vote_pre_save_action(instance, **kwargs):
     if instance.item:
@@ -60,9 +62,19 @@ def order_post_save_action(instance, **kwargs):
         emails = instance.container.owner.get_emails()
         phone = instance.container.owner.phone
         link = reverse('catalog:service-orders')
-        message = EmailMultiAlternatives(
-            unicode(_(u"Поступил новый заказ")),
-            render_to_string(settings.NEW_ORDER_MESSAGE_TEMPLATE_NAME,
+        async_send_mail(
+                        unicode(_(u"Поступил новый заказ")),
+                        render_to_string(settings.NEW_ORDER_MESSAGE_TEMPLATE_NAME,
+                {'link': link, 'object': order, 'order_statuses': ORDER_STATUSES,
+                'site_url': settings.SITE_URL,
+                 }),
+                        settings.EMAIL_FROM,
+                        emails, fail_silently=True
+                    )
+
+        async_send_mail(
+            subject=unicode(_(u"Поступил новый заказ")),
+            body=render_to_string(settings.NEW_ORDER_MESSAGE_TEMPLATE_NAME,
     {'link': link, 'object': instance, 'order_statuses': ORDER_STATUSES,
     'site_url': settings. SITE_URL,
     'refuse_url': reverse_lazy('catalog:update_order_status',
@@ -71,11 +83,9 @@ def order_post_save_action(instance, **kwargs):
                      kwargs=dict(pk=instance.pk, status='finished')),
      'mail_code': mail_code,
      }),
-            settings.EMAIL_FROM,
-            emails,
+            from_email=settings.EMAIL_FROM,
+            recipient_list=emails,
         )
-        message.content_subtype = 'html'
-        message.send(fail_silently=True)
         amount = instance.cost
         amount_curr = numeral.choose_plural(int(round(float(str(amount)))), (u"рубль", u"рубля", u"рублей"))
         sms = SMSLogger.objects.create(
@@ -120,13 +130,13 @@ def order_post_save_action(instance, **kwargs):
                 'company': company
             })
 
-            send_mail(
+            async_send_mail(
                 subject=unicode(_("Please vote for your order")),
                 # message=unicode(settings.VOTE_MESSAGE % {
                 #    'link': link,
                 #    'company': company
                 # }),
-                message=message,
+                body=message,
                 from_email=settings.EMAIL_FROM,
                 recipient_list=[email, ],
                 fail_silently=True
