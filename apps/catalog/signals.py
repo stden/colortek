@@ -62,6 +62,7 @@ def order_post_save_action(instance, **kwargs):
         emails = instance.container.owner.get_emails()
         phone = instance.container.owner.phone
         link = reverse('catalog:service-orders')
+
         async_send_mail(
             subject=unicode(_(u"Поступил новый заказ")),
             body=render_to_string(settings.NEW_ORDER_MESSAGE_TEMPLATE_NAME,
