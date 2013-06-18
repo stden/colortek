@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>{% load pytils_numeral corefilters thumbnail coretags banner %}
+<html>{% load pytils_numeral corefilters thumbnail coretags banner seo %}
     <head>
+        {{ block.super }}{% get_metadata as metadata %}{{ metadata }}
+
         {% block head %}
             <title>Уже везу</title>
         {% endblock %}
