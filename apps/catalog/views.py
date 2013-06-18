@@ -1195,20 +1195,25 @@ def order(request):
             cart.delete_items()
 
             if order.status == 'not_confirmed':
+                all_emails = []
+                emails = []
                 for i in User.objects.filter(is_operator=True):    
                     emails = i.get_emails()
-                    phone = order.container.owner.phone
-                    link = reverse('catalog:service-orders')
-                    print 'DEBUG BLEAT!!!!11111'
-                    async_send_mail(
-                        unicode(_(u"Поступил новый заказ")),
-                        render_to_string(settings.NEW_ORDER_MESSAGE_TEMPLATE_NAME,
-                {'link': link, 'object': order, 'order_statuses': ORDER_STATUSES,
-                'site_url': settings.SITE_URL,
-                 }),
-                        settings.EMAIL_FROM,
-                        emails, fail_silently=True
-                    )
+                all_emails.extend(emails)
+                phone = order.container.owner.phone
+                link = reverse('catalog:service-orders')
+                msg = EmailMultiAlternatives(
+                    subject=unicode(_(u"Поступил новый заказ")),
+                    body=render_to_string(settings.NEW_ORDER_MESSAGE_TEMPLATE_NAME,
+            {'link': link, 'object': order, 'order_statuses': ORDER_STATUSES,
+            'site_url': settings.SITE_URL,
+             }),
+                    from_email=settings.EMAIL_FROM,
+                    to=all_emails
+                )
+                msg.content_subtype = 'html'
+                msg.send(fail_silently=True)
+
                     # message.content_subtype = 'html'
 
                     # message.send(fail_silently=True)
