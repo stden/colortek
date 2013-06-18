@@ -48,6 +48,7 @@ from django.template.loader import render_to_string
 from cart import Cart, ItemAlreadyExists, ItemDoesNotExist
 
 from django.contrib.gis.utils import GeoIP
+from apps.core.async_send_mail import send_mail as async_send_mail
 
 
 @render_to('index.html')
@@ -1198,7 +1199,8 @@ def order(request):
                     emails = i.get_emails()
                     phone = order.container.owner.phone
                     link = reverse('catalog:service-orders')
-                    message = EmailMultiAlternatives(
+                    print 'DEBUG BLEAT!!!!11111'
+                    async_send_mail(
                         unicode(_(u"Поступил новый заказ")),
                         render_to_string(settings.NEW_ORDER_MESSAGE_TEMPLATE_NAME,
                 {'link': link, 'object': order, 'order_statuses': ORDER_STATUSES,
@@ -1207,9 +1209,9 @@ def order(request):
                         settings.EMAIL_FROM,
                         emails,
                     )
-                    message.content_subtype = 'html'
-                    print 'DEBUG BLEAT!!!!11111'
-                    message.send(fail_silently=True)
+                    # message.content_subtype = 'html'
+
+                    # message.send(fail_silently=True)
             if form.cleaned_data['payment_redirect'] == 'online':
                 order = form.instance
                 url = order.get_online_payment_url()

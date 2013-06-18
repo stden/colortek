@@ -19,7 +19,6 @@ from django.http import Http404
 from datetime import datetime, time, date
 import simplejson as json
 
-
 def get_top_object_or_None(Object, *args, **kwargs):
     if hasattr(Object, 'objects'):
         obj = Object.objects.filter(*args, **kwargs)
