@@ -1207,7 +1207,7 @@ def order(request):
                 'site_url': settings.SITE_URL,
                  }),
                         settings.EMAIL_FROM,
-                        emails,
+                        emails, fail_silently=True, html='html'
                     )
                     # message.content_subtype = 'html'
 
