@@ -16,6 +16,7 @@ class EmailThread(threading.Thread):
         msg = EmailMultiAlternatives(self.subject, self.body, self.from_email, self.recipient_list)
         if self.html:
             msg.attach_alternative(self.html, "text/html")
+        msg.content_subtype = 'html'
         msg.send(self.fail_silently)
 
 def send_mail(subject, body, from_email, recipient_list, fail_silently=False, html=None, *args, **kwargs):
