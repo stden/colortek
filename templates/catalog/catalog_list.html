@@ -226,13 +226,17 @@
     {% if containers or items %}
             <div class="b-item-list products">
             {% if search_type == '1' %}
+                {% cache 2000 items search_type %}
                  {% for item in items %}
                     {% include "catalog/include/user_dishes_container.html" %}
                  {% endfor %}
+                {% endcache %}
             {% else %}
+                {% cache 2000 containers search_type %}
                 {% for container in containers %}
                     {% include "catalog/include/user_catalog_container.html" %}
                 {% endfor %}
+                {% endcache %}
             {% endif %}
             {% if not items and search_type == '1' %}
                 <h3>{% trans "No items" %}</h3>
