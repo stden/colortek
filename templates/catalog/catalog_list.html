@@ -224,7 +224,7 @@
         });
     </script>
     {% if containers or items %}
-        {% cache 500 content %}
+        {% cache 2000 content %}
             <div class="b-item-list products">
             {% if search_type == '1' %}
                  {% for item in items %}
