@@ -10,7 +10,7 @@ from decimal import Decimal
 
 def cart(request):
     _cart = Cart(request)
-    items = _cart.cart.item_set.count()
+    items = len(list(_cart.cart.item_set.all))
     item_ct = get_model_content_type(Item)
     addon_ct = get_model_content_type(Addon)
 
