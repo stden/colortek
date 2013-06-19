@@ -508,8 +508,6 @@ def service_specials(request, pk):
 
 @render_to('catalog/catalog_list.html')
 def catalog_list(request, service_pk=0, codename='', is_special=False):
-
-    get_ids = lambda queryset: [query_id.values()[0] for query_id in queryset.values('id')]
     service = (
         get_object_or_None(Service, pk=service_pk)
         or get_object_or_None(Service, codename=codename)
@@ -544,9 +542,9 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
         (geoip.city(ip) or {}).get('city', None)
     )
 
-
+    owners_ids = [id_dict.values()[0] for id_dict in User.objects.filter(is_published=True).values('id')]
     containers = Container.objects.filter(
-        service=service, owner__in=get_ids(User.objects.filter(is_published=True))).order_by('owner')
+        service=service, owner__in=owners_ids).order_by('owner') #@TODO: select_related
 
     state = int(state) if isinstance(state, basestring) else 1
     if state:
@@ -567,7 +565,7 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
         td = TimeNDay.objects.filter(
             Q(is_active=True) & qset
         )
-        schedules = list(Schedule.objects.filter(timenday_schedule_set__in=td))
+        schedules = Schedule.objects.filter(timenday_schedule_set__in=td)
         containers = containers.filter(owner__schedule_user_set__in=schedules)
 
     if by_rating:
@@ -592,7 +590,8 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
             Category.objects.filter(parent__in=categories)  # 2 lvl
         categories = categories | \
             Category.objects.filter(parent__in=categories)  # 3 lvl
-        containers = containers.filter(category__in=get_ids(categories))  # categories_list)
+        containers = containers.\
+            filter(category__in=categories)  # categories_list)
         # containers = (
         #    containers.filter(container__title__in=container_list) |
         #    containers.filter(title__in=container_list)
@@ -623,7 +622,7 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
     has_coords = has_coords and 'mlng' in request.GET
     if has_coords and not all((nlat, mlat, nlng, mlng)):
         containers = Container.objects.filter(id= -1)
-    items = Item.objects.filter(container__in=get_ids(containers))
+    items = Item.objects.filter(container__in=containers)
 
     new_ones = request.GET.get('new_ones', False)
     one_week = datetime.now() - timedelta(weeks=1)
