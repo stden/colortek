@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+DI_SMS_PASSWORD = '1233123'
+SMS_DIRECT_PASSWORD = '123'
+SMS_TWO_PASSWORD = '123'# -*- coding: utf-8 -*-
 from django.db import models
 from apps.core.managers import AbstractManager
 
