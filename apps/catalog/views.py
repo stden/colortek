@@ -543,7 +543,7 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
     )
 
     owners_ids = [id_dict.values()[0] for id_dict in User.objects.filter(is_published=True).values('id')]
-    containers = Container.objects.filter(
+    containers = Container.objects.select_related('owner').filter(
         service=service, owner__in=owners_ids).order_by('owner') #@TODO: select_related
 
     state = int(state) if isinstance(state, basestring) else 1
