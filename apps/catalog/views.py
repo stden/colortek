@@ -681,6 +681,7 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
         items = items.order_by('-container__mean_rating')             
     # paging
     # containers = paginate(containers, page, pages=settings.DEFAULT_PAGES_COUNT)
+    containers = list(containers)
     items = paginate(items, page, pages=settings.DEFAULT_PAGES_COUNT)
     dt = {
         'service': service,
