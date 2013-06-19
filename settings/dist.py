@@ -103,8 +103,8 @@ SECRET_KEY = 'ylh11rtk_8!wpd8e=v)0^5*#@pd%nc_6czkd+kfdvk&amp;n&amp;#wuo4'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
+        'django_jinja2.loaders.filesystem.Loader',
+        'django_jinja2.loaders.app_directories.Loader',
 )
 
 
@@ -173,6 +173,7 @@ INSTALLED_APPS = (
     'pytils',
     # Uncomment the next line to enable the admin:
     'django_ipgeobase',
+    'django_jinja2',
     'rollyourown.seo',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
