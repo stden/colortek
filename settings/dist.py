@@ -127,7 +127,7 @@ TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
 
 
 MIDDLEWARE_CLASSES = (
-    'apps.core.middleware.__init__.ExceptionMiddleware', # Нужно для получения трейсов при DEBUG=False
+    # 'apps.core.middleware.__init__.ExceptionMiddleware', # Нужно для получения трейсов при DEBUG=False
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
