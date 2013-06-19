@@ -991,7 +991,7 @@ class VoteAtom(caching.base.CachingMixin, models.Model):
     )
 
     objects = caching.base.CachingManager()
-    
+
     def __unicode__(self):
         return "%s [%s]" % (self.title, self.klass.get_title())
 
