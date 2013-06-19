@@ -1,4 +1,4 @@
-{% extends "base_web.html" %}{% load i18n thumbnail coretags corefilters seo %}
+{% extends "base_web.html" %}{% load i18n thumbnail coretags corefilters seo cache %}
 {% block head %}{{ block.super }}{% get_metadata as metadata %}{{ metadata }}{% endblock %}
 
 
@@ -224,6 +224,7 @@
         });
     </script>
     {% if containers or items %}
+        {% cache 500 content %}
             <div class="b-item-list products">
             {% if search_type == '1' %}
                  {% for item in items %}
@@ -250,6 +251,7 @@
 				{% include "pages_loader.html" %}
             {% endwith %}
         {% endif %}
+        {% endcache %}
     {% else %}
         <h3>{% trans "You have no data to show" %}</h3>
         <div style='height: 600px; display: block;'>&nbsp;</div>
