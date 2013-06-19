@@ -230,9 +230,9 @@
                     {% include "catalog/include/user_dishes_container.html" %}
                  {% endwith %}
             {% else %}
-                {% for container in containers %}
+                {% with containers=containers %}
                     {% include "catalog/include/user_catalog_container.html" %}
-                {% endfor %}
+                {% endwith %}
             {% endif %}
             {% if not items and search_type == '1' %}
                 <h3>{% trans "No items" %}</h3>
