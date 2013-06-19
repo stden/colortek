@@ -343,4 +343,4 @@ CACHES = {
 #Django Cache-Machine settings
 
 CACHE_COUNT_TIMEOUT = 60
-CACHE_EMPTY_QUERYSETS = True
+# CACHE_EMPTY_QUERYSETS = True
