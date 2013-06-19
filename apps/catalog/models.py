@@ -976,7 +976,7 @@ class VoteKlass(models.Model):
         verbose_name_plural = _("Vote classes")
 
 
-class VoteAtom(models.Model):
+class VoteAtom(caching.base.CachingMixin, models.Model):
     title = models.CharField(_("title"), max_length=128)
     klass = models.ForeignKey(
         VoteKlass, related_name='voteatom_voteklass_set',
@@ -990,6 +990,8 @@ class VoteAtom(models.Model):
         default=10, validators=[MaxValueValidator(255)]
     )
 
+    objects = caching.base.CachingManager()
+    
     def __unicode__(self):
         return "%s [%s]" % (self.title, self.klass.get_title())
 
