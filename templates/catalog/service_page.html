@@ -50,7 +50,7 @@
     {% include "catalog/include/addons_include.html" %}
 	<div class="b-dish-list">
 		<div class="line">
-            {% cache 1000 content %}
+            {% cache 1000 dishes %}
 			{% include "catalog/include/service_page_items.html" %}
             {% endcache %}
 		</div>
