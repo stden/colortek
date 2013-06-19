@@ -44,7 +44,7 @@ FAST_TRANS_STATUS = (
     _("not_confirmed"),
 )
 
-class Service(models.Model):
+class Service(caching.base.CachingMixin, models.Model):
     """ Service provides """
     title = models.CharField(_("title"), max_length=128)
     description = models.CharField(
@@ -67,6 +67,8 @@ class Service(models.Model):
         _('weight'), help_text=_('less is prior'),
         default=0
     )
+
+    objects = caching.base.CachingManager()
 
     @property
     def containers(self):
