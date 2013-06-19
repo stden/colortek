@@ -107,6 +107,10 @@ TEMPLATE_LOADERS = (
         'django_jinja2.loaders.app_directories.Loader',
 )
 
+JINJA2_ENGINE_CONDITION = lambda template_path: 'jinja' in os.path.basename(template_path).split('.')
+JINJA2_TEMPLATE_LOADERS = TEMPLATE_LOADERS
+
+
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'django.core.context_processors.request',

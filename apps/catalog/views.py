@@ -506,7 +506,7 @@ def service_specials(request, pk):
     return get_service_data(request, pk)
 
 
-@render_to('catalog/catalog_list.html')
+@render_to('catalog/catalog_list.jinja.html')
 def catalog_list(request, service_pk=0, codename='', is_special=False):
     service = (
         get_object_or_None(Service, pk=service_pk)
