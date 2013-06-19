@@ -177,7 +177,6 @@ INSTALLED_APPS = (
     'pytils',
     # Uncomment the next line to enable the admin:
     'django_ipgeobase',
-    'django_jinja2',
     'rollyourown.seo',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
