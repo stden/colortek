@@ -103,13 +103,11 @@ SECRET_KEY = 'ylh11rtk_8!wpd8e=v)0^5*#@pd%nc_6czkd+kfdvk&amp;n&amp;#wuo4'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-        'django_jinja2.loaders.filesystem.Loader',
-        'django_jinja2.loaders.app_directories.Loader',
+    ('django.template.loaders.cached.Loader', (
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )),
 )
-
-JINJA2_ENGINE_CONDITION = lambda template_path: 'jinja' in os.path.basename(template_path).split('.')
-JINJA2_TEMPLATE_LOADERS = TEMPLATE_LOADERS
-
 
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
