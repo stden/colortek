@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>{% load pytils_numeral corefilters thumbnail coretags banner seo %}
+<html>{% load pytils_numeral corefilters thumbnail coretags banner seo cache %}
     <head>
         {{ block.super }}{% get_metadata as metadata %}{{ metadata }}
 
@@ -66,6 +66,7 @@
         <div class="main"><div class="mainSF">
 
             <div id="b-top">
+            {% cache online_bar 500 %}
                 <div class="b-steps-info">
                     <div class="b-inner">
                         <div class="step"><div class="i">
@@ -110,6 +111,7 @@
                         </div></div>
                     </div>
                 </div><!-- /b-steps-info -->
+            {% endcache %}
                 <div class="navigation">
                     <div class="b-inner">
                         <div class="region{% if user.is_authenticated %} l-2{% endif %}">
