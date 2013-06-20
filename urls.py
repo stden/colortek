@@ -34,8 +34,17 @@ urlpatterns = patterns('',
         kwargs=dict(template='splash.html'))
 
 )
-
+print settings.DEBUG
+print settings.STATIC_ROOT
 if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': '/home/dan/git_rep/colortek/media' ,
+            'show_indexes': True,
+            }
+        )
+    )
+
     urlpatterns += patterns('',
         (r'^uploads/(?P<path>.*)$', 'django.views.static.serve', {
             'document_root': settings.MEDIA_ROOT ,

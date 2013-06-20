@@ -83,7 +83,7 @@ class Service(caching.base.CachingMixin, models.Model):
         return self.category_service_set
 
     def get_top_containers(self):
-        return self.containers.filter(container=None)
+        return self.containers.prefetch_related('items').filter(container=None)
 
     def get_container_types(self):
         return self.containers.values('title').distinct()
