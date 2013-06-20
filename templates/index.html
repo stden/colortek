@@ -1,5 +1,5 @@
 {% extends "base_web.html" %}
-{% load i18n thumbnail seo %}
+{% load i18n thumbnail seo cache %}
 
 {% block head %}{{ block.super }}{% get_metadata as metadata %}{{ metadata }}{% endblock %}
 
