@@ -681,6 +681,9 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
     # paging
     containers = paginate(containers, page, pages=settings.DEFAULT_PAGES_COUNT)
     items = paginate(items, page, pages=settings.DEFAULT_PAGES_COUNT)
+    if not request.session.get('City'):
+        # Костыль, если город не выбран
+        request.session['city'] = 0
     dt = {
         'service': service,
         'categories': categories,
@@ -691,7 +694,7 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
         'types': [int(i if i.isdigit() else 0) for i in
                   request.GET.getlist('type')],
         'G': request.GET,
-        'request': request,
+        # 'request': request,
         'order_by': order_by,
         'order_by_prefix': order_by_prefix,
         'order_by_prefix_future': order_by_prefix_future,
