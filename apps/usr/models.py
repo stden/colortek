@@ -15,8 +15,8 @@ from django.core.urlresolvers import reverse
 from apps.core.helpers import get_object_or_None
 import caching.base
 
-User.__bases__ = (caching.base.CachingMixin, models.Model)
-UserManager.__bases__ = (caching.base.CachingManager, models.Manager)
+# User.__bases__ = (caching.base.CachingMixin, models.Model)
+# UserManager.__bases__ = (caching.base.CachingManager, models.Manager)
 
 User.add_to_class(
     'invites', models.PositiveSmallIntegerField(
@@ -184,7 +184,7 @@ User.add_to_class(
     'is_verified', models.BooleanField(
         _('is verified?'),
         help_text=_("marks if user passed through "
-        "post-registraction verification"),
+        "post-registration verification"),
         default=False
     )
 )
