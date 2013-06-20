@@ -14,6 +14,7 @@
 
 {% block content %}
     <form action="" id='top-action-form'>
+
         <div class="form address-search">
             <div class="place">
                 <div class="subway">
@@ -223,6 +224,8 @@
 			
         });
     </script>
+        {% cache 3600 fastfood request.get_full_path request.session.city %}
+
     {% if containers or items %}
             <div class="b-item-list products">
             {% if search_type == '1' %}
@@ -254,6 +257,7 @@
         <h3>{% trans "You have no data to show" %}</h3>
         <div style='height: 600px; display: block;'>&nbsp;</div>
     {% endif %}
+        {% endcache %}
 <script type='text/javascript'>
 $('.plus, .mins').click(function(e){
    p = $(this).parent();
