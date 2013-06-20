@@ -5,6 +5,8 @@
 
 
 {% block content %}
+    {% if request.path == '/' or request.path == '/catalog/' %}
+    {% cache 3600 main_page %}
     <div class="col-{{ services.count }}">
         {% for service in services %}
         <div class="col">
@@ -28,4 +30,6 @@
         </div>
         {% endfor %}
     </div>
+        {% endcache %}
+    {% endif %}
 {% endblock %}
