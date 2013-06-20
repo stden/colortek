@@ -27,7 +27,7 @@ class GeoIPLookupDict(object):
         raise TypeError("GeoIPLookupDict is not iterable")
 
 def geoip(request):
-    ip = request.META.get('HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR'))
+    ip = request.META.get('HTTP_X_FORWARDED_FOR')
     if ip and len(ip.split(',')) >= 2:
         ip = ip.split(',')[-2]
     geop = IPGeoBase.objects.by_ip(ip)
