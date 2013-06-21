@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.contrib.gis.utils import GeoIP
 from django_ipgeobase.models import IPGeoBase
 from apps.geo.models import City
@@ -53,7 +55,9 @@ def geoip(request):
             request.session.save()
         else:
             city_not_in_list = True  
-                                      
+    if not request.session.get('City'):
+        # Костыль, если город не выбран
+        request.session['city'] = 1 #Питер по дефолту
     return {
         'geoip': GeoIPLookupDict(ip),
         'rgeoip': geop,
