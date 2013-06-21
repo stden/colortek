@@ -35,5 +35,5 @@ VK_API_KEY=3359713
 ITEMS_ON_PAGE=21
 ALLOW_SUPERUSER_VOTE=True
 
-THUMBNAIL_DEBUG=False
-THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
+# THUMBNAIL_DEBUG=False
+# THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
