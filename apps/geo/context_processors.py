@@ -55,9 +55,9 @@ def geoip(request):
             request.session.save()
         else:
             city_not_in_list = True  
-    if not request.session.get('City'):
-        # Костыль, если город не выбран
-        request.session['city'] = 1 #Питер по дефолту
+    # if not request.session.get('City'):
+    #     # Костыль, если город не выбран
+    #     request.session['city'] = 1 #Питер по дефолту
     return {
         'geoip': GeoIPLookupDict(ip),
         'rgeoip': geop,
