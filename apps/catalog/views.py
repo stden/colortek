@@ -3,6 +3,7 @@ from copy import deepcopy
 from decimal import Decimal
 from datetime import datetime, timedelta
 
+from apps.geo.context_processors import geoip
 from apps.geo.models import GPos
 from apps.core.helpers import (
     render_to, get_model_content_type, make_http_response,
@@ -199,6 +200,8 @@ def service_orders_nc(request):
         'G': request.GET,
         'status': request.GET.getlist('status', []),
     })
+    if not request.session.get('city'):
+        geoip(request)
     return dt
 
 

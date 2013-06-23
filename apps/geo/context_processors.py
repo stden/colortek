@@ -33,7 +33,6 @@ def geoip(request):
 
     if ip and len(ip.split(',')) >= 2:
         ip = ip.split(',')[-2].strip()
-        print 'IP is', ip
     geop = IPGeoBase.objects.by_ip(ip)
     if geop.exists():
         geop = geop[0]
