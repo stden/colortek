@@ -7,6 +7,13 @@ from django.contrib import admin
 from apps.core.shortcuts import direct_to_template
 from apps.catalog.seo import Metadata
 from rollyourown.seo.admin import register_seo_admin
+import logging
+from sorl.thumbnail.log import ThumbnailLogHandler
+
+
+handler = ThumbnailLogHandler()
+handler.setLevel(logging.ERROR)
+logging.getLogger('sorl.thumbnail').addHandler(handler)
 
 admin.autodiscover()
 
@@ -34,8 +41,7 @@ urlpatterns = patterns('',
         kwargs=dict(template='splash.html'))
 
 )
-print settings.DEBUG
-print settings.STATIC_ROOT
+
 if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
