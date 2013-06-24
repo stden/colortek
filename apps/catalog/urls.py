@@ -76,7 +76,7 @@ urlpatterns = patterns(
     # url(r'cart/item/(?P<item_pk>\d+)/addon/add/(?P<addon_pk>\d+)/(?P<quantity>\d+)/$',
     #    'add_addon_to_cart', name='cart-addon-add'),
 
-    url(r'cart//addon/add/(?P<addon_pk>\d+)/(?P<quantity>\d+)/$',
+    url(r'cart/addon/add/(?P<addon_pk>\d+)/(?P<quantity>\d+)/$',
         'add_addon_to_cart', name='cart-addon-add'),
     url(r'cart/addon/checkout/(?P<addon_pk>\d+)/(?P<quantity>\d+)/$',
         'add_addon_to_cart',
