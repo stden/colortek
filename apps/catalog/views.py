@@ -200,8 +200,8 @@ def service_orders_nc(request):
         'G': request.GET,
         'status': request.GET.getlist('status', []),
     })
-    if not request.session.get('city'):
-        geoip(request)
+    # if not request.session.get('city'):
+    #     geoip(request)
     return dt
 
 
