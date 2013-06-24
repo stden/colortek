@@ -1201,7 +1201,6 @@ def order(request):
 
             if order.status == 'not_confirmed':
                 for i in User.objects.filter(is_operator=True):
-                    print form.cleaned_data
                     emails = i.get_emails()
                     phone = order.container.owner.phone
                     link = reverse('catalog:service-orders')

@@ -31,5 +31,8 @@ class GeoMiddleware(object):
                     request.session['city'] = city.pk
                     request.session['city_title'] = city.title
                     request.session.save()
+                else:
+                    request.session['city']  = ''
+                    request.session.save()
         # print pattern.search(path)
         return
