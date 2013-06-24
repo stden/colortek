@@ -22,7 +22,7 @@ DATABASES = {
         'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-DEBUG=True
+DEBUG=False
 APACHE=True # apache is shit
 DEFAULT_TEMPLATE='base_web.html'
 DO_SECRET='bf43f9283a1211e2a7a9002608f6ce38'
