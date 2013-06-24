@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>{% load pytils_numeral corefilters thumbnail coretags banner seo cache %}
+<html>{% load pytils_numeral corefilters thumbnail coretags banner seo cache compress %}
     <head>
         {{ block.super }}{% get_metadata as metadata %}{{ metadata }}
 
@@ -14,22 +14,26 @@
 
         {% block css %}
         <link rel="stylesheet" type="text/css" media="screen" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
+
+
         <link rel='stylesheet' type='text/css' media='screen' href='/media/css/jquery.ui.timepicker.css'>
         <link rel="stylesheet" type="text/css" media="screen" href="/media/css/cusel.css">
         <link rel="stylesheet" type="text/css" media="screen" href="/media/css/default.css">
         <link rel="stylesheet" type="text/css" media="screen" href="/media/css/inner.css">
         <link rel='stylesheet' type='text/css' media='screen' href='/media/css/jquery.fancybox.css'>
+        <link href="/media/css/tipTip.css" rel="stylesheet" type="text/css" />
+
 		<!--[if IE 7]><link rel="stylesheet" href="/media/css/ie7.css" media="all"><![endif]-->
 		<!--[if IE 8]><link rel="stylesheet" href="/media/css/ie8.css" media="all"><![endif]-->
 		<!--[if lt IE 9]><link rel="stylesheet" href="/media/css/ie.css" media="all"><![endif]-->
         {% endblock %}
-		
+
 		<!-- Favicon -->
         <link rel="icon" href="/media/img/favicon.ico" type="image/x-icon">
         <link rel="shortcut icon" href="/media/img/favicon.ico" type="image/x-icon">
 
         {% block js %}
-		
+
 		<script type="text/javascript" src="/media/js/jquery.min.js"></script>
         <script type='text/javascript' src='/media/js/jquery.tmpl.min.js'></script>
 		
@@ -39,12 +43,15 @@
         <script type="text/javascript" src="/media/js/cusel.min.js"></script>
         <script type="text/javascript" src="/media/js/jquery.mousewheel.js"></script>
         <script type="text/javascript" src="/media/js/jquery-ui.js"></script>
+        <script type="text/javascript" src="/media/js/jquery.tipTip.minified.js"></script>
+
 
         <script type="text/javascript" src="/media/js/jscroller-0.4.js"></script>
+        <script type='text/javascript' src='/media/js/jquery.fancybox.pack.js'></script>
+
         <script type="text/javascript" src="/media/js/jquery.ui.timepicker.js"></script>
         <script type="text/javascript" src="/media/js/site.js"></script>
         <script type="text/javascript" src="/media/js/helpers.js"></script>
-        <script type='text/javascript' src='/media/js/jquery.fancybox.pack.js'></script>
         <!-- noty -->
         <script type='text/javascript' src='/media/js/noty/jquery.noty.js'></script>
         <script type='text/javascript' src='/media/js/noty/layouts/top.js'></script>
@@ -55,12 +62,12 @@
         <script type='text/javascript' src='/media/js/noty/defaults.js'></script>
 
         <!-- google maps -->
+
+
         <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 
-        <link href="/media/css/tipTip.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="/media/js/jquery.tipTip.minified.js"></script>
-
         {% endblock %}
+
     </head>
     <body class="{% block body-class %}{% endblock %}{% if get_full_path == '/' or get_full_path == '/catalog/' %} main-page{% endif %}">
         <div class="main"><div class="mainSF">

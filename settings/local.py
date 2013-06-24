@@ -22,7 +22,7 @@ DATABASES = {
         'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-DEBUG=False
+DEBUG=True
 APACHE=True # apache is shit
 DEFAULT_TEMPLATE='base_web.html'
 DO_SECRET='bf43f9283a1211e2a7a9002608f6ce38'
@@ -34,6 +34,9 @@ SERVICE_NAME=RESOURCE_NAME
 VK_API_KEY=3359713
 ITEMS_ON_PAGE=21
 ALLOW_SUPERUSER_VOTE=True
+
+# COMPRESS_ENABLED = DEBUG
+
 
 # THUMBNAIL_DEBUG=False
 # THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
