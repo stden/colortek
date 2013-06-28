@@ -26,3 +26,4 @@
 /.pydevproject
 /.settings/
 settings/local.py
+.idea
