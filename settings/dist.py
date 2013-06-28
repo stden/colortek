@@ -7,8 +7,10 @@ from django.conf import global_settings
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))
 
+
 def rel(path):
     return os.path.join(PROJECT_ROOT, path)
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -17,7 +19,7 @@ ENABLE_ADMIN = False
 
 ADMINS = (
     ('Dan', 'dangusev92@gmail.com'),
-    # ('Your Name', 'your_email@example.com'),
+    ('Denis Stepulenok', 'super.denis@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -25,12 +27,13 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': rel('db.sqlite'),  # Or path to database file if using sqlite3.
-        'USER': '',  # Not used with sqlite3.
-        'PASSWORD': '',  # Not used with sqlite3.
-        'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',  # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': rel('db.sqlite'), # Or path to database file if using sqlite3.
+        'USER': '', # Not used with sqlite3.
+        'PASSWORD': '', # Not used with sqlite3.
+        'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '', # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -48,8 +51,8 @@ TIME_ZONE = 'Europe/Moscow'
 LANGUAGE_CODE = 'ru'
 _ = lambda s: s
 LANGUAGES = (
-   ('ru', _('Russian')),
-   ('en', _('English')),
+    ('ru', _('Russian')),
+    ('en', _('English')),
 )
 SITE_ID = 1
 
@@ -96,7 +99,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -104,11 +107,10 @@ SECRET_KEY = 'ylh11rtk_8!wpd8e=v)0^5*#@pd%nc_6czkd+kfdvk&amp;n&amp;#wuo4'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    
-)
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
 
+)
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'django.core.context_processors.request',
@@ -123,7 +125,6 @@ TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'apps.geo.context_processors.geoip',
 )
 
-
 MIDDLEWARE_CLASSES = (
     # 'apps.core.middleware.__init__.ExceptionMiddleware', # Нужно для получения трейсов при DEBUG=False
     'django.middleware.common.CommonMiddleware',
@@ -137,7 +138,6 @@ MIDDLEWARE_CLASSES = (
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
-
 
 ROOT_URLCONF = 'urls'
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -304,7 +304,8 @@ SEO_FOR_MODELS = [
 ]
 #Django Debug Toolbar
 
-INTERNAL_IPS = ('127.0.0.1', '88.201.246.190', '95.161.250.160', '194.85.174.25', '95.140.90.126', '192.168.0.80', '94.188.52.77')
+INTERNAL_IPS = (
+    '127.0.0.1', '88.201.246.190', '95.161.250.160', '194.85.174.25', '95.140.90.126', '192.168.0.80', '94.188.52.77')
 INSTALLED_APPS += (
     'debug_toolbar',
 )
