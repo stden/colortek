@@ -3,33 +3,6 @@ from copy import deepcopy
 from decimal import Decimal
 from datetime import datetime, timedelta
 
-from apps.geo.context_processors import geoip
-from apps.geo.models import GPos
-from apps.core.helpers import (
-    render_to, get_model_content_type, make_http_response,
-    get_object_or_None, paginate
-)
-from apps.catalog.helpers import is_valid
-from apps.accounts.decorators import partner_required, user_fields_required
-from apps.accounts.models import TimeNDay, Schedule
-from apps.catalog.forms import (
-    AddContainerForm, AddItemForm, OrderForm, VoteOrderForm,
-    AddAddonForm, SearchPartnerOrderForm, CartItemAddForm,
-    OrderUpdateForm, AddSpecialForm, AddAddonToCartForm, ImportCSVForm
-)
-from apps.catalog.forms import generate_vote_form
-from apps.catalog.models import(
-    Container, Service, Item, Order, OrderContainer,
-    Vote, Addon, AddonList, Category, PaymentTransaction,
-    Special, BonusTransaction,
-    ORDER_STATUSES, MailCode,
-)
-from apps.geo.models import City
-from apps.catalog.decorators import (
-    not_empty_cart_required, check_provider_unique,
-    item_owner, container_owner
-)
-
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
@@ -37,7 +10,6 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
-from django.core.mail import send_mail, EmailMultiAlternatives
 from django.conf import settings
 from django.template import loader, Context
 from django.http import HttpResponseRedirect, Http404
@@ -45,10 +17,34 @@ from django.db import transaction
 from django.db.models import Q, F
 from django.contrib import messages
 from django.template.loader import render_to_string
-
-from cart import Cart, ItemAlreadyExists, ItemDoesNotExist
-
 from django.contrib.gis.utils import GeoIP
+
+from apps.geo.models import GPos
+from apps.core.helpers import (
+    render_to, get_model_content_type, make_http_response,
+    get_object_or_None, paginate
+    )
+from apps.catalog.helpers import is_valid
+from apps.accounts.decorators import partner_required, user_fields_required
+from apps.accounts.models import TimeNDay, Schedule
+from apps.catalog.forms import (
+    AddContainerForm, AddItemForm, OrderForm, VoteOrderForm,
+    AddAddonForm, SearchPartnerOrderForm, CartItemAddForm,
+    OrderUpdateForm, AddSpecialForm, AddAddonToCartForm, ImportCSVForm
+    )
+from apps.catalog.forms import generate_vote_form
+from apps.catalog.models import (
+    Container, Service, Item, Order, OrderContainer,
+    Vote, Addon, AddonList, Category, PaymentTransaction,
+    Special, BonusTransaction,
+    ORDER_STATUSES, MailCode,
+    )
+from apps.geo.models import City
+from apps.catalog.decorators import (
+    not_empty_cart_required, check_provider_unique,
+    item_owner, container_owner
+    )
+from cart import Cart, ItemAlreadyExists, ItemDoesNotExist
 from apps.core.async_send_mail import send_mail as async_send_mail
 
 
@@ -120,12 +116,10 @@ def service_orders_nc(request):
     if request.user.is_partner:
         statuses.pop(statuses.index('approved'))
         statuses_not_confirmed.append('approved')
-        statuses_not_confirmed.pop(statuses_not_confirmed.\
-                                   index('not_confirmed'))
+        statuses_not_confirmed.pop(statuses_not_confirmed.index('not_confirmed'))
         statuses_not_confirmed.pop(statuses_not_confirmed.index('checking'))
 
-    orders = Order.objects.filter(status__in=statuses_not_confirmed).\
-    order_by('-id')
+    orders = Order.objects.filter(status__in=statuses_not_confirmed).order_by('-id')
     offset = datetime.now() - timedelta(**settings.NOT_CONFIRMED_INTERVAL)
     orders_nc = Order.objects.filter(
         status__in=statuses_not_confirmed,
@@ -141,16 +135,14 @@ def service_orders_nc(request):
     if max_cost:
         orders = orders.filter(cost__lte=max_cost)
     if client:
-        orders = (
-            orders.filter(offline_client__name__icontains=client)
-        )
+        orders = (orders.filter(offline_client__name__icontains=client))
     if date:
         _date = datetime.strptime(date, '%d.%m.%Y')
         _stop_date = _date + timedelta(hours=23, minutes=59, seconds=59)
         orders = orders.filter(
             created_on__gte=_date, created_on__lte=_stop_date
         )
-    # filtering for partners
+        # filtering for partners
     if request.user.is_partner and not request.user.is_operator:
         orders = orders.filter(container__owner=request.user)
         dt.update({'_template': 'catalog/service_partner_orders.html'})
@@ -220,8 +212,8 @@ def service_orders(request):
     _format = request.GET.get('format', None)
 
     excludes = ['not_confirmed',
-        'approved',
-        'checking'
+                'approved',
+                'checking'
     ]
     statuses = [
         'approved',
@@ -355,7 +347,7 @@ def get_service_data(request, pk, title='', category_pk=None):
         is_approved=True
     )
     containers = Container.objects.filter(
-    #    container=None,
+        #    container=None,
         owner=service,
         service=service.service).order_by('title').distinct('title')
     if title:
@@ -387,7 +379,7 @@ def get_service_data(request, pk, title='', category_pk=None):
 def all_specials(request, service_name):
     if not service_name:
         return dict(redirect=reverse('catalog:all-specials',
-                 kwargs=dict(service_name=Service.objects.all()[0].codename)))
+                                     kwargs=dict(service_name=Service.objects.all()[0].codename)))
     try:
         service = Service.objects.get(codename=service_name)
     except Service.DoesNotExist:
@@ -542,7 +534,7 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
         'city',
         request.user.city
         if request.user.is_authenticated() else \
-        (geoip.city(ip) or {}).get('city', None)
+            (geoip.city(ip) or {}).get('city', None)
     )
 
     owners_ids = [id_dict.values()[0] for id_dict in User.objects.filter(is_published=True).values('id')]
@@ -590,10 +582,10 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
     if categories_list:
         categories = Category.objects.filter(pk__in=categories_list)
         categories = categories | \
-            Category.objects.filter(parent__in=categories)  # 2 lvl
+                     Category.objects.filter(parent__in=categories)  # 2 lvl
         categories = categories | \
-            Category.objects.filter(parent__in=categories)  # 3 lvl
-        containers = containers.\
+                     Category.objects.filter(parent__in=categories)  # 3 lvl
+        containers = containers. \
             filter(category__in=categories)  # categories_list)
         # containers = (
         #    containers.filter(container__title__in=container_list) |
@@ -624,7 +616,7 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
     has_coords = has_coords and 'nlng' in request.GET
     has_coords = has_coords and 'mlng' in request.GET
     if has_coords and not all((nlat, mlat, nlng, mlng)):
-        containers = Container.objects.filter(id= -1)
+        containers = Container.objects.filter(id=-1)
     items = Item.objects.filter(container__in=containers)
 
     new_ones = request.GET.get('new_ones', False)
@@ -637,7 +629,7 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
         if new_ones:
             items = items.filter(container__owner__publish_date__gte=one_week)
         if is_special:
-            items = items.filter(is_special_active=True)  
+            items = items.filter(is_special_active=True)
     else:  # by containers
         containers = containers.filter(
             owner__service_name__icontains=title).order_by(
@@ -656,7 +648,7 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
             )
         if by_rating:
             containers = containers.order_by('-mean_rating')
-        # containers = containers.filter(item_container_set__in=items)
+            # containers = containers.filter(item_container_set__in=items)
 
     page = request.GET.get('page', 1)
     containers = Container.objects.filter(
@@ -667,7 +659,7 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
     # ordering
     items = Item.objects.filter(
         pk__in=items.order_by('-cost').values('pk')
-        ).distinct().order_by('-cost')
+    ).distinct().order_by('-cost')
     order_by = request.GET.get('order_by', '-cost')
     order_by_asc = not order_by.startswith('-')
     if not order_by_asc:
@@ -680,8 +672,8 @@ def catalog_list(request, service_pk=0, codename='', is_special=False):
     if order_by in settings.CATALOG_ORDER_BY:
         items = items.order_by(order_by_prefix + order_by)
     if by_rating:
-        items = items.order_by('-container__mean_rating')             
-    # paging
+        items = items.order_by('-container__mean_rating')
+        # paging
     containers = paginate(containers, page, pages=settings.DEFAULT_PAGES_COUNT)
     items = paginate(items, page, pages=settings.DEFAULT_PAGES_COUNT)
 
@@ -999,7 +991,7 @@ def add_item_to_cart(request, item_pk, quantity=1, checkout=False):
         raise Http404("Go fsck yourself")
     if int(quantity) < threshold:
         msg = _("You can not order less of item quantity then "
-        "given threshold"
+                "given threshold"
         )
         return {'success': False, 'errors': unicode(msg)}
     if int(quantity) % threshold != 0:
@@ -1207,11 +1199,10 @@ def order(request):
                     async_send_mail(
                         unicode(_(u"Поступил новый заказ")),
                         render_to_string(settings.NEW_ORDER_MESSAGE_TEMPLATE_NAME,
-                {'link': link, 'object': order, 'order_statuses': ORDER_STATUSES,
-                'site_url': settings.SITE_URL,
-                 }),
+                                         {'link': link, 'object': order, 'order_statuses': ORDER_STATUSES,
+                                          'site_url': settings.SITE_URL}),
                         settings.EMAIL_FROM,
-                        emails, fail_silently=True
+                        emails
                     )
                     # message.content_subtype = 'html'
 
@@ -1251,7 +1242,7 @@ def order_repeat(request, pk):
     if cart.cart.item_set.count() != 0:
         messages.error(
             request, _("You can not repeat order if there's something "
-            "in the cart, please cleanse it")
+                       "in the cart, please cleanse it")
         )
         # return redirect(request.META.get('HTTP_REFERER', '/'))
         return redirect(reverse('catalog:service-page',
@@ -1264,11 +1255,11 @@ def order_repeat(request, pk):
         if item.is_deleted:
             messages.warning(
                 request, _("Item '%s' does not exist anymore, sorry") % \
-                    item.title
+                         item.title
             )
         else:
             cart.add(item, item.get_cost(), container.quantity)
-    # return redirect(request.META.get('HTTP_REFERER', '/'))
+            # return redirect(request.META.get('HTTP_REFERER', '/'))
     return redirect(reverse('catalog:service-page',
                             args=(order.container.owner.pk,)))
 
@@ -1388,15 +1379,15 @@ def order_vote(request, sid):
 @csrf_exempt
 def order_payment_notification(request):
     success = ('<?xml version="1.0" encoding="UTF-8"?>'
-        "<result>"
-        "<code>{code}</code>"
-        "</result>"
+               "<result>"
+               "<code>{code}</code>"
+               "</result>"
     )
     error = ('<?xml version="1.0" encoding="UTF-8"?>'
-        "<result>"
-        "<code>{code}</code>"
-        "<comment>{comment}</comment>"
-        "</result>"
+             "<result>"
+             "<code>{code}</code>"
+             "<comment>{comment}</comment>"
+             "</result>"
     )
     # # verbose version:
     # response = '''
@@ -1412,7 +1403,7 @@ def order_payment_notification(request):
     if request.method != 'POST':
         response.write(
             error.format(
-                code= -1,
+                code=-1,
                 comment='no allowed method %s' % request.method
             )
         )

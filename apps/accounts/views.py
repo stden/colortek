@@ -1,23 +1,8 @@
 # Create your views here.
 # -*- coding: utf-8 -*-
 from datetime import datetime, timedelta
-from apps.core.helpers import render_to
-from apps.accounts.models import (
-    Invite, ContactPhone, ContactEmail, DeliverCost, Verification
-)
-from apps.accounts.forms import (
-    LoginForm, UserRegisterForm, RegisterPartnerForm1, RegisterPartnerForm2,
-    TimeNDayFormset, SendInviteForm, InviteRegisterForm, UserProfileEditForm,
-    PartnerProfileEditForm, PartnerEditOrgForm,
-    AccountSetGCoordinates, PasswordRestoreInitiateForm, PasswordRestoreForm
-)
-from apps.accounts.wizards import RegisterPartnerWizard
-from apps.accounts.decorators import (
-    partner_required, check_invite, phone_owner, email_owner, prevent_bruteforce
-)
-from apps.core.helpers import get_object_or_None
-from django.shortcuts import get_object_or_404
 
+from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -28,6 +13,21 @@ from django.conf import settings
 from django.db import transaction
 from django.http import Http404
 
+from apps.core.helpers import render_to
+from apps.accounts.models import (
+    Invite, ContactPhone, ContactEmail, DeliverCost, Verification
+    )
+from apps.accounts.forms import (
+    LoginForm, UserRegisterForm, RegisterPartnerForm1, RegisterPartnerForm2,
+    TimeNDayFormset, SendInviteForm, InviteRegisterForm, UserProfileEditForm,
+    PartnerProfileEditForm, PartnerEditOrgForm,
+    AccountSetGCoordinates, PasswordRestoreInitiateForm, PasswordRestoreForm
+    )
+from apps.accounts.wizards import RegisterPartnerWizard
+from apps.accounts.decorators import (
+    partner_required, check_invite, phone_owner, email_owner, prevent_bruteforce
+    )
+from apps.core.helpers import get_object_or_None
 from apps.core.models import UserSID
 from apps.sms.models import SMSLogger
 
@@ -64,24 +64,24 @@ def register_user(request):
         if form.is_valid():
             user = form.save(commit=False)
             sms = SMSLogger(provider='disms',
-                    text=settings.USER_REGISTER_SMS % {
-                    'login': form.cleaned_data['email'],
-                    'password': form.cleaned_data['password']
-                }, phone=form.cleaned_data['phone']
+                            text=settings.USER_REGISTER_SMS % {
+                                'login': form.cleaned_data['email'],
+                                'password': form.cleaned_data['password']
+                            }, phone=form.cleaned_data['phone']
             )
             sms.send_message()
             user.set_password(form.cleaned_data['password'])
             user.is_active = True
             user.is_verified = True
             user.save()
-            auth_user = auth.authenticate(username=user.email, password = form.cleaned_data['password'])
+            auth_user = auth.authenticate(username=user.email, password=form.cleaned_data['password'])
             auth.login(request, auth_user)
 
-        #    auth.login(request, auth_user)
+            #    auth.login(request, auth_user)
 
             # process invite
             expired = datetime.now() + \
-                timedelta(hours=settings.INVITE_EXPIRES_HOURS)
+                      timedelta(hours=settings.INVITE_EXPIRES_HOURS)
             invite = get_object_or_None(
                 Invite, email=form.cleaned_data['email'],
                 expire_date__lte=expired
@@ -107,7 +107,7 @@ def register_partner(request):
         [
             RegisterPartnerForm1,
             RegisterPartnerForm2,
-    #        TimeNDayFormset
+            #        TimeNDayFormset
         ], initial_dict={
             '2': schedule_initial,
         }
@@ -160,13 +160,13 @@ def invite(request):
                 'username': invite.sender.get_real_name()
 
             })
-#            msg = settings.INVITE_MESSAGE % {
-#                'user': request.user.username,
-#                'link': settings.SITE_URL + reverse(
-#                    'accounts:invite-register', args=(invite.sid,)),
-#                'resource': settings.SITE_URL,
-#                'resource_name': settings.RESOURCE_NAME
-#            }
+            #            msg = settings.INVITE_MESSAGE % {
+            #                'user': request.user.username,
+            #                'link': settings.SITE_URL + reverse(
+            #                    'accounts:invite-register', args=(invite.sid,)),
+            #                'resource': settings.SITE_URL,
+            #                'resource_name': settings.RESOURCE_NAME
+            #            }
 
             # no mail send, no money :)
             # send_mail(
@@ -205,7 +205,7 @@ def invite_register(request, sid):
     if not invite:
         return {'redirect': 'core:ufo'}
     form = InviteRegisterForm(request.POST or None,
-        invite=invite
+                              invite=invite
     )
     if request.method == 'POST':
         if form.is_valid():
@@ -282,14 +282,15 @@ def profile_contact_phone_delete(request, pk):
     phone = get_object_or_404(ContactPhone, pk=pk)
     phone.delete()
     return {'redirect': 'accounts:profile-edit'}
-    
+
+
 @email_owner(field='pk')
 @login_required
 @render_to('index.html')
 def profile_contact_email_delete(request, pk):
     email = get_object_or_404(ContactEmail, pk=pk)
     email.delete()
-    return {'redirect': 'accounts:profile-edit'}    
+    return {'redirect': 'accounts:profile-edit'}
 
 
 # from future
@@ -361,7 +362,7 @@ def password_restore_initiate(request):
             for sid in sids:
                 msg = settings.PASSWORD_RESTORE_REQUEST_MESSAGE % {
                     'link': settings.SITE_URL + reverse(
-                    'accounts:password-restore', args=(sid.sid,))
+                        'accounts:password-restore', args=(sid.sid,))
                 }
                 send_mail(
                     subject=unicode(_('Your password requested to change')),
@@ -380,7 +381,7 @@ def password_restore(request, sid):
     instance = get_object_or_None(UserSID, sid=sid, expired=False)
     if not instance:
         request.session['brute_force_iter'] \
- = request.session.get('brute_force_iter', 0) + 1
+            = request.session.get('brute_force_iter', 0) + 1
         raise Http404("not found")
 
     form = PasswordRestoreForm(
